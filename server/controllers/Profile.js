@@ -8,7 +8,7 @@ exports.updateProfile = async (req, res) => {
     try {
         //1 fetch the details
         // Treated profession and accountType differently
-        const { dateOfBirth, about , contactNumber, gender,display,profession} = req.body;
+        const { dateOfBirth, about , contactNumber, gender,display,profession,imageUrl} = req.body;
         const userId = req.user.id;
 
         //3 fetch the profile using the user id
@@ -27,7 +27,9 @@ exports.updateProfile = async (req, res) => {
             let lastWord = cleanedString[1];
             user.firstName = firstWord;
             user.lastName = lastWord;
-            user.image = imageUrl;
+            if(imageUrl){
+                user.image = imageUrl;
+            }
             await user.save();
         }
         await profile.save();

@@ -15,7 +15,7 @@ router.post('/login', login);
 //sendOTP
 router.post('/sendotp', sendOTP);
 //changePassword
-router.post('/changepassword', auth, changePassword);
+router.post('/change-password', auth, changePassword);
 // Route for generating a reset password token
 router.post("/reset-password-token", resetPasswordToken)
 

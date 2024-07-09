@@ -22,7 +22,7 @@ const cartSlice = createSlice({
                 localStorage.setItem('total',JSON.stringify(state.total));
                 localStorage.setItem('totalItems',JSON.stringify(state.totalItems));
                 localStorage.setItem('cart',JSON.stringify(state.cart));
-                toast.success("Course added to cart")
+                // toast.success("Course added to cart")
 
             }
         },
@@ -39,7 +39,7 @@ const cartSlice = createSlice({
             localStorage.setItem('total',JSON.stringify(state.total));
             localStorage.setItem('totalItems',JSON.stringify(state.totalItems));
             localStorage.setItem('cart',JSON.stringify(state.cart));
-            toast.success("Course removed from the cart")
+            // toast.success("Course removed from the cart")
         },
         resetCart: (state,action) => {
             state.cart = [];
@@ -48,7 +48,7 @@ const cartSlice = createSlice({
             localStorage.removeItem("cart")
             localStorage.removeItem("total")
             localStorage.removeItem("totalItems")
-            toast.success("Successfully reset the cart.");
+            // toast.success("Successfully reset the cart.");
         }
     }
 });

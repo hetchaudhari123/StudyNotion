@@ -243,27 +243,28 @@ exports.changePassword = async (req, res) => {
         {  password: encryptedPassword  },
         { new: true } 
     );
-    //send mail - Password updated
-    try{
+    // //send mail - Password updated
+    // try{
 
-    const emailResponse = await mailSender(email,passwordUpdated(
-        email,
-        `Password updated successfully for ${updatedUserDetails.firstName} ${updatedUserDetails.lastName}`
-    ));
-    console.log("Email sent successfully:", emailResponse.response);
-    }catch(error){
-        console.error("Error occurred while sending email:", error);
-        return res.status(500).json({
-            success:false,
-            message:"Error occurred while sending the mail",
-            error: error.message,
-        })
-    }
+    // const emailResponse = await mailSender(email,passwordUpdated(
+    //     email,
+    //     `Password updated successfully for ${updatedUserDetails.firstName} ${updatedUserDetails.lastName}`
+    // ));
+    // console.log("Email sent successfully:", emailResponse.response);
+    // }catch(error){
+    //     console.error("Error occurred while sending email:", error);
+    //     return res.status(500).json({
+    //         success:false,
+    //         message:"Error occurred while sending the mail",
+    //         error: error.message,
+    //     })
+    // }
 
     //return response
     return res.status(200).json({
         success:true,
-        message:"Successfully changed the password"
+        message:"Successfully changed the password",
+        
     })
     }catch(err){
         console.log("Error occurred while changing the password:",err);

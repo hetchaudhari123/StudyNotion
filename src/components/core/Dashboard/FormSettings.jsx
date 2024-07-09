@@ -30,7 +30,7 @@ const FormSettings = () => {
     const { user } = useSelector(state => state.profile);
     const [imageUrl, setImageUrl] = useState(`${user?.image}`);
     const initialValues = {
-        file: ``,
+        file:'',
         display: `${user?.firstName + " " + user?.lastName}`,
         profession: `${user?.additionalDetails?.profession}`,
         dob: `${user?.additionalDetails?.dateOfBirth ?? '2024-01-24'}`,
@@ -40,41 +40,34 @@ const FormSettings = () => {
         currentPassword: ``,
         changePassword: ``,
         about: `${user?.additionalDetails?.about ?? ""}`
+      
     }
     const {
         register,
         handleSubmit,
         formState: { errors, isSubmitSuccessful },
         reset,
-        watch
+        watch,
+        setValue
     } = useForm({
         defaultValues: initialValues
     });
 
     const selectedValue = watch('gender');
     const navigate = useNavigate();
-    // console.log(user?.email);
     const submitSettings = (data) => {
-        // if (data.dob) {
-        //     const [year, month, day] = data.dob.split('-');
-        //     data.dob = `${day}-${month}-${year}`;
-        // }
-        console.log("before the data");
-        console.log(data);
-        console.log(user?.email);
-
-        console.log("after the data");
-        dispatch(setProfile(data,imageUrl,setLoading,navigate,user?.email));
+      console.log(data);
+      dispatch(setProfile(data,setLoading,user?.email,user?.image));
     }
     useEffect(() => {
         if (isSubmitSuccessful) {
             reset(initialValues, {
-                keepSubmitSuccessful: false  // This will reset the isSubmitSuccessful state
+                keepSubmitSuccessful: false
             })
-            setImageUrl(`${user?.image}`);
         }
     }, [isSubmitSuccessful])
     const handleFileChange = (e) => {
+        console.log("File is.....",e?.target?.files[0]);
         const file = e.target.files[0];
         if (file) {
             const reader = new FileReader();
@@ -85,22 +78,18 @@ const FormSettings = () => {
         }
         return;
     }
+   
     return (
         <form onSubmit={handleSubmit(submitSettings)} className='my-4 mx-auto w-[400px]  lg:ml-24 lg:mt-8 lg:w-[792px] '>
             <div className='flex flex-col gap-11'>
                 <div className='p-6 flex flex-row gap-5 rounded-lg border border-richblack-700 bg-richblack-800'>
                     <div className=''>
-                        {/* <img className='text-richblack-5 flex gap-6 h-[78px] w-[78px] object-contain aspect-square rounded-full' 
-                        src={`${user?.image}`} 
-                        alt={`${user?.firstName + " " + user?.lastName}`} /> */}
+                       
                         <img className='text-richblack-5 flex gap-6 h-[78px] w-[78px] object-contain aspect-square rounded-full'
-                            // src={`${file}`} 
-                            // alt={`${display}`} />
                             src={`${imageUrl}`}
                             alt={`${user?.firsName + " " + user?.lastName}`} />
                     </div>
                     <div className='flex flex-col gap-3'>
-                        {/* #DBDDEA */}
                         <div className='font-inter text-base font-medium leading-6 text-left text-richblack-25'>
                             <label htmlFor="file">
                                 Change Profile Picture
@@ -108,13 +97,18 @@ const FormSettings = () => {
                         </div>
                         <div>
                             <input
-                                type="file"
-                                id="file"
-                                {...register('file')}
-                                name="file"
+                                type='file'
+                                id='file'
+                                {...register('file')
+                                }
+                                onChange={(e) => {
+                                    handleFileChange(e);
+                                    setValue('file', e.target.files[0]);
+                                }}
+                                name='file'
                                 className='hidden'
-                                onChange={handleFileChange}
-                            />
+                                />
+                                {/* // onChange={handleFileChange} */}
                             <div className='flex flex-row gap-3'>
 
                                 <CTAButton
@@ -129,10 +123,8 @@ const FormSettings = () => {
                                 </CTAButton>
                                 <CTAButton active={false} bgColor={'bg-richblack-700'}
                                     onClick={() => {
-                                        console.log(document.getElementById('file').value)
-                                        document.getElementById('file').value = ''
-                                        console.log(document.getElementById('file').value)
-                                        console.log("hey")
+                                        setValue('file', '');
+                                        setImageUrl(user?.image);
                                     }}>
 
                                     <div className='font-inter text-base font-medium bg-richblack-700 text-richblack-5 leading-6 text-center'>
