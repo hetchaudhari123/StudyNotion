@@ -45,7 +45,9 @@ const MyProfile = () => {
 
 
 
-              <div className='font-inter text-sm font-normal leading-6 text-left text-richblack-300'>{user?.additionalDetails?.about}</div>
+              <div className='font-inter text-sm font-normal leading-6 text-left text-richblack-300'>
+                {user?.additionalDetails?.about ?? "Write Something About Yourself!"} 
+                </div>
             </div>
 
           </div>
@@ -79,7 +81,7 @@ const MyProfile = () => {
               <div className='font-inter text-sm font-normal leading-5 text-left text-richblack-600'>Email</div>
 
 
-              <div className='font-inter text-sm font-normal leading-6 text-left text-richblack-300'>{user?.email}</div>
+              <div className='font-inter text-sm font-normal leading-6 text-left text-richblack-5'>{user?.email}</div>
             </div>
             <div className='w-1/2 flex flex-col gap-0.5 justify-between  '>
               <div className='font-inter text-sm font-normal leading-5 text-left text-richblack-600'>Phone Number</div>

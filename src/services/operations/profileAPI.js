@@ -151,3 +151,26 @@ export const deleteProfile = (setLoading,navigate) => {
     }
   }
 }
+export const getEnrolledCourses = (setLoading,setCourses,printSuccess) => {
+  return async (dispatch) => {  
+    const toastId = toast.loading("Loading...")
+    setLoading(true)
+    try{
+      const response = await apiConnector('GET',profileEndpoints.GET_USER_ENROLLED_COURSES_API);
+      console.log("RESPONSE FROM GET ENROLLED COURSES API.........",response);
+      if(!response.data.success){
+        throw new Error(response.data.message);
+      }
+      if(printSuccess) toast.success("Successfully fetched all the courses!");
+      setCourses(response?.data?.data?.courses);
+      setLoading(false);
+      toast.dismiss(toastId);
+    }catch(err){
+      console.log('ERROR FROM GET ENROLLED COURSES API.........',err);
+      toast.error("Failed to fetch the enrolled courses");
+      setLoading(false);
+      toast.dismiss(toastId);
+    }
+
+  }
+}

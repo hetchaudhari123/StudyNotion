@@ -161,14 +161,15 @@ exports.getEnrolledCourses = async (req, res) => {
         }
         return res.status(200).json({
             success: true,
-            message: "Successfully fetched all the courses"
+            message: "Successfully fetched all the courses",
+            data:userDetails
+
         });
     } catch (err) {
         console.log(err);
         return res.status(500).json({
             success: false,
-            message: "Error occurred while fetching all the courses",
-            error: err.message
+            message: err.message
         });
     }
 }

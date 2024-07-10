@@ -95,7 +95,6 @@ exports.createCourse = async (req, res) => {
     }
 }
 
-
 exports.showAllCourses = async (req, res) => {
     try {
         const courses = await Course.find({}, {
