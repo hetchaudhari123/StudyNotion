@@ -16,7 +16,7 @@ export const profileEndpoints = {
   GET_USER_ENROLLED_COURSES_API: BASE_URL + "/profile/get-enrolled-courses",
   // BY ME
   GET_COUNT_USERS_API:BASE_URL + '/profile/get-number-of-users',
-  
+  DELETE_USER_API:BASE_URL + '/profile/delete-profile'
 }
 
 // STUDENTS ENDPOINTS

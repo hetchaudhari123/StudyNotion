@@ -28,13 +28,13 @@ export const updatePicture = (file, setLoading, printSuccess = false) => {
     if (printSuccess) setLoading(false);
   }
 }
-export const updatePassword = (email,oldPassword, changePassword) => {
+export const updatePassword = (email,currentPassword, changePassword) => {
   return async () => {
     try {
       let oldPassword = currentPassword;
       let newPassword = changePassword;
       let confirmNewPassword = changePassword;
-      const responseChangePassword = await apiConnector('POST', endpoints.CHANGEPASSWORD_API, { email, oldPassword, newPassword });
+      const responseChangePassword = await apiConnector('POST', endpoints.CHANGEPASSWORD_API, { email, oldPassword, newPassword,confirmNewPassword });
       console.log('RESPONSE FROM CHANGE PASSWORD......', responseChangePassword);
 
       if (!responseChangePassword.data.success) {
@@ -89,10 +89,9 @@ export const setProfile = ({ file,
       if (changePassword !== '') {
         await dispatch(updatePassword(email,currentPassword, changePassword, changePassword));
       }
-      dispatch(logout());
+      await dispatch(logout());
       try {
-        let password = changePassword !== '' ?? currentPassword;
-
+        let password = (changePassword !== '') ? (changePassword) : currentPassword;
         const response = await apiConnector("POST", endpoints.LOGIN_API, {
           email,
           password,
@@ -128,5 +127,27 @@ export const setProfile = ({ file,
       console.log("ERROR FROM UPDATE PROFILE API.....", err);
     }
 
+  }
+}
+export const deleteProfile = (setLoading,navigate) => {
+  return async (dispatch) => {
+    const toastId = toast.loading("Loading...")
+    setLoading(true)
+    try{
+      const response = await apiConnector('DELETE',profileEndpoints.DELETE_USER_API);
+      if(!response.data.success){
+        throw new Error(response.data.message);
+      }
+      console.log('RESPONSE FROM DELETE PROFILE.......',response);
+      setLoading(false);
+      toast.dismiss(toastId);
+      toast.success("Successfully deleted the profile!");
+      await dispatch(logout(navigate));
+    }catch(err){
+        console.log('ERROR FROM DELETE PROFILE API........',err);
+        setLoading(false);
+        toast.dismiss(toastId);
+        toast.error("Failed to delete the profile");
+    }
   }
 }

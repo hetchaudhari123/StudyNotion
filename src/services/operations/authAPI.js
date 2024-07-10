@@ -185,8 +185,10 @@ export function logout(navigate) {
     localStorage.removeItem("token")
     localStorage.removeItem("user")
     if(navigate) toast.success("Logged Out")
-    if(navigate)
-    navigate("/")
+    if(navigate){
+      console.log("INSIDE LOG OUT");
+      navigate("/")
+    }
   }
 }
 

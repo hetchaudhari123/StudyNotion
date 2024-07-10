@@ -3,7 +3,8 @@ import * as Icons from "react-icons/vsc"
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-const SidebarLink = ({ type, icon, text, path,modal }) => {
+import { useEffect } from 'react';
+const SidebarLink = ({ type, icon, text, path,modal  }) => {
   const Icon = Icons[icon];
   const location = useLocation();
   const { user } = useSelector((state) => state.profile);

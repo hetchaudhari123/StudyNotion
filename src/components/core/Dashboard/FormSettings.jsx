@@ -7,7 +7,7 @@ import { FaRegEyeSlash } from "react-icons/fa";
 import { FaRegEye } from "react-icons/fa6";
 import { FiTrash2 } from "react-icons/fi";
 import { useDispatch } from 'react-redux'
-import { setProfile } from '../../../services/operations/profileAPI'
+import { deleteProfile, setProfile } from '../../../services/operations/profileAPI'
 import { useNavigate } from 'react-router-dom'
 const FormSettings = () => {
     const profession = [
@@ -29,11 +29,14 @@ const FormSettings = () => {
     const [showChangePassword, setShowChangePassword] = useState(false);
     const { user } = useSelector(state => state.profile);
     const [imageUrl, setImageUrl] = useState(`${user?.image}`);
+    const navigate = useNavigate();
+
+   
     const initialValues = {
         file:'',
         display: `${user?.firstName + " " + user?.lastName}`,
         profession: `${user?.additionalDetails?.profession}`,
-        dob: `${user?.additionalDetails?.dateOfBirth ?? '2024-01-24'}`,
+        dob: `${user?.additionalDetails?.dateOfBirth ?? ''}`,
         gender: `${user?.additionalDetails?.gender ?? ""}`,
         countrycode: "+91",
         phoneNo: `${user?.additionalDetails?.contactNumber ?? ""}`,
@@ -54,7 +57,6 @@ const FormSettings = () => {
     });
 
     const selectedValue = watch('gender');
-    const navigate = useNavigate();
     const submitSettings = (data) => {
       console.log(data);
       dispatch(setProfile(data,setLoading,user?.email,user?.image));
@@ -78,7 +80,9 @@ const FormSettings = () => {
         }
         return;
     }
-   
+    const deleteHandler = () => {
+        dispatch(deleteProfile(setLoading,navigate));
+    }
     return (
         <form onSubmit={handleSubmit(submitSettings)} className='my-4 mx-auto w-[400px]  lg:ml-24 lg:mt-8 lg:w-[792px] '>
             <div className='flex flex-col gap-11'>
@@ -413,10 +417,10 @@ const FormSettings = () => {
                         </div>
                     </div>
                 </div>
-                <div className='p-6 gap-5 rounded-lg flex flex-row border cursor-pointer bg-richblack-900  border-pink-700 '>
-                    <div className='w-fit h-fit'>
+                <div className='p-6 gap-5 rounded-lg flex flex-row border bg-richblack-900  border-pink-700 '>
+                    <div className='w-fit h-fit cursor-pointer' onClick={deleteHandler}>
                         <div className='p-3.5 flex gap-2.5 rounded-full 
-                        bg-pink-700 text-2xl cursor-pointer '>
+                        bg-pink-700 text-2xl  '>
                             <FiTrash2 />
                         </div>
                     </div>
@@ -431,14 +435,18 @@ const FormSettings = () => {
 
                         </div>
 
-                        <div className='font-inter text-base italic font-medium leading-6 text-left text-pink-300 '>
+                        <div className='font-inter text-base italic font-medium leading-6 text-left text-pink-300  cursor-pointer' onClick={deleteHandler}>
                             I want to delete my account.
                         </div>
                     </div>
                 </div>
                 <div className='flex flex-row justify-end gap-4'>
 
-                    <CTAButton active={false} bgColor={"bg-richblack-700"}>
+                    <CTAButton active={false} bgColor={"bg-richblack-700"} onClick={
+                        () => {
+                            navigate('/dashboard/my-profile');
+                        }
+                    }>
 
                         <div className='font-inter text-base font-medium leading-6 text-center text-richblack-5'>
                             Cancel
