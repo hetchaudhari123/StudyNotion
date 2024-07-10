@@ -20,7 +20,7 @@ const Sidebar = () => {
       {
         sidebarLinks.map((ele, index) => {
           return (
-            <SidebarLink type={ele.type} path={ele.path} icon={ele.icon} modal={modal} text={ele.name} key={ele.id}></SidebarLink>
+            <SidebarLink type={ele.type} path={ele.path} icon={ele.icon} modal={modal} text={ele.name} key={ele.id} iconChoose={ele?.iconChoose ?? false}></SidebarLink>
           )
         })
       }
@@ -31,6 +31,8 @@ const Sidebar = () => {
 
       <SidebarLink path={"/dashboard/settings"} icon={"VscSettingsGear"} text={"Settings"} modal={modal}>
       </SidebarLink>
+     
+      
 
 
 

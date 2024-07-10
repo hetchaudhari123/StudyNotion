@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import * as Icons from "react-icons/vsc"
+import * as FiIcons from "react-icons/fi"
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
-const SidebarLink = ({ type, icon, text, path,modal  }) => {
-  const Icon = Icons[icon];
+const SidebarLink = ({ type, icon, text, path,modal,iconChoose = false  }) => {
+  const Icon = (!iconChoose) ? Icons[icon] : FiIcons[icon];
   const location = useLocation();
   const { user } = useSelector((state) => state.profile);
   const matchPath = () => {
@@ -18,8 +19,9 @@ const SidebarLink = ({ type, icon, text, path,modal  }) => {
       <div className={`cursor-pointer flex flex-row  items-center font-inter text-sm font-medium leading-6 text-left py-2 px-6 gap-3 bg-richblack-800 ${(matchPath() && !modal) ? ("border-l-2 border-yellow-50 text-yellow-50 bg-yellow-800") :
         ("text-richblack-300 ")}`}>
         <div>
-
           <Icon className={`text-lg text-richblack-300`}></Icon>
+        
+        
         </div>
         <div>
           {text}
