@@ -4,7 +4,6 @@ import { NavbarLinks } from '../../data/navbar-links'
 import { Link } from 'react-router-dom'
 import { IoIosArrowDropdownCircle } from "react-icons/io"
 import { useEffect, useState } from 'react'
-import apiCall from '../../services/apiconnector'
 import { categories } from '../../services/apis_by_me'
 import apiConnector from '../../services/apiconnector'
 import { useSelector } from 'react-redux'

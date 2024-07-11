@@ -6,6 +6,8 @@ import { login, logout } from "./authAPI"
 import { setUser } from "../../redux/slices/profileSlice"
 import { setToken } from "../../redux/slices/authSlice"
 import { endpoints } from "../apis"
+import { courseEndpoints } from "../apis"
+import { removeCart } from "../../redux/slices/cartSlice"
 export const updatePicture = (file, setLoading, printSuccess = false) => {
   return async (dispatch) => {
 
@@ -173,4 +175,34 @@ export const getEnrolledCourses = (setLoading,setCourses,printSuccess) => {
     }
 
   }
+}
+export const fetchAverageRating = async (courseId,setLoading = null,printSuccess = true) => {
+      let toastId = ""
+      if(printSuccess) toastId = toast.loading("Loading...")
+      if(printSuccess) setLoading(true)
+        try{
+        const response = await apiConnector('GET',courseEndpoints.GET_AVERAGE_RATING_COURSES_API,courseId);
+        console.log('RESPONSE FROM AVERAGE RATING API........',response);
+        if(!response.data.success){
+          throw new Error(response.data.message);
+        }
+        if(printSuccess)
+        toast.success("Successfully fetched the average rating of the course.")
+        // response?.data?.data?.courses[]
+        if(printSuccess){
+          setLoading(false);
+          toast.dismiss(toastId);
+        }
+        return response?.data?.average
+      }catch(err){
+        console.log('ERROR FROM AVERAGE RATING API......',err);
+        if(printSuccess){
+          setLoading(false);
+          toast.dismiss(toastId);
+        }
+        if(printSuccess)
+        toast.error("Failed to fetch the average rating of the course.");
+        return null;
+      }
+    
 }

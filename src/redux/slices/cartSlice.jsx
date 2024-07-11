@@ -4,6 +4,98 @@ const initialState = {
     total: localStorage.getItem('total') ? JSON.parse(localStorage.getItem('total')) : (null),
     totalItems: localStorage.getItem('totalItems') ? JSON.parse(localStorage.getItem('totalItems')) : null,
     cart: localStorage.getItem('cart') ? JSON.parse(localStorage.cart) : []
+    // FOR TESTING
+//     total:1198,
+//     totalItems:3,
+//     cart: [
+//         {category
+//             : 
+//             "66716c1331080dde34df5047",
+//             courseContent
+//             : 
+//             [],
+//             courseDescription
+//             : 
+//             "Learn ML!",
+//             courseName
+//             : 
+//             "ML",
+//             instructions
+//             : 
+//             [],
+//             instructor
+//             : 
+//             "668df4639e8882a6c5d1b9fb",
+//             price
+//             : 
+//             599,
+//             ratingAndReviews
+//             : 
+//             [],
+//             status
+//             : 
+//             "Draft",
+//             studentsEnrolled
+//             : 
+//             [],
+//             tag
+//             : 
+//             ['[AI,ML]'],
+//             thumbnail
+//             : 
+//             "https://res.cloudinary.com/dkqaa1o1w/image/upload/v1720579219/StudyNotion/j7ygioewwnmtsxtrj3nn.jpg",
+//             whatYouWillLearn
+//             : 
+//             "ML from top educators",
+//             _id
+//             : 
+//             "668df4949e8882a6c5d1ba03"
+//         },
+//             {
+//                 category
+//                         : 
+//                         "66716c1331080dde34df5047",
+//                         courseContent
+//                         : 
+//                         [],
+//                         courseDescription
+//                         : 
+//                         "Learn Python",
+//                         courseName
+//                         : 
+//                         "Python",
+//                         instructions
+//                         : 
+//                         [],
+//                         instructor
+//                         : 
+//                         "668df4639e8882a6c5d1b9fb",
+//                         price
+//                         : 
+//                         599,
+//                         ratingAndReviews
+//                         : 
+//                         [],
+//                         status
+//                         : 
+//                         "Draft",
+//                         studentsEnrolled
+//                         : 
+//                         [],
+//                         tag
+//                         : 
+//                         ['[AI,ML]'],
+//                         thumbnail
+//                         : 
+//                         "https://res.cloudinary.com/dkqaa1o1w/image/upload/v1720589000/StudyNotion/encfd2te2as6bqp1xgde.jpg",
+//                         whatYouWillLearn
+//                         : 
+//                         "Python and its understanding",
+//                         _id
+// : 
+// "668e1ac89e8882a6c5d1bd44"
+//             }
+//     ]
 }
 const notify = () => toast('Here is your toast.');
 const cartSlice = createSlice({

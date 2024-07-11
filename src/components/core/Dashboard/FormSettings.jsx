@@ -164,8 +164,8 @@ const FormSettings = () => {
                                     type="text"
 
                                     {...register("display")}
-
-                                    style={{ boxShadow: '0px -1px 0px 0px rgba(255, 255, 255, 0.18) inset' }} className='font-inter text-base font-medium leading-6 text-left bg-richblack-700  p-3 flex flex-col gap-3 rounded-lg text-richblack-200'>
+                                    style={{ boxShadow: '0px -1px 0px 0px rgba(255, 255, 255, 0.18) inset' }}
+                                     className='font-inter text-base font-medium leading-6 text-left bg-richblack-700  p-3 flex flex-col gap-3 rounded-lg text-richblack-200'>
                                 </input>
 
                                 <div className='flex gap-1.5 font-inter

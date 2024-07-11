@@ -37,8 +37,7 @@ exports.showAllTheCategories = async (req, res) => {
     } catch (err) {
         return res.status(500).json({
             success: false,
-            message: "Error occurred while fetching the categories.",
-            error:err.message
+            message: err.message
         })
     }
 }

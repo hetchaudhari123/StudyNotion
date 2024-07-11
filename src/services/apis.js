@@ -50,11 +50,13 @@ export const courseEndpoints = {
 // RATINGS AND REVIEWS
 export const ratingsEndpoints = {
   REVIEWS_DETAILS_API: BASE_URL + "/course/get-reviews",
+  GET_AVERAGE_RATING_COURSES_API: BASE_URL + "/course/get-average-rating"
+
 }
 
 // CATAGORIES API
 export const categories = {
-  CATEGORIES_API: BASE_URL + "/course/show-all-categories",
+  CATEGORIES_API: BASE_URL + "/course/get-all-categories",
 }
 
 // CATALOG PAGE DATA

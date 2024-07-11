@@ -117,8 +117,7 @@ exports.getAverageRating = async (req, res) => {
         console.log(err);
         return res.status(500).json({
             success: false,
-            message: "Error occurred while calculating the average rating",
-            error:err.message
+            message:err.message
         })
     }
 }
