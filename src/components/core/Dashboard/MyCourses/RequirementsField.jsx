@@ -32,13 +32,13 @@ const RequirementsField = ({ register, setValue, errors, reqList, setReqList, ge
           className='w-full focus:outline-none text-richblack-200 bg-transparent font-inter text-base font-medium leading-6
         text-left' />
       </div>
-      {
+      {/* {
         errors.requirement &&
         (<div className='text-richblack-5'>
           {errors.requirement.message}
         </div>)
 
-      }
+      } */}
 
       <div
         onClick={addHandler}

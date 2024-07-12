@@ -9,6 +9,11 @@ import ThumbnailField from './ThumbnailField';
 import RequirementsField from './RequirementsField';
 import CTAButton from "../../HomePage/Button"
 import { FaAngleRight } from "react-icons/fa6";
+import { buildCourse } from '../../../../services/operations/courseAPI';
+import { fetchCourseDetails } from '../../../../services/operations/courseAPI';
+import { useSelector } from 'react-redux';
+import { setStep } from '../../../../redux/slices/courseSlice';
+import { updateCourse } from '../../../../services/operations/courseAPI';
 const CourseForm = () => {
     const {
         register,
@@ -27,42 +32,103 @@ const CourseForm = () => {
     const [category, setCategory] = useState([]);
     const [loading, setLoading] = useState(false);
     const [tagList, setTagList] = useState([]);
-    console.log(category);
+    // const [formData,setFormData] = useState(null);
+    const [image, setImage] = useState(null);
+    const [editCourse,setEditCourse] = useState(false);
+    const {courseStep,courseDetails} = useSelector(state => state.course);
     useEffect(() => {
         dispatch(fetchCategory(setCategory, setLoading, false));
+        if(courseDetails) {
+            setEditCourse(true);
+            const formData = new FormData();
+            formData.append('thumbnailImage', courseDetails.file);
+            formData.append('courseDescription', courseDetails.courseDescription);
+            formData.append('whatYouWillLearn', courseDetails.whatYouWillLearn);
+            formData.append('price', courseDetails.price);
+            formData.append('tag', courseDetails.tag);
+            formData.append('category', courseDetails.category);
+            // formData.append('status', courseDetails.status);
+            formData.append('instructions', courseDetails.instructions);
+            formData.append('courseName', courseDetails.courseName);
+            setReqList(formData.get('whatYouWillLearn'));
+            // setCategory(formData.get('category'));
+            setTagList(formData.get('tag'));
+            setImage(formData.get('thumbnailImage'));
+            setValue('courseTitle',formData.get('courseName'));
+            setValue('courseDesc',formData.get('courseDescription'));
+            setValue('price',formData.get('price'));
+            setValue('requirement',formData.get('instructions'));
+            // setValue('file',formData.get(thumbnailImage));
+        }
     }, [])
     if (loading) {
         return (
             <Spinner></Spinner>
         )
     }
-    const submitHandler = (data) => {
-        console.log(data);
+    const submitHandler = () => {
+        // benefit
+// : 
+// "fdfd"
+// category
+// : 
+// "66716c1331080dde34df5047"
+// courseDec
+// : 
+// "fdfd"
+// courseTitle
+// : 
+// "abc"
+// price
+// : 
+// "12"
+// requirement
+// : 
+// ""
+// tag
+// : 
+// ""
+
+        
+        const {benefit,category,courseDec,courseTitle,price,file} = getValues();
+        const courseDescription = courseDec;
+        const whatYouWillLearn = benefit;
+        const status = "Draft";
+        const courseName = courseTitle;
+        const tag = tagList.toString();
+        const instructions = reqList.toString();
+        console.log(courseDescription,whatYouWillLearn,status,courseName,price,tag,category,file,instructions);
+        dispatch(setStep(2));
+        if(!editCourse)//!!!!!!!!!!!!!!!!!!!!!! CHANGE THIS
+        dispatch(buildCourse({courseDescription,whatYouWillLearn,status,courseName,price,tag,category,status,instructions,file},setLoading,true));
+        else//!!!!!!!!!!!!!!!!!!!!!! CHANGE THIS
+        dispatch(updateCourse({courseDescription,whatYouWillLearn,status,courseName,price,tag,category,status,instructions,file},setLoading,true));//!!!!!!!!!!!!!!!!!!!!!! CHANGE THIS
+
     }
     return (
-        <form className='mt-4 ml-8 flex flex-col gap-4  w-[665px]' onSubmit={handleSubmit(submitHandler)}>
-            <div className='p-6 gap-7 flex flex-col rounded-lg border 
+        <form className='w-[400px]   md:mt-4 md:ml-8 flex flex-col gap-4 md:w-[665px]' onSubmit={handleSubmit(submitHandler)}>
+            <div className='p-2 md:p-6 gap-7 flex flex-col rounded-lg border 
             border-richblack-700 bg-richblack-800'>
                 <div className='flex flex-col gap-1.5 font-inter text-sm font-normal leading-6 text-left'>
-                    <label className='gap-0.5 flex flex-row  text-richblack-5' htmlFor="courseTitle">Course Title <span className='text-pink-200'>*</span>
+                    <label className=' gap-0.5 flex flex-row  text-richblack-5' htmlFor="courseTitle">Course Title <span className='text-pink-200'>*</span>
                     </label>
 
-                    <div style={{ boxShadow: "0px -1px 0px 0px #FFFFFF2E inset" }} className='flex flex-row bg-richblack-700 p-3 gap-3 rounded-lg'>
+                    <div style={{ boxShadow: "0px -1px 0px 0px #FFFFFF2E inset" }} className=' flex flex-row bg-richblack-700 p-3 gap-3 w-full rounded-lg'>
 
                         <input type="text"
                             name='courseTitle'
                             id='courseTitle'
                             placeholder='Enter Course Title'
                             {...register("courseTitle", { required: { value: true, message: "Please enter course title" } })}
-                            className='bg-transparent focus:outline-none text-richblack-200 font-inter text-base font-medium leading-6 text-left'
+                            className='bg-transparent focus:outline-none text-richblack-200 font-inter text-base font-medium leading-6 text-left w-full'
                         />
-                        {
+                        {/* {
                             errors.courseTitle && (
                                 <span className='text-richblack-200'>
                                     {errors.courseTitle.message}
                                 </span>
                             )
-                        }
+                        } */}
 
                     </div>
 
@@ -95,18 +161,19 @@ const CourseForm = () => {
                         font-normal
                         leading-6
                         text-left
-                        h-[127px]
-                        w-[617px]'
+                        w-full
+                        md:h-[127px]
+                        md:w-[617px]'
                         >
 
                         </textarea>
-                        {
+                        {/* {
                             errors.courseDec && (
                                 <span className='text-richblack-200'>
                                     {errors.courseDec.message}
                                 </span>
                             )
-                        }
+                        } */}
                     </div>
                 </div>
                 <div className='gap-1.5 flex flex-col'>
@@ -142,11 +209,11 @@ const CourseForm = () => {
                                 leading-6
                                 text-left
                                 '/>
-                            {errors.price && (
+                            {/* {errors.price && (
                                 <span>
                                     {errors.price.message}
                                 </span>
-                            )}
+                            )} */}
                         </div>
 
                     </div>
@@ -166,12 +233,10 @@ const CourseForm = () => {
 
                     <div style={{ boxShadow: "0px -1px 0px 0px #FFFFFF2E inset" }} className='bg-richblack-700 p-3 gap-4 rounded-lg flex flex-row items-center justify-between text-richblack-200'>
 
-                        <div className='bg-richblack-700'>
-                            Choose a Category
-                        </div>
+                      
                         <select
                             {...register("category", { required: { value: true, message: "Please select a category" } })}
-                            className='bg-richblack-700 focus:outline-none' >
+                            className='w-full bg-richblack-700 focus:outline-none' >
                             {
                                 category.map((ele, index) => (
                                     <option
@@ -195,6 +260,8 @@ const CourseForm = () => {
                 </div>
                 <div>
                     <ThumbnailField
+                    setImage={setImage}
+                    image={image}
                         setValue={setValue} register={register}
                     ></ThumbnailField>
                 </div>
@@ -212,7 +279,7 @@ const CourseForm = () => {
                     <div style={{ boxShadow: "0px -1px 0px 0px #FFFFFF2E inset" }}
                         className='bg-richblack-700
                          gap-3 rounded-lg text-richblack-200
-                        font-inter text-base font-medium leading-6 text-left w-[617px] h-[127px]'
+                        font-inter text-base font-medium leading-6 text-left md:w-[617px] md:h-[127px]'
 
                     >
                         <textarea
@@ -224,13 +291,13 @@ const CourseForm = () => {
                             className='p-3 bg-transparent w-full
                             focus:outline-none h-full'
                         />
-                        {
+                        {/* {
                             errors.benefit && (<div>
                                 {
                                     errors?.benefit?.message
                                 }
                             </div>)
-                        }
+                        } */}
                     </div>
                 </div>
                 <RequirementsField

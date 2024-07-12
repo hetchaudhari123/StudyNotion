@@ -2,8 +2,7 @@ import React, { useState } from 'react'
 import CTAButton from "../../HomePage/Button"
 import { BsWindowSidebar } from 'react-icons/bs';
 import { IoCloudUploadOutline } from "react-icons/io5";
-const ThumbnailField = ({ register, setValue }) => {
-  const [image, setImage] = useState(null);
+const ThumbnailField = ({ register, setValue,image,setImage }) => {
   const handleFileChange = (e) => {
     console.log("File is.....", e?.target?.files[0]);
     const file = e.target.files[0];
@@ -31,8 +30,8 @@ const ThumbnailField = ({ register, setValue }) => {
          bg-richblack-700
           gap-2 rounded-lg
          flex flex-col
-         h-[206px]
-         w-[617px]
+         md:h-[206px]
+         md:w-[617px]
          
          '
         onClick={() => {
@@ -50,7 +49,7 @@ const ThumbnailField = ({ register, setValue }) => {
             setValue('file', e.target.files[0]);
           }}
         />
-        <div className='w-full h-full '>
+        <div className='w-full h-full flex justify-center'>
 
           {image ? (<img
             src={`${image}`}

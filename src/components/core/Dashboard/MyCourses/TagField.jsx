@@ -28,12 +28,19 @@ const TagField = ({setValue,register,tagList,setTagList}) => {
             <div className='text-richblack-5'>Tags</div>
             <span className='text-pink-200'>*</span>
         </div>
-        <div className='flex flex-row gap-4 px-4 py-2 flex-wrap'>
+{/* width: Fill (617px)px;
+height: Hug (48px)px;
+padding: 12px 0px 0px 0px;
+gap: 16px;
+border-radius: 8px 0px 0px 0px;
+opacity: 0px;
+ */}
+        <div className='flex flex-row gap-4 px-4  flex-wrap'>
             {
                 tagList.map((ele,index) => {
                     return (
                         <div key={index} className='bg-yellow-400 rounded-[200px] px-4 py-0.5 gap-2 w-fit flex flex-row items-center justify-center'>
-                            <div className='text-richblack-5 font-semibold'>
+                            <div className='text-richblack-5 font-medium'>
                                 {ele}
                             </div>
                             <div onClick={() => {removeTag(ele)}} className='cursor-pointer'>

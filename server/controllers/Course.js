@@ -16,6 +16,7 @@ exports.createCourse = async (req, res) => {
             status,
             instructions } = req.body;
         const thumbnail = req.files.thumbnailImage;
+
         //2 validation 
         if (
             !courseName ||
@@ -56,8 +57,9 @@ exports.createCourse = async (req, res) => {
         }
 
         //3 cloudinary insertion
+        // console.log('THUMBNAIL IMAGE............');
         const thumbnailImage = await fileUploader(thumbnail, process.env.FOLDER_NAME);
-        console.log(thumbnailImage);
+        console.log('THUMBNAIL IMAGE............', thumbnailImage);
 
         //4 insertion into the db
         const course = await Course.create({
@@ -70,27 +72,27 @@ exports.createCourse = async (req, res) => {
             tag,
             status,
             instructions: instructions,
-            thumbnail: thumbnailImage.secure_url,
+            thumbnail: thumbnailImage?.secure_url,
             Category: categoryDetails._id
         });
         await User.findByIdAndUpdate({
             _id: instructorDetails._id,
         }, { $push: { courses: course._id } }, { new: true });
-        const categoryResponse = await Category.findByIdAndUpdate( category , { 
+        const categoryResponse = await Category.findByIdAndUpdate(category, {
             $push: { courses: course._id }
-         }, { new: true });
-         console.log(categoryResponse);
+        }, { new: true });
+        console.log(categoryResponse);
         return res.status(200).json({
             success: true,
             data: course,
             message: "Successfully created the course"
         })
+
     } catch (err) {
         console.error(err);
         return res.status(500).json({
             success: false,
-            message: "Error occurred while creating the course.",
-            error: err.message,
+            message: err.message,
         })
     }
 }
@@ -172,6 +174,122 @@ exports.getCourseDetails = async (req, res) => {
             success: false,
             message: "Error occurred while fetching the details of the courses",
             error: err.message
+        })
+    }
+}
+
+
+
+exports.editCourse = async (req, res) => {
+    try {
+        //1 fetch the details
+        let { courseid, courseName,
+            courseDescription,
+            whatYouWillLearn,
+            price,
+            tag,
+            category,
+            status,
+            instructions } = req.body;
+        const thumbnail = req?.files?.thumbnailImage;
+
+        //2 validation 
+        //2.1 validate the instructor
+        const instructorID = req.user.id;
+        const instructorDetails = await User.findById(instructorID, {
+            accountType: "Instructor"
+        });
+        if (!instructorDetails) {
+            return res.status(404).json({
+                success: false,
+                message: "The instructor is not registered"
+            })
+        }
+      if(!status || status === undefined){
+        status = 'Published';
+      }
+        //2.2
+        if (
+            !courseName ||
+            !courseDescription ||
+            !whatYouWillLearn ||
+            !price ||
+            !tag ||
+            !thumbnail ||
+            !category
+        ) {
+            return res.status(400).json({
+                success: false,
+                message: "All Fields are Mandatory",
+            });
+        }
+         //2.3 validate the courseid
+         const course = await Course.findOne({ _id: courseid });
+         if (!course) {
+             return res.status(400).json({
+                 success: false,
+                 message: `The course id ${courseid} doesn't exist.`,
+             })
+         } 
+         //2.4
+            //2.2 validate the tag
+        const categoryID = category;//tags contain the id of the tag
+        const categoryDetails = await Category.findById(categoryID);
+        if (!categoryDetails) {
+            return res.status(404).json({
+                success: false,
+                message: "The category is not registered"
+            })
+        }
+            //3 cloudinary insertion
+            // console.log('THUMBNAIL IMAGE............');
+            const thumbnailImage = await fileUploader(thumbnail, process.env.FOLDER_NAME);
+            console.log('THUMBNAIL IMAGE............', thumbnailImage);
+        
+        //4 updation into the db
+        const updatedCourse = await Course.findOneAndUpdate(
+            { _id: courseid }, // Filter: find document by courseId
+            {
+                $set: {
+                    courseName,
+                    category: categoryDetails._id,
+                    courseDescription,
+                    instructor: instructorDetails._id,
+                    whatYouWillLearn,
+                    price,
+                    tag,
+                    status,
+                    instructions: instructions,
+                    thumbnail: thumbnailImage?.secure_url,
+                    Category: categoryDetails._id
+                }
+            },
+            { new: true } // Options: return the updated document
+        );
+        await User.findByIdAndUpdate({
+            _id: instructorDetails._id,
+        }, { $pull: { courses: courseid } }, { new: true });
+        await User.findByIdAndUpdate({
+            _id: instructorDetails._id,
+        }, { $push: { courses: updatedCourse._id } }, { new: true });
+        await Category.findByIdAndUpdate(category, {
+            $pull: { courses: courseid }
+        }, { new: true });
+        const categoryResponse = await Category.findByIdAndUpdate(category, {
+            $push: { courses: updatedCourse._id }
+        }, { new: true });
+        console.log(categoryResponse);
+        return res.status(200).json({
+            success: true,
+            data: course,
+            message: "Successfully updated the course"
+        })
+
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({
+            success: false,
+            message: err.message,
         })
     }
 }
