@@ -97,10 +97,10 @@ const CourseForm = ({loading,setLoading}) => {
         console.log(courseDescription,whatYouWillLearn,status,courseName,price,tag,category,file,instructions);
         if(!editCourse)
         {
-          dispatch(buildCourse({courseDescription,whatYouWillLearn,status,courseName,price,tag,category,status,instructions,file},setLoading,setEditCourse,setStep,true));
+           dispatch(buildCourse({courseDescription,whatYouWillLearn,status,courseName,price,tag,category,status,instructions,file},setLoading,setEditCourse,setStep,true));
         } 
         else{
-            dispatch(updateCourse({courseDescription,whatYouWillLearn,status,courseName,price,tag,category,status,instructions,file},setLoading,setEditCourse,setStep,true));
+             dispatch(updateCourse({courseDescription,whatYouWillLearn,status,courseName,price,tag,category,status,instructions,file},setLoading,setEditCourse,setStep,true));
         }
       
         

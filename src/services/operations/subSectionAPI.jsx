@@ -11,7 +11,12 @@ export const addSubSection = (
     timeDuration,
     description,
     setCourseDetails,
-    video},
+    video,
+    reset,
+    setModal,
+    initialValues,
+    setSectionId
+},
     setLoading = null,
     printSuccess = true
 ) => {
@@ -21,6 +26,13 @@ export const addSubSection = (
         if (printSuccess) toastId = toast.loading("Loading...")
         if (printSuccess) setLoading(true)
         try {
+            console.log({sectionId,
+                courseId,
+                title,
+                timeDuration,
+                description,
+                setCourseDetails,
+                video});
             const formData = new FormData();
             formData.append('video', video);
             formData.append('timeDuration', timeDuration);
@@ -36,12 +48,15 @@ export const addSubSection = (
             // Update Course Details
             console.log('COURSEID FROM ADD SUBSECTION.....',courseId);
             await dispatch(fetchCourse(courseId,null,false));
+           
             if (printSuccess) {
                 setLoading(false);
                 toast.dismiss(toastId);
             }
-            if (printSuccess)
+            if (printSuccess)  
                 toast.success("Successfully created the section");
+              setModal(0);
+              setSectionId(null);
         } catch (err) {
             console.log('ERROR FROM CREATE SUBSECION API......',err);
             if (printSuccess) {

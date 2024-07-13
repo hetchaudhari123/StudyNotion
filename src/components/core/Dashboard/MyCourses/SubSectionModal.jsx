@@ -3,7 +3,7 @@ import CTAButton from '../../HomePage/Button'
 import { RxCross1 } from "react-icons/rx";
 import ThumbnailField from './ThumbnailField';
 import { useForm } from 'react-hook-form';
-import { useState,useEffect } from 'react';
+import { useState } from 'react';
 import { addSubSection } from '../../../../services/operations/subSectionAPI';
 import TimeField from './TimeField';
 import { setCourseDetails } from '../../../../redux/slices/courseSlice';
@@ -18,6 +18,7 @@ const SubSectionModal = ({
   setValue,
   getValues,
   sectionId,
+  setSectionId,
   dispatch,
 index }) => {
   const [image, setImage] = useState(null);
@@ -25,6 +26,7 @@ index }) => {
   const {courseDetails} = useSelector(state => state.course);
   const closeHandler = () => {
     setModal(0);
+    setSectionId(null);
   }
   // console.log('COURSEDETAILS FROM SUBSECTION MODAL.......',courseDetails);  
   const saveHandler = async () => {
@@ -42,35 +44,37 @@ index }) => {
     console.log('SECTIONID.........',sectionId);
     await dispatch(addSubSection({
       sectionId:sectionId,
+      setSectionId,
       courseId:courseDetails._id,
       timeDuration:timeDuration,
       title: getValues('title'),
       description: getValues('desc'),
       setCourseDetails: setCourseDetails,
-      video: getValues('file')
+      video: getValues('file'),
+      reset,
+      initialValues,
+      setModal
     },
-      setLoading,
-      true
+      setLoading
     ));
-    setModal(0);
+  
+
   }
-
-
   const initialValues = {
     file:'',
     hour:'',
     min:'',
-    sec:'', 
+    sec:'',
+    title:'',
+    desc:''
 }
-//   useEffect(() => {
-//     if (isSubmitSuccessful) {
-//         reset({
-//          initialValues
-//         }, {
-//             keepSubmitSuccessful: false
-//         })
-//     }
-// }, [isSubmitSuccessful])
+  //  useEffect(() => {
+  //       if (isSubmitSuccessful) {
+  //           reset(initialValues, {
+  //               keepSubmitSuccessful: false
+  //           })
+  //       }
+  //   }, [isSubmitSuccessful])
   return (
     // <div style={{ backgroundColor: 'rgba(189, 189, 189, 0.9)' }} 
     // className={`fixed ${true ? ("opacity-100") :
@@ -123,7 +127,7 @@ index }) => {
                 image={image}
                 setImage={setImage}
                 customClass='md:w-full md:aspect-ratio-video'
-                
+                sectionId={sectionId}
               >
 
               </ThumbnailField>

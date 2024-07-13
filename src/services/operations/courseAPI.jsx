@@ -57,19 +57,21 @@ export const buildCourse = ({
             if (!response.data.success) {
                 throw new Error(response.data.message);
             }
-            formData.append('id',response.data.data._id);
-            const responseData = response.data.data;
-            const formObj = await formDatatoObject(formData);
-            console.log("OBJECT....",formObj);
+            // formData.append('id',response.data.data._id);
+            // const responseData = response.data.data;
+            // const formObj = await formDatatoObject(formData);
+            // console.log("OBJECT....",formObj);
             // dispatch(setCourseDetails(formObj));
             dispatch(setCourseDetails(response.data.data));
+
             if (printSuccess) {
                 setLoading(false);
                 toast.dismiss(toastId);
             }
             if (printSuccess)
                 toast.success("Successfully saved the course");
-
+            setEditCourse(true);
+            dispatch(setStep(2));
         } catch (err) {
             console.log("ERROR FROM CREATE COURSE API........", err);
             if (printSuccess) {
@@ -79,8 +81,7 @@ export const buildCourse = ({
             if (printSuccess)
                 toast.error("Failed to save the course.");
         }
-        setEditCourse(true);
-        dispatch(setStep(2));
+        
     }
 }
 export const updateCourse = (

@@ -18,22 +18,23 @@ import { useEffect } from 'react';
 import { useFieldArray } from 'react-hook-form';
 import { useId } from 'react';
 const SectionForm = () => {
-
     const {
         register,
         handleSubmit,
         formState: { errors, isSubmitSuccessful },
         reset,
         getValues,
-        setValue,
-        control
+        setValue
     } = useForm({
     });
     const { courseDetails } = useSelector(state => state.course);
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
     const [modal, setModal] = useState(0);
-   
+    // 0 ----------> No Modal
+    // 1 ----------> SubSectionModal
+    // 
+    // 
     const submitHandler = () => {
 
         dispatch(buildSection(getValues('sectionName'),
@@ -55,6 +56,11 @@ const SectionForm = () => {
     // useEffect(() => {
     // console.log("COURSE DETAILS.....",courseDetails)
     // },[courseDetails]);
+    const [sectionId,setSectionId] = useState(null);
+    const addLectureHandler = (id) => {
+        setModal(1);
+        setSectionId(id);
+    }
     console.log("COURSEDETAILS FROM SECTION FORM.........", courseDetails);
     return (
         // <form className=' w-full transition-all duration-1000' onSubmit={handleSubmit(submitHandler)}>
@@ -120,7 +126,7 @@ const SectionForm = () => {
 
                                             */
                                             // border-bottom: 1px solid #424854
-                                            <div key={useId()}
+                                            <div key={e._id}
                                                 className=' flex flex-row justify-between items-center w-full border-b border-b-richblack-600 
                                                     bg-richblack-700 py-3 px-6 gap-3 text-richblack-400'>
                                                 <div className='flex flex-row gap-2 items-center '>
@@ -157,7 +163,9 @@ const SectionForm = () => {
                                 <div className=' py-3 gap-3  bg-richblack-700
                                     border-b border-b-richblack-600 flex flex-row justify-between
                                     w-11/12 mx-auto items-center cursor-pointer'
-                                    onClick={() => {setModal(1)}}>
+                                    onClick={() => {
+                                        addLectureHandler(ele._id);
+                                    }}>
                                     <div className='gap-1 flex flex-row
                                     text-yellow-50 font-inter text-base 
                                     font-medium text-left leading-6'>
@@ -166,8 +174,10 @@ const SectionForm = () => {
                                     </div>
                                 </div>
                                 {/* for sub-section */}
-                                {(modal === 1) && <SubSectionModal
+                                {(modal === 1 && sectionId === ele._id) && <SubSectionModal
+                                
                                     sectionId={ele._id}
+                                    setSectionId = {setSectionId}
                                     dispatch={dispatch}
                                     setModal={setModal} modal={modal}
                                     register={register}
