@@ -2,25 +2,40 @@ import { addSection } from "../../redux/slices/courseSlice";
 import apiConnector from "../apiconnector"
 import { courseEndpoints } from "../apis"
 import toast from "react-hot-toast";
-export const addSubSection = (sectionId,
+import { fetchCourse } from "./courseAPI";
+import { fetchAllCourses } from "./courseAPI";
+export const addSubSection = (
+    {sectionId,
+    courseId,
     title,
+    timeDuration,
     description,
     setCourseDetails,
+    video},
     setLoading = null,
-    printSuccess = true) => {
+    printSuccess = true
+) => {
     return async (dispatch) => {
+        console.log('SECTION ID..........',sectionId);
         let toastId = ""
         if (printSuccess) toastId = toast.loading("Loading...")
         if (printSuccess) setLoading(true)
         try {
-            const response = await apiConnector('POST',courseEndpoints.CREATE_SUBSECTION_API,{sectionId,title,
-                description});
+            const formData = new FormData();
+            formData.append('video', video);
+            formData.append('timeDuration', timeDuration);
+            formData.append('title', title);
+            formData.append('description', description);
+            formData.append('sectionId', sectionId);
+            const response = await apiConnector('POST',courseEndpoints.CREATE_SUBSECTION_API,
+                formData,{ 'Content-Type': 'multipart/form-data' });
             console.log('RESPONSE FROM CREATE SUBSECTION API......',response);
             if(!response.data.success){
                 throw new Error(response.data.message);
             }
-            // ADD SUBSECTION
-            dispatch(addSection(response.data.data));
+            // Update Course Details
+            console.log('COURSEID FROM ADD SUBSECTION.....',courseId);
+            await dispatch(fetchCourse(courseId,null,false));
             if (printSuccess) {
                 setLoading(false);
                 toast.dismiss(toastId);

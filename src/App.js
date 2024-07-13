@@ -21,7 +21,9 @@ import Wishlist from "./components/core/Dashboard/Wishlist";
 import MyCourses from "./components/core/Dashboard/MyCourses";
 function App() {
   return (
-    <div className="w-screen min-h-screen h-[100%] bg-richblack-900 flex flex-col font-inter ">
+    <div className="overflow-y-auto w-screen 
+    min-h-screen h-[100%] 
+    bg-richblack-900 flex flex-col font-inter ">
       
       <Navbar />
       <Routes>

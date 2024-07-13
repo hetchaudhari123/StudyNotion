@@ -150,6 +150,7 @@ export const fetchCourse = (courseId,setLoading = null , printSuccess = true) =>
         if (printSuccess) setLoading(true)
         try{   
             // const response = await apiConnector('POST',courseEndpoints.COURSE_DETAILS_API,{ courseId });
+            console.log("COURSEID FROM FETCH COURSE......",courseId);
             const response = await apiConnector('POST',courseEndpoints.COURSE_DETAILS_API,{ courseId });
             console.log('RESPONSE FROM GET COURSE DETAILS API.....',response);
             if(!response.data.success){
@@ -166,6 +167,35 @@ export const fetchCourse = (courseId,setLoading = null , printSuccess = true) =>
             console.log('ERROR FROM GET COURSE DETAILS API.....',err);
             if (printSuccess) {
 
+                setLoading(false);
+                toast.dismiss(toastId);
+            }
+            if (printSuccess)
+                toast.error("Failed to edit the course.");
+        }
+    }
+}
+export const fetchAllCourses = (setLoading = null,printSuccess = true) => {
+    return async (dispatch) => {
+        let toastId = ""
+        if (printSuccess) toastId = toast.loading("Loading...")
+        if (printSuccess) setLoading(true)
+        try{
+            const response = await apiConnector('GET',courseEndpoints.GET_ALL_COURSE_API);
+            console.log('RESPONSE FROM GET ALL COURSES API.......',response);
+            if(!response.data.success){
+                throw new Error(response.data.message);
+            }
+            dispatch(setCourseDetails(response.data.data));
+            if (printSuccess) {
+                setLoading(false);
+                toast.dismiss(toastId);
+            }
+            if (printSuccess)
+                toast.success("Successfully edited and saved the course");
+        }catch(err){
+            console.log('ERROR FROM FETCH ALL COURSES....',err);
+            if (printSuccess) {
                 setLoading(false);
                 toast.dismiss(toastId);
             }

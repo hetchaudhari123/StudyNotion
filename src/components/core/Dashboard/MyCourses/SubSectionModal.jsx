@@ -4,47 +4,100 @@ import { RxCross1 } from "react-icons/rx";
 import ThumbnailField from './ThumbnailField';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
-
+import { addSubSection } from '../../../../services/operations/subSectionAPI';
 import TimeField from './TimeField';
-const SubSectionModal = ({ modal, setModal }) => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitSuccessful },
-    reset,
-    watch,
-    setValue,
-    getValues
-  } = useForm({
-
-  });
+import { setCourseDetails } from '../../../../redux/slices/courseSlice';
+import Spinner from '../../../common/Spinner';
+import { useSelector } from 'react-redux';
+const SubSectionModal = ({ 
+  modal, setModal, register,
+  handleSubmit,
+  errors,
+  isSubmitSuccessful,
+  reset,
+  setValue,
+  getValues,
+  sectionId,
+  dispatch,
+index }) => {
   const [image, setImage] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const {courseDetails} = useSelector(state => state.course);
   const closeHandler = () => {
-    setModal(false);
+    setModal(0);
   }
+  // console.log('COURSEDETAILS FROM SUBSECTION MODAL.......',courseDetails);  
   const saveHandler = () => {
-
+    console.log(getValues());
+    let timeDuration = "";
+    if(getValues('hour') !== 'HH'){
+      timeDuration += `${getValues('hour')}h `;
+    }
+    if(getValues('min') !== 'MM'){
+      timeDuration += `${getValues('min')}m `;
+    }
+    if(getValues('sec') !== 'SS'){
+      timeDuration += `${getValues('sec')}s `
+    }
+    console.log('SECTIONID.........',sectionId);
+    dispatch(addSubSection({
+      sectionId:sectionId,
+      courseId:courseDetails._id,
+      timeDuration:timeDuration,
+      title: getValues('title'),
+      description: getValues('desc'),
+      setCourseDetails: setCourseDetails,
+      video: getValues('file')
+    },
+      setLoading,
+      true
+    ));
+    setModal(0);
+  }
+  if (loading) {
+    return (<div>
+      <Spinner></Spinner>
+    </div>)
   }
   return (
-    <div style={{ backgroundColor: 'rgba(189, 189, 189, 0.9)' }} 
-    className={`fixed ${true ? ("opacity-100") :
-      ("hidden opacity-0")} top-0 left-0 bottom-0 
+    // <div style={{ backgroundColor: 'rgba(189, 189, 189, 0.9)' }} 
+    // className={`fixed ${true ? ("opacity-100") :
+    //   ("hidden opacity-0")} top-0 left-0 bottom-0 
+    // right-0 transition-all duration-200
+    // overflow-y-auto 
+    //  `}>
+
+    <div style={{ backgroundColor: 'rgba(189, 189, 189, 0.9)' }}
+      className={`fixed ${true ? ("opacity-100") :
+        ("hidden opacity-0")} top-0 left-0 bottom-0 
     right-0 transition-all duration-200
-    overflow-y-scroll `}>
+    overflow-y-auto 
+    flex justify-center 
+        p-4
+     `}>
 
-      <div className='bg-richblack-800 flex flex-col gap-6  fixed left-1/2 top-1/2 translate-x-[-50%] translate-y-[-50%] 
-       rounded-lg overflow-y-scroll'>
+      {/* <div className='bg-richblack-800 
+      flex flex-col gap-6 left-1/2 top-1/2 translate-x-[-50%] translate-y-[-50%] 
+       rounded-lg border-2 border-white 
+       my-[10rem]
+       absolute'> */}
+      <div className='bg-richblack-800 
+      flex flex-col gap-6 
+       rounded-lg  
+       
+       relative
+       h-[786px]'>
 
-        <div className='w-full rounded-lg text-white'>
+        <div className=' w-full rounded-lg text-white'>
           <div className='rounded-t-lg flex flex-row items-center py-4 px-6 gap-3
             border border-richblack-600 bg-richblack-700
             justify-between'>
 
             <div className='w-full font-inter text-lg font-semibold
               leading-7 text-left text-white'>
-              Editing Lecture
+              Adding Lecture
             </div>
-            <div>
+            <div className='cursor-pointer' onClick={closeHandler}>
               <RxCross1 />
             </div>
           </div>
@@ -57,7 +110,8 @@ const SubSectionModal = ({ modal, setModal }) => {
                 setValue={setValue}
                 image={image}
                 setImage={setImage}
-                customClass = {"md:w-full md:aspect-video"}
+                customClass='md:w-full md:aspect-ratio-video'
+                
               >
 
               </ThumbnailField>
@@ -81,6 +135,8 @@ const SubSectionModal = ({ modal, setModal }) => {
 
                 <input
                   placeholder='Enter Lecture Title'
+                  id='title'
+                  name='title'
                   {...register("title", { required: { value: true, message: "Please enter the course title" } })}
                   className=" 
                     text-richblack-200
@@ -98,10 +154,10 @@ const SubSectionModal = ({ modal, setModal }) => {
               <div className='flex flex-col gap-1.5 '>
                 <div className='flex text-richblack-5 flex-row gap-0.5'>
 
-                    <label htmlFor="time" className='text-inter
+                  <label htmlFor="time" className='text-inter
                     text-sm font-normal leading-6 text-left'>
-                      Video Playback Time
-                    </label>
+                    Video Playback Time
+                  </label>
                   <div className='text-pink-200'>
                     *
                   </div>
@@ -113,6 +169,8 @@ const SubSectionModal = ({ modal, setModal }) => {
                     <TimeField time={'hour'}
                       placeholder={'HH'} register={register}
                       errors={errors}
+                      setValue={setValue}
+                      getValues={getValues}
                     ></TimeField>
                   </div>
                   <div>
@@ -120,14 +178,18 @@ const SubSectionModal = ({ modal, setModal }) => {
                     <TimeField time={'min'}
                       placeholder={'MM'}
                       register={register}
-                      errors={errors}></TimeField>
+                      errors={errors}
+                      setValue={setValue}
+                      getValues={getValues}></TimeField>
                   </div>
                   <div>
                     {/* Secs */}
                     <TimeField time={'sec'}
                       placeholder={'SS'}
                       register={register}
-                      errors={errors}></TimeField>
+                      errors={errors}
+                      setValue={setValue}
+                      getValues={getValues}></TimeField>
                   </div>
                 </div>
               </div>
@@ -160,6 +222,8 @@ const SubSectionModal = ({ modal, setModal }) => {
                   <input
 
                     type="text"
+                    id='desc'
+                    name='desc'
                     {...register("desc",
                       {
                         required: {

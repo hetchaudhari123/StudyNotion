@@ -5,7 +5,8 @@ require('dotenv').config();
 exports.createSubSection = async (req,res) => {
     try{
         //1 fetch the details
-        const {sectionId,title,description} = req.body;
+        // console.log("SECTIONID",sectionId);
+        const {sectionId,title,description,timeDuration} = req.body;
         const video = req.files.video;
         //2 validation
         // if(!title ||!timeDuration || !desc || !videoFile){
@@ -14,7 +15,9 @@ exports.createSubSection = async (req,res) => {
         //         message:"One or more fields are empty"
         //     })
         // }
-        if (!sectionId || !title || !description || !video) {
+        if (!sectionId || !title || !description || !video
+           
+        ) {
             return res
               .status(404)
               .json({ success: false, message: "All Fields are Required" })
@@ -26,17 +29,19 @@ exports.createSubSection = async (req,res) => {
         //4 insert into the sub-section
         const subSectionDetails = await SubSection.create({
             title,
-            timeDuration: `${file.duration}`,
+            // timeDuration: `${timeDuration ?? file.duration}`,
+            timeDuration: `${timeDuration}`,
             description,
             videoUrl:file.secure_url,
         });
         //5 insert the id of the sub-section into the section
         const sectionResponse = await Section.findByIdAndUpdate(sectionId,{$push:{subSection:subSectionDetails._id}},{new:true}).populate('subSection');
+        // const courses = await Courses.find(sectionId,{$push:{subSection:subSectionDetails._id}},{new:true}).populate('subSection');
         console.log(sectionResponse);
         return res.status(200).json({
             success:true,
             message:"Successfully inserted the sub-section",
-            data:subSectionDetails
+            data:sectionResponse
         })
     }catch(err){
       console.error("Error creating new sub-section:", err)

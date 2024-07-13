@@ -1,7 +1,7 @@
 import React from 'react'
 import { BiSolidUpArrow } from "react-icons/bi";
 import { BiSolidDownArrow } from "react-icons/bi";
-const TimeField = ({ time, placeholder, register, errors }) => {
+const TimeField = ({ time, placeholder,setValue,getValues, register, errors }) => {
     return (
         <div className='flex flex-col gap-1.5'>
             {/* Hours */}

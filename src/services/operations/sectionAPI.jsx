@@ -13,7 +13,7 @@ export const buildSection = (
         let toastId = ""
         if (printSuccess) toastId = toast.loading("Loading...")
         if (printSuccess) setLoading(true)
-        const courseId = courseDetails.id;
+        const courseId = courseDetails._id;
         try {
             const response = await apiConnector('POST', courseEndpoints.CREATE_SECTION_API,
                 { sectionName, courseId });

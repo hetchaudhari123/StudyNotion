@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import CTAButton from "../../HomePage/Button"
 import { BsWindowSidebar } from 'react-icons/bs';
 import { IoCloudUploadOutline } from "react-icons/io5";
-const ThumbnailField = ({ register, setValue,image,setImage,customClass="" }) => {
+const ThumbnailField = ({ register, setValue,image,setImage,customClass="" ,height=true,width=true,valueName = 'file'}) => {
   const handleFileChange = (e) => {
     console.log("File is.....", e?.target?.files[0]);
     const file = e.target.files[0];
@@ -32,23 +32,23 @@ const ThumbnailField = ({ register, setValue,image,setImage,customClass="" }) =>
          bg-richblack-700
           gap-2 rounded-lg
          flex flex-col
-         ${"md:h-[206px]"}
-         ${"md:w-[617px]"}
+         ${height && "md:h-[206px]"}
+         ${width && "md:w-[617px]"}
          ${customClass}
          `}
         onClick={() => {
-          document.getElementById('file').click()
+          document.getElementById(`${valueName}`).click()
         }}>
         {/* Input */}
         <input
-          type='file'
-          id='file'
-          name='file'
+          type={`${valueName}`}
+          id={`${valueName}`}
+          name={`${valueName}`}
           className='hidden'
-          {...register("file", { required: { value: true, message: "Please enter course thumbnail" } })}
+          {...register(`${valueName}`, { required: { value: true, message: "Please enter course thumbnail" } })}
           onChange={(e) => {
             handleFileChange(e);
-            setValue('file', e.target.files[0]);
+            setValue(`${valueName}`, e.target.files[0]);
           }}
         />
         <div className='w-full h-full flex justify-center'>
