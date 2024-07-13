@@ -15,17 +15,16 @@ const MyCourses = () => {
     const dispatch = useDispatch(); // FOR TESTING
  
     const [loading,setLoading] = useState(false);
-    if (loading) {
-        return (
-            <Spinner></Spinner>
-        )
-    }
-    useEffect(() => {
-        dispatch(fetchCourse('669120c8c3f50daf209bba96',setLoading,false));
-        dispatch(setStep(2));
-    },[]);
+ 
+    // FOR TESTING STEP2 -------> REMOVE DURING PRODUCTION
+    // useEffect(() => {
+        // dispatch(fetchCourse('669263f752972ae01650c574',setLoading,false));
+        // dispatch(setStep(2));
+    // },[]);
     return (
-        <div className=''>
+        (loading) ? (<Spinner/>)
+        :
+        (<div className=''>
             <div className='py-6 pr-32 pl-6 flex flex-row gap-6
                 text-richblack-300 font-inter text-sm font-normal leading-6
                 text-left'>
@@ -71,6 +70,7 @@ const MyCourses = () => {
                 </div>
             </div>
         </div>
+        )
     )
 }
 

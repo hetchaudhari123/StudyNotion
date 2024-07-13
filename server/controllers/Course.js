@@ -104,6 +104,7 @@ exports.createCourse = async (req, res) => {
 exports.showAllCourses = async (req, res) => {
     try {
         const courses = await Course.find({}, {
+            _id:true,
             courseName: true,
             price: true,
             thumbnail: true,

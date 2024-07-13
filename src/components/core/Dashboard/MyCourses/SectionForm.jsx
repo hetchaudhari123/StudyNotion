@@ -16,8 +16,9 @@ import SubSectionModal from './SubSectionModal';
 import { contactusEndpoint } from '../../../../services/apis';
 import { useEffect } from 'react';
 import { useFieldArray } from 'react-hook-form';
+import { useId } from 'react';
 const SectionForm = () => {
-    
+
     const {
         register,
         handleSubmit,
@@ -32,14 +33,7 @@ const SectionForm = () => {
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
     const [modal, setModal] = useState(0);
-    const { fields, append, prepend, remove, swap, move, insert } = useFieldArray({
-        control, // control props comes from useForm (optional: if you are using FormContext)
-        name: "subsection", // unique name for your Field Array
-      });
-    // 0 ----------> No Modal
-    // 1 ----------> Add Lecture through SubSectionModal
-    // 
-    // 
+   
     const submitHandler = () => {
 
         dispatch(buildSection(getValues('sectionName'),
@@ -49,34 +43,29 @@ const SectionForm = () => {
     }
     // CHANGE THIS!!!!!!!!!!!!!!!!
     // FOR TESTING
-    if (!courseDetails || loading) {
-        return (
-            <Spinner />
-        )
-    }
+    // if (!courseDetails || loading) {
+        // return (
+            // <Spinner />
+        // )
+    // }
     // FOR PRODUCTION
 
-    // if ( loading) {
-    //     return (
-    //         <Spinner />
-    //     )
-    // }
-    const addLectureHandler = (sectionId) => {
-        setModal(1);
-    }
+   
+  
     // useEffect(() => {
     // console.log("COURSE DETAILS.....",courseDetails)
     // },[courseDetails]);
     console.log("COURSEDETAILS FROM SECTION FORM.........", courseDetails);
     return (
-        <form className=' w-full transition-all duration-1000' onSubmit={handleSubmit(submitHandler)}>
+        // <form className=' w-full transition-all duration-1000' onSubmit={handleSubmit(submitHandler)}>
+        (loading)?(<Spinner/>):(<form className=' w-full transition-all duration-1000' >
             <div className='w-full gap-7 flex flex-col '>
 
                 <div className=' rounded-lg border bg-richblack-700
                     border-richblack-600'>
                     {
                         // render sections
-                        courseDetails?.courseContent.length > 0 &&
+                        courseDetails?.courseContent &&
                         courseDetails.courseContent.map((ele, index) => (
 
                             // border-bottom: 1px solid #424854
@@ -131,7 +120,7 @@ const SectionForm = () => {
 
                                             */
                                             // border-bottom: 1px solid #424854
-                                            <div key={i}
+                                            <div key={useId()}
                                                 className=' flex flex-row justify-between items-center w-full border-b border-b-richblack-600 
                                                     bg-richblack-700 py-3 px-6 gap-3 text-richblack-400'>
                                                 <div className='flex flex-row gap-2 items-center '>
@@ -168,7 +157,7 @@ const SectionForm = () => {
                                 <div className=' py-3 gap-3  bg-richblack-700
                                     border-b border-b-richblack-600 flex flex-row justify-between
                                     w-11/12 mx-auto items-center cursor-pointer'
-                                    onClick={() => addLectureHandler(ele._id)}>
+                                    onClick={() => {setModal(1)}}>
                                     <div className='gap-1 flex flex-row
                                     text-yellow-50 font-inter text-base 
                                     font-medium text-left leading-6'>
@@ -246,6 +235,7 @@ const SectionForm = () => {
             {/* {text1,text2,setModal,onClickBtn1,onClickBtn2,btn1,btn2} */}
 
         </form>
+        )
     )
 }
 

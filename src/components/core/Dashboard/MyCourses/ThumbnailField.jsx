@@ -10,7 +10,7 @@ const ThumbnailField = ({ register, setValue,image,setImage,customClass="" ,heig
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        console.log('READER RESULT.....',reader.result);
+        // console.log('READER RESULT.....',reader.result);
         setImage(reader.result);
       }
       reader.readAsDataURL(file);

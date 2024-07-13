@@ -27,7 +27,7 @@ index }) => {
     setModal(0);
   }
   // console.log('COURSEDETAILS FROM SUBSECTION MODAL.......',courseDetails);  
-  const saveHandler = () => {
+  const saveHandler = async () => {
     console.log(getValues());
     let timeDuration = "";
     if(getValues('hour') !== 'HH'){
@@ -40,7 +40,7 @@ index }) => {
       timeDuration += `${getValues('sec')}s `
     }
     console.log('SECTIONID.........',sectionId);
-    dispatch(addSubSection({
+    await dispatch(addSubSection({
       sectionId:sectionId,
       courseId:courseDetails._id,
       timeDuration:timeDuration,
@@ -54,26 +54,23 @@ index }) => {
     ));
     setModal(0);
   }
-  if (loading) {
-    return (<div>
-      <Spinner></Spinner>
-    </div>)
-  }
+
+
   const initialValues = {
     file:'',
     hour:'',
     min:'',
     sec:'', 
 }
-  useEffect(() => {
-    if (isSubmitSuccessful) {
-        reset({
-         initialValues
-        }, {
-            keepSubmitSuccessful: false
-        })
-    }
-}, [isSubmitSuccessful])
+//   useEffect(() => {
+//     if (isSubmitSuccessful) {
+//         reset({
+//          initialValues
+//         }, {
+//             keepSubmitSuccessful: false
+//         })
+//     }
+// }, [isSubmitSuccessful])
   return (
     // <div style={{ backgroundColor: 'rgba(189, 189, 189, 0.9)' }} 
     // className={`fixed ${true ? ("opacity-100") :
@@ -81,7 +78,7 @@ index }) => {
     // right-0 transition-all duration-200
     // overflow-y-auto 
     //  `}>
-
+(loading)?(<Spinner></Spinner>):(
     <div style={{ backgroundColor: 'rgba(189, 189, 189, 0.9)' }}
       className={`fixed ${true ? ("opacity-100") :
         ("hidden opacity-0")} top-0 left-0 bottom-0 
@@ -286,7 +283,7 @@ index }) => {
         </div>
       </div>
     </div>
-
+)
   )
 }
 

@@ -61,7 +61,8 @@ export const buildCourse = ({
             const responseData = response.data.data;
             const formObj = await formDatatoObject(formData);
             console.log("OBJECT....",formObj);
-            dispatch(setCourseDetails(formObj));
+            // dispatch(setCourseDetails(formObj));
+            dispatch(setCourseDetails(response.data.data));
             if (printSuccess) {
                 setLoading(false);
                 toast.dismiss(toastId);
