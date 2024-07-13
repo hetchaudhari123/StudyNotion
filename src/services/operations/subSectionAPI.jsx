@@ -1,9 +1,10 @@
-import { addSection } from "../../redux/slices/courseSlice";
+import { addSection, setCourseDetails } from "../../redux/slices/courseSlice";
 import apiConnector from "../apiconnector"
 import { courseEndpoints } from "../apis"
 import toast from "react-hot-toast";
 import { fetchCourse } from "./courseAPI";
 import { fetchAllCourses } from "./courseAPI";
+
 export const addSubSection = (
     {sectionId,
     courseId,
@@ -67,4 +68,40 @@ export const addSubSection = (
                 toast.error("Failed to create the section.");
         }
     }
+}
+export const editSubSection = ({subSectionId,title,description,setSectionId,setModal,setSubSectionId},
+    setLoading = null,
+    printSuccess = true
+) => {
+    return async (dispatch) => {
+
+        let toastId = ""
+        if (printSuccess) toastId = toast.loading("Loading...")
+        if (printSuccess) setLoading(true)
+    try{ 
+        const response = await apiConnector('POST',courseEndpoints.UPDATE_SUBSECTION_API,{subSectionId,title,description});
+        console.log('RESPONSE FROM UPDATE SUBSECTION API......',response);
+        const fetchResponse = await dispatch(fetchAllCourses(setLoading,false));
+        if(!response.data.success){
+            throw new Error(response.data.message);
+        }
+        if (printSuccess) {
+            setLoading(false);
+            toast.dismiss(toastId);
+        }
+        if (printSuccess)  
+            toast.success("Successfully created the section");
+          setModal(0);
+          setSectionId(null);
+          setSubSectionId(null);
+    }catch(err){
+        console.log('ERROR FROM UPDATE SUBSECION API.....',err);
+        if (printSuccess) {
+            setLoading(false);
+            toast.dismiss(toastId);
+        }
+        if (printSuccess)
+            toast.error("Failed to create the section.");
+    }
+}
 }

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import CTAButton from '../../HomePage/Button'
 import { RxCross1 } from "react-icons/rx";
 import ThumbnailField from './ThumbnailField';
@@ -8,9 +8,13 @@ import { addSubSection } from '../../../../services/operations/subSectionAPI';
 import TimeField from './TimeField';
 import { setCourseDetails } from '../../../../redux/slices/courseSlice';
 import Spinner from '../../../common/Spinner';
+import { editSubSection } from '../../../../services/operations/subSectionAPI';
 import { useSelector } from 'react-redux';
 const SubSectionModal = ({
+  edit = false,
   modal, setModal, register,
+  subSectionId,
+  setSubSectionId,
   handleSubmit,
   errors,
   isSubmitSuccessful,
@@ -21,27 +25,62 @@ const SubSectionModal = ({
   setSectionId,
   dispatch,
   index }) => {
-  const [image, setImage] = useState(null);
+  // const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
   const { courseDetails } = useSelector(state => state.course);
+  useEffect(() => {
+    if(edit){
+      // timeDuration,----->Remaining
+      // title: getValues('title'),
+      // courseDetails.courseContent.includes(sectionId).subSection.
+      // includes(subSectionId);
+      const section = courseDetails.courseContent.find(section => section._id === sectionId);
+      const subSection = section.subSection.find(sub => sub._id === subSectionId);
+      setValue('title',subSection?.title);
+      setValue('desc',subSection?.description);
+      const timeString = subSection?.timeDuration;
+      let hours = 0, minutes = 0, seconds = 0;
+
+      const timeParts = timeString.split(' ');
+    
+      timeParts.forEach(part => {
+        if (part.includes('h')) {
+          hours = parseInt(part.replace('h', ''), 10);
+        } else if (part.includes('m')) {
+          minutes = parseInt(part.replace('m', ''), 10);
+        } else if (part.includes('s')) {
+          seconds = parseInt(part.replace('s', ''), 10);
+        }
+      });
+      // description: getValues('desc'),
+      setValue('hour',hours);
+      setValue('min',minutes);
+      setValue('sec',seconds);
+      setValue('file',subSection.videoUrl);
+    }
+  },[])
   const closeHandler = () => {
     setModal(0);
     setSectionId(null);
+    setSubSectionId(null);
   }
   // console.log('COURSEDETAILS FROM SUBSECTION MODAL.......',courseDetails);  
   const saveHandler = async () => {
     // console.log(getValues());
-    let timeDuration = "";
-    if (getValues('hour') !== 'HH') {
-      timeDuration += `${getValues('hour')}h `;
-    }
-    if (getValues('min') !== 'MM') {
-      timeDuration += `${getValues('min')}m `;
-    }
-    if (getValues('sec') !== 'SS') {
-      timeDuration += `${getValues('sec')}s `
-    }
+
+  
     // console.log('SECTIONID.........',sectionId);
+    if(!edit){
+      let timeDuration = "";
+      if (getValues('hour') !== 'HH') {
+        timeDuration += `${getValues('hour')}h `;
+      }
+      if (getValues('min') !== 'MM') {
+        timeDuration += `${getValues('min')}m `;
+      }
+      if (getValues('sec') !== 'SS') {
+        timeDuration += `${getValues('sec')}s `
+      }
     await dispatch(addSubSection({
       sectionId,
       setSectionId,
@@ -55,6 +94,28 @@ const SubSectionModal = ({
     },
       setLoading
     ));
+  }
+    else{
+      let timeDuration = "";
+      if (getValues('hour') !== 'HH') {
+        timeDuration += `${getValues('hour')}h `;
+      }
+      if (getValues('min') !== 'MM') {
+        timeDuration += `${getValues('min')}m `;
+      }
+      if (getValues('sec') !== 'SS') {
+        timeDuration += `${getValues('sec')}s `
+      }
+      await dispatch(editSubSection({
+        subSectionId,title:getValues('title'),description:getValues('description'),
+        setSectionId,
+        setModal,
+        setSubSectionId,
+        timeDuration
+      },
+        setLoading,
+        true));
+    }
 
 
   }
@@ -86,7 +147,9 @@ const SubSectionModal = ({
 
               <div className='w-full font-inter text-lg font-semibold
               leading-7 text-left text-white'>
-                Adding Lecture
+                {
+                (!edit) ? "Adding Lecture" : "Editing Lecture"
+                }
               </div>
               <div className='cursor-pointer' onClick={closeHandler}>
                 <RxCross1 />

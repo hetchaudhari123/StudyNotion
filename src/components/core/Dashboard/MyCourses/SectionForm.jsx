@@ -45,25 +45,37 @@ const SectionForm = () => {
             setLoading,
             true));
     }
-    // CHANGE THIS!!!!!!!!!!!!!!!!
-    // FOR TESTING
-    // if (!courseDetails || loading) {
-        // return (
-            // <Spinner />
-        // )
-    // }
-    // FOR PRODUCTION
+  
+  
 
    
   
     // useEffect(() => {
     // console.log("COURSE DETAILS.....",courseDetails)
     // },[courseDetails]);
+    // MODAL
+    //1 -> Add Sub Section
+    //2 -> Edit Sub Section
+    
+
     const [sectionId,setSectionId] = useState(null);
+    const [subSectionId,setSubSectionId] = useState(null);
+
     const addLectureHandler = (id) => {
+
         setModal(1);
         setSectionId(id);
         
+    }
+    const editLectureHandler = ({subSectionId,sectionId,str}) => {
+        if(str === 'subsection'){
+            setModal(2);
+            setSubSectionId(subSectionId);
+            setSectionId(sectionId);
+        }
+        else{
+
+        }
     }
     useEffect(() => {
         if (isSubmitSuccessful) {
@@ -73,6 +85,13 @@ const SectionForm = () => {
         }
     }, [isSubmitSuccessful])
     // console.log("COURSEDETAILS FROM SECTION FORM.........", courseDetails);
+      // FOR TESTING
+      if (!courseDetails || loading) {
+        return (
+            <Spinner />
+        )
+    }
+    // FOR PRODUCTION
     return (
         // <form className=' w-full transition-all duration-1000' onSubmit={handleSubmit(submitHandler)}>
         (loading)?(<Spinner/>):(<form className=' w-full transition-all duration-1000' >
@@ -105,7 +124,7 @@ const SectionForm = () => {
                                     </div>
                                     <div className='
                                     font-inter text-base text-richblack-400 font-bold leading-6 text-left flex flex-row gap-3'>
-                                        <div>
+                                        <div >
                                             <HiMiniPencil className='cursor-pointer' />
                                         </div>
                                         <div>
@@ -139,8 +158,13 @@ const SectionForm = () => {
                                             */
                                             // border-bottom: 1px solid #424854
                                             <div key={e._id}
-                                                className=' flex flex-row justify-between items-center w-full border-b border-b-richblack-600 
-                                                    bg-richblack-700 py-3 px-6 gap-3 text-richblack-400'>
+                                                className=' flex flex-row 
+                                                justify-between items-center 
+                                                border-b border-b-richblack-600 
+                                                    bg-richblack-700 py-3 px-6 
+                                                    gap-3 text-richblack-400
+                                                    mx-auto
+                                                    w-11/12'>
                                                 <div className='flex flex-row gap-2 items-center '>
                                                     <div className='cursor-pointer'>
                                                         <RxDropdownMenu />
@@ -158,7 +182,8 @@ const SectionForm = () => {
                                                 <div className='flex flex-row gap-3 items-center
                                                     justify-between '>
                                                     {/* Dustbin */}
-                                                    <div className='cursor-pointer'>
+                                                    <div onClick={() => {
+                                                        editLectureHandler({subSectionId:e._id,sectionId:ele._id,str:'subsection'})}} className='cursor-pointer'>
                                                         <HiMiniPencil className='cursor-pointer' />
 
                                                     </div>
@@ -190,6 +215,22 @@ const SectionForm = () => {
                                 
                                     sectionId={ele._id}
                                     setSectionId = {setSectionId}
+                                    dispatch={dispatch}
+                                    setModal={setModal} modal={modal}
+                                    register={register}
+                                    handleSubmit={handleSubmit}
+                                    errors={errors}
+                                    isSubmitSuccessful={isSubmitSuccessful}
+                                    reset={reset}
+                                    setValue={setValue}
+                                    getValues={getValues}
+                                />}
+                                {(modal === 2 && sectionId === ele._id) && <SubSectionModal
+                                    edit={true}
+                                    sectionId={ele._id}
+                                    setSectionId = {setSectionId}
+                                    subSectionId={subSectionId}
+                                    setSubSectionId={setSubSectionId}
                                     dispatch={dispatch}
                                     setModal={setModal} modal={modal}
                                     register={register}

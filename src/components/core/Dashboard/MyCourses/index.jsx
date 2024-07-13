@@ -14,10 +14,11 @@ const MyCourses = () => {
     const {courseStep} = useSelector(state => state.course); //FOR TESTING
     const dispatch = useDispatch(); // FOR TESTING 
     // FOR TESTING STEP2 -------> REMOVE DURING PRODUCTION
-    // useEffect(() => {
-        // dispatch(fetchCourse('669263f752972ae01650c574',setLoading,false));
-        // dispatch(setStep(2));
-    // },[]);
+    const [loading,setLoading] = useState(false);
+    useEffect(() => {
+        dispatch(fetchCourse('669297ea069e5e52c23d6324',setLoading,false));
+        dispatch(setStep(2));
+    },[]);
     return (
         
         (<div className=''>
