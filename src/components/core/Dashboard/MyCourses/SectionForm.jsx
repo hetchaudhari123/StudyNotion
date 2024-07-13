@@ -17,21 +17,27 @@ import { contactusEndpoint } from '../../../../services/apis';
 import { useEffect } from 'react';
 import { useFieldArray } from 'react-hook-form';
 const SectionForm = () => {
+    
     const {
         register,
         handleSubmit,
         formState: { errors, isSubmitSuccessful },
         reset,
         getValues,
-        setValue
+        setValue,
+        control
     } = useForm({
     });
     const { courseDetails } = useSelector(state => state.course);
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
     const [modal, setModal] = useState(0);
+    const { fields, append, prepend, remove, swap, move, insert } = useFieldArray({
+        control, // control props comes from useForm (optional: if you are using FormContext)
+        name: "subsection", // unique name for your Field Array
+      });
     // 0 ----------> No Modal
-    // 1 ----------> SubSectionModal
+    // 1 ----------> Add Lecture through SubSectionModal
     // 
     // 
     const submitHandler = () => {

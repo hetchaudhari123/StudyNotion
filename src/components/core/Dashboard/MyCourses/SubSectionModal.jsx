@@ -3,7 +3,7 @@ import CTAButton from '../../HomePage/Button'
 import { RxCross1 } from "react-icons/rx";
 import ThumbnailField from './ThumbnailField';
 import { useForm } from 'react-hook-form';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import { addSubSection } from '../../../../services/operations/subSectionAPI';
 import TimeField from './TimeField';
 import { setCourseDetails } from '../../../../redux/slices/courseSlice';
@@ -59,6 +59,21 @@ index }) => {
       <Spinner></Spinner>
     </div>)
   }
+  const initialValues = {
+    file:'',
+    hour:'',
+    min:'',
+    sec:'', 
+}
+  useEffect(() => {
+    if (isSubmitSuccessful) {
+        reset({
+         initialValues
+        }, {
+            keepSubmitSuccessful: false
+        })
+    }
+}, [isSubmitSuccessful])
   return (
     // <div style={{ backgroundColor: 'rgba(189, 189, 189, 0.9)' }} 
     // className={`fixed ${true ? ("opacity-100") :

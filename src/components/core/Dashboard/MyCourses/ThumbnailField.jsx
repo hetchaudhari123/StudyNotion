@@ -2,19 +2,21 @@ import React, { useState } from 'react'
 import CTAButton from "../../HomePage/Button"
 import { BsWindowSidebar } from 'react-icons/bs';
 import { IoCloudUploadOutline } from "react-icons/io5";
-const ThumbnailField = ({ register, setValue,image,setImage,customClass="" ,height=true,width=true,valueName = 'file'}) => {
+import { useEffect } from 'react';
+const ThumbnailField = ({ register, setValue,image,setImage,customClass="" ,height=true,width=true}) => {
   const handleFileChange = (e) => {
-    console.log("File is.....", e?.target?.files[0]);
+    // console.log("File is.....", e?.target?.files[0]);
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
+        console.log('READER RESULT.....',reader.result);
         setImage(reader.result);
       }
       reader.readAsDataURL(file);
     }
-    return;
   }
+  
   return (
     <div className=' w-full gap-1.5 flex flex-col'>
 
@@ -37,26 +39,37 @@ const ThumbnailField = ({ register, setValue,image,setImage,customClass="" ,heig
          ${customClass}
          `}
         onClick={() => {
-          document.getElementById(`${valueName}`).click()
+          document.getElementById('file').click()
         }}>
         {/* Input */}
         <input
-          type={`${valueName}`}
-          id={`${valueName}`}
-          name={`${valueName}`}
+          type='file'
+          id='file'
+          name='file'
           className='hidden'
-          {...register(`${valueName}`, { required: { value: true, message: "Please enter course thumbnail" } })}
+          {...register('file', { required: { value: true,
+             message: "Please enter course thumbnail" } })}
           onChange={(e) => {
             handleFileChange(e);
-            setValue(`${valueName}`, e.target.files[0]);
+            setValue('file', e.target.files[0]);
           }}
         />
+        {/* <div className='w-full border-2 border-white'>
+        <img
+            src={`${i}`}
+            alt={`${"Thumbnail Image"}`}
+            className='  text-richblack-5 
+            flex gap-6  object-contain h-full'
+          />
+        </div> */}
         <div className='w-full h-full flex justify-center'>
 
-          {image ? (<img
+          {(image) ? (
+            <img
             src={`${image}`}
             alt={`${"Thumbnail Image"}`}
-            className=' text-richblack-5 flex gap-6  object-contain h-full'
+            className='  text-richblack-5 
+            flex gap-6  object-contain h-full'
           />) :
             (
 
