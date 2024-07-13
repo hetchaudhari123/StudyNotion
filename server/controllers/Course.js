@@ -27,6 +27,10 @@ exports.createCourse = async (req, res) => {
             !thumbnail ||
             !category
         ) {
+            console.log("MISSING FIELDS........",
+                {courseName,
+                    courseDescription,whatYouWillLearn,price,tag,thumbnail,category}
+            );
             return res.status(400).json({
                 success: false,
                 message: "All Fields are Mandatory",
@@ -123,13 +127,14 @@ exports.showAllCourses = async (req, res) => {
 //BY ME
 exports.getCourseDetails = async (req, res) => {
     try {
-        //1 fetch the courseID
+        // 1 fetch the courseID
         const { courseId } = req.body;
+        // const courseId = req.body.courseId;
         //2 validation
         if (!courseId) {
             return res.status(400).json({
                 success: false,
-                message: "The course doesn't exist"
+                message: "The courseId field is empty"
             })
         }
         //2.1 fetch all the courses
@@ -172,8 +177,7 @@ exports.getCourseDetails = async (req, res) => {
         console.error(err);
         return res.status(500).json({
             success: false,
-            message: "Error occurred while fetching the details of the courses",
-            error: err.message
+            message: err.message
         })
     }
 }

@@ -3,6 +3,7 @@ import { IoMdCloseCircleOutline } from "react-icons/io";
 
 const RequirementsField = ({ register, setValue, errors, reqList, setReqList, getValues }) => {
   const addHandler = () => {
+    if(getValues('requirement') === "") return;
     if (!reqList.includes(getValues('requirement'))) {
       setReqList([...reqList, getValues('requirement')])
     }

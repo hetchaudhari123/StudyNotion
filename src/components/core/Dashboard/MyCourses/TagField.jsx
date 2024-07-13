@@ -8,7 +8,7 @@ const TagField = ({setValue,register,tagList,setTagList}) => {
         if(e.key !== 'Enter' && e.key !== ',' && e.key !== ' '){
             return;
         }
-        if(str.length <= 1){
+        if(str.length === 0){
             throw new Error('The Tag Field is empty');
         }
         if(tagList.includes(str)){
@@ -37,7 +37,7 @@ opacity: 0px;
  */}
         <div className='flex flex-row gap-4 px-4  flex-wrap'>
             {
-                tagList.map((ele,index) => {
+                tagList && tagList.length > 0 && tagList.map((ele,index) => {
                     return (
                         <div key={index} className='bg-yellow-400 rounded-[200px] px-4 py-0.5 gap-2 w-fit flex flex-row items-center justify-center'>
                             <div className='text-richblack-5 font-medium'>

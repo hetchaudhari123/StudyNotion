@@ -12,9 +12,9 @@ import { FaAngleRight } from "react-icons/fa6";
 import { buildCourse } from '../../../../services/operations/courseAPI';
 import { fetchCourseDetails } from '../../../../services/operations/courseAPI';
 import { useSelector } from 'react-redux';
-import { setStep } from '../../../../redux/slices/courseSlice';
+import { setEditCourse,setStep } from '../../../../redux/slices/courseSlice';
 import { updateCourse } from '../../../../services/operations/courseAPI';
-const CourseForm = () => {
+const CourseForm = ({loading,setLoading}) => {
     const {
         register,
         handleSubmit,
@@ -30,16 +30,17 @@ const CourseForm = () => {
     const [reqList, setReqList] = useState([]);
     const dispatch = useDispatch();
     const [category, setCategory] = useState([]);
-    const [loading, setLoading] = useState(false);
     const [tagList, setTagList] = useState([]);
     // const [formData,setFormData] = useState(null);
     const [image, setImage] = useState(null);
-    const [editCourse,setEditCourse] = useState(false);
-    const {courseStep,courseDetails} = useSelector(state => state.course);
+    // const [editCourse,setEditCourse] = useState(false);
+    // const [editCourse,setEditCourse] = useSelector((state) => state.editCourse);
+    const {editCourse,courseStep,courseDetails} = useSelector(state => state.course);
+
     useEffect(() => {
         dispatch(fetchCategory(setCategory, setLoading, false));
         if(courseDetails) {
-            setEditCourse(true);
+            dispatch(setEditCourse(true));
             const formData = new FormData();
             formData.append('thumbnailImage', courseDetails.file);
             formData.append('courseDescription', courseDetails.courseDescription);
@@ -61,12 +62,8 @@ const CourseForm = () => {
             // setValue('file',formData.get(thumbnailImage));
         }
     }, [])
-    if (loading) {
-        return (
-            <Spinner></Spinner>
-        )
-    }
-    const submitHandler = () => {
+
+    const submitHandler = async () => {
         // benefit
 // : 
 // "fdfd"
@@ -98,12 +95,15 @@ const CourseForm = () => {
         const tag = tagList.toString();
         const instructions = reqList.toString();
         console.log(courseDescription,whatYouWillLearn,status,courseName,price,tag,category,file,instructions);
-        dispatch(setStep(2));
-        if(!editCourse)//!!!!!!!!!!!!!!!!!!!!!! CHANGE THIS
-        dispatch(buildCourse({courseDescription,whatYouWillLearn,status,courseName,price,tag,category,status,instructions,file},setLoading,true));
-        else//!!!!!!!!!!!!!!!!!!!!!! CHANGE THIS
-        dispatch(updateCourse({courseDescription,whatYouWillLearn,status,courseName,price,tag,category,status,instructions,file},setLoading,true));//!!!!!!!!!!!!!!!!!!!!!! CHANGE THIS
-
+        if(!editCourse)
+        {
+          dispatch(buildCourse({courseDescription,whatYouWillLearn,status,courseName,price,tag,category,status,instructions,file},setLoading,setEditCourse,setStep,true));
+        } 
+        else{
+            dispatch(updateCourse({courseDescription,whatYouWillLearn,status,courseName,price,tag,category,status,instructions,file},setLoading,setEditCourse,setStep,true));
+        }
+      
+        
     }
     return (
         <form className='w-[400px]   md:mt-4 md:ml-8 flex flex-col gap-4 md:w-[665px]' onSubmit={handleSubmit(submitHandler)}>

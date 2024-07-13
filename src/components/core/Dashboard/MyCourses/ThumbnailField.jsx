@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import CTAButton from "../../HomePage/Button"
 import { BsWindowSidebar } from 'react-icons/bs';
 import { IoCloudUploadOutline } from "react-icons/io5";
-const ThumbnailField = ({ register, setValue,image,setImage }) => {
+const ThumbnailField = ({ register, setValue,image,setImage,customClass="" }) => {
   const handleFileChange = (e) => {
     console.log("File is.....", e?.target?.files[0]);
     const file = e.target.files[0];
@@ -16,7 +16,7 @@ const ThumbnailField = ({ register, setValue,image,setImage }) => {
     return;
   }
   return (
-    <div className='gap-1.5 flex flex-col'>
+    <div className=' w-full gap-1.5 flex flex-col'>
 
       <div className='flex flex-row gap-0.5 font-inter 
         text-sm font-normal leading-6 text-left'>
@@ -26,14 +26,16 @@ const ThumbnailField = ({ register, setValue,image,setImage }) => {
         <div className='text-pink-200'>*</div>
       </div>
 
-      <div className='border border-richblack-600
+      {/* //  ${height ?? */}
+        {/* //  */}
+      <div className={`border border-richblack-600
          bg-richblack-700
           gap-2 rounded-lg
          flex flex-col
-         md:h-[206px]
-         md:w-[617px]
-         
-         '
+         ${"md:h-[206px]"}
+         ${"md:w-[617px]"}
+         ${customClass}
+         `}
         onClick={() => {
           document.getElementById('file').click()
         }}>

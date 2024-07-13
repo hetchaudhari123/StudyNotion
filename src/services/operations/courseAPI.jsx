@@ -35,7 +35,7 @@ export const buildCourse = ({
     instructions,
     file,
     courseName
-}, setLoading, printSuccess = true) => {
+}, setLoading,setEditCourse,setStep, printSuccess = true) => {
     return async (dispatch) => {
         let toastId = ""
         if (printSuccess) toastId = toast.loading("Loading...")
@@ -57,7 +57,7 @@ export const buildCourse = ({
             if (!response.data.success) {
                 throw new Error(response.data.message);
             }
-      
+            formData.append('id',response.data.data._id);
             const responseData = response.data.data;
             const formObj = await formDatatoObject(formData);
             console.log("OBJECT....",formObj);
@@ -68,6 +68,7 @@ export const buildCourse = ({
             }
             if (printSuccess)
                 toast.success("Successfully saved the course");
+
         } catch (err) {
             console.log("ERROR FROM CREATE COURSE API........", err);
             if (printSuccess) {
@@ -77,6 +78,8 @@ export const buildCourse = ({
             if (printSuccess)
                 toast.error("Failed to save the course.");
         }
+        setEditCourse(true);
+        dispatch(setStep(2));
     }
 }
 export const updateCourse = (
@@ -90,7 +93,7 @@ export const updateCourse = (
         instructions,
         file,
         courseName
-    }, setLoading, printSuccess = true
+    }, setLoading, setEditCourse,setStep,printSuccess = true
 ) => {
     return async (dispatch) => {
         let toastId = ""
@@ -118,6 +121,8 @@ export const updateCourse = (
             const formObj = await formDatatoObject(formData);
             console.log("OBJECT....",formObj);
             dispatch(setCourseDetails(formObj));
+            setEditCourse(true);
+            dispatch(setStep(2));
             if (printSuccess) {
                 setLoading(false);
                 toast.dismiss(toastId);
@@ -127,6 +132,40 @@ export const updateCourse = (
         } catch (err) {
             console.log("ERROR FROM EDIT COURSE API........", err);
             if (printSuccess) {
+
+                setLoading(false);
+                toast.dismiss(toastId);
+            }
+            if (printSuccess)
+                toast.error("Failed to edit the course.");
+        }
+       
+    }
+}
+export const fetchCourse = (courseId,setLoading = null , printSuccess = true) => {
+    
+    return async (dispatch) => {
+        let toastId = ""
+        if (printSuccess) toastId = toast.loading("Loading...")
+        if (printSuccess) setLoading(true)
+        try{   
+            // const response = await apiConnector('POST',courseEndpoints.COURSE_DETAILS_API,{ courseId });
+            const response = await apiConnector('POST',courseEndpoints.COURSE_DETAILS_API,{ courseId });
+            console.log('RESPONSE FROM GET COURSE DETAILS API.....',response);
+            if(!response.data.success){
+                throw new Error(response.data.message);
+            }
+            dispatch(setCourseDetails(response.data.data));
+            if (printSuccess) {
+                setLoading(false);
+                toast.dismiss(toastId);
+            }
+            if (printSuccess)
+                toast.success("Successfully edited and saved the course");
+        }catch(err){
+            console.log('ERROR FROM GET COURSE DETAILS API.....',err);
+            if (printSuccess) {
+
                 setLoading(false);
                 toast.dismiss(toastId);
             }
