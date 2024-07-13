@@ -12,9 +12,9 @@ export const addSubSection = (
     description,
     setCourseDetails,
     video,
-    reset,
+    
     setModal,
-    initialValues,
+    
     setSectionId
 },
     setLoading = null,

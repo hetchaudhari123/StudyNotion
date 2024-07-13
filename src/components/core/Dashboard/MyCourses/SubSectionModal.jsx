@@ -9,7 +9,7 @@ import TimeField from './TimeField';
 import { setCourseDetails } from '../../../../redux/slices/courseSlice';
 import Spinner from '../../../common/Spinner';
 import { useSelector } from 'react-redux';
-const SubSectionModal = ({ 
+const SubSectionModal = ({
   modal, setModal, register,
   handleSubmit,
   errors,
@@ -20,141 +20,111 @@ const SubSectionModal = ({
   sectionId,
   setSectionId,
   dispatch,
-index }) => {
+  index }) => {
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
-  const {courseDetails} = useSelector(state => state.course);
+  const { courseDetails } = useSelector(state => state.course);
   const closeHandler = () => {
     setModal(0);
     setSectionId(null);
   }
   // console.log('COURSEDETAILS FROM SUBSECTION MODAL.......',courseDetails);  
   const saveHandler = async () => {
-    console.log(getValues());
+    // console.log(getValues());
     let timeDuration = "";
-    if(getValues('hour') !== 'HH'){
+    if (getValues('hour') !== 'HH') {
       timeDuration += `${getValues('hour')}h `;
     }
-    if(getValues('min') !== 'MM'){
+    if (getValues('min') !== 'MM') {
       timeDuration += `${getValues('min')}m `;
     }
-    if(getValues('sec') !== 'SS'){
+    if (getValues('sec') !== 'SS') {
       timeDuration += `${getValues('sec')}s `
     }
-    console.log('SECTIONID.........',sectionId);
+    // console.log('SECTIONID.........',sectionId);
     await dispatch(addSubSection({
-      sectionId:sectionId,
+      sectionId,
       setSectionId,
-      courseId:courseDetails._id,
-      timeDuration:timeDuration,
+      courseId: courseDetails._id,
+      timeDuration,
       title: getValues('title'),
       description: getValues('desc'),
-      setCourseDetails: setCourseDetails,
+      setCourseDetails,
       video: getValues('file'),
-      reset,
-      initialValues,
       setModal
     },
       setLoading
     ));
-  
+
 
   }
-  const initialValues = {
-    file:'',
-    hour:'',
-    min:'',
-    sec:'',
-    title:'',
-    desc:''
-}
-  //  useEffect(() => {
-  //       if (isSubmitSuccessful) {
-  //           reset(initialValues, {
-  //               keepSubmitSuccessful: false
-  //           })
-  //       }
-  //   }, [isSubmitSuccessful])
+
+
   return (
-    // <div style={{ backgroundColor: 'rgba(189, 189, 189, 0.9)' }} 
-    // className={`fixed ${true ? ("opacity-100") :
-    //   ("hidden opacity-0")} top-0 left-0 bottom-0 
-    // right-0 transition-all duration-200
-    // overflow-y-auto 
-    //  `}>
-(loading)?(<Spinner></Spinner>):(
-    <div style={{ backgroundColor: 'rgba(189, 189, 189, 0.9)' }}
-      className={`fixed ${true ? ("opacity-100") :
-        ("hidden opacity-0")} top-0 left-0 bottom-0 
+
+    (
+      <div style={{ backgroundColor: 'rgba(189, 189, 189, 0.9)' }}
+        className={`fixed ${true ? ("opacity-100") :
+          ("hidden opacity-0")} top-0 left-0 bottom-0 
     right-0 transition-all duration-200
     overflow-y-auto 
     flex justify-center 
         p-4
      `}>
+{
+        (loading) ? (<Spinner />) : (
+        <div className='bg-richblack-800 
+            flex flex-col gap-6 
+            rounded-lg  
+            relative
+            h-[786px]'>
 
-      {/* <div className='bg-richblack-800 
-      flex flex-col gap-6 left-1/2 top-1/2 translate-x-[-50%] translate-y-[-50%] 
-       rounded-lg border-2 border-white 
-       my-[10rem]
-       absolute'> */}
-      <div className='bg-richblack-800 
-      flex flex-col gap-6 
-       rounded-lg  
-       
-       relative
-       h-[786px]'>
-
-        <div className=' w-full rounded-lg text-white'>
-          <div className='rounded-t-lg flex flex-row items-center py-4 px-6 gap-3
+          <div className=' w-full rounded-lg text-white'>
+            <div className='rounded-t-lg flex flex-row items-center py-4 px-6 gap-3
             border border-richblack-600 bg-richblack-700
             justify-between'>
 
-            <div className='w-full font-inter text-lg font-semibold
+              <div className='w-full font-inter text-lg font-semibold
               leading-7 text-left text-white'>
-              Adding Lecture
-            </div>
-            <div className='cursor-pointer' onClick={closeHandler}>
-              <RxCross1 />
-            </div>
-          </div>
-
-          <div className='w-full flex flex-col bg-richblack-800 p-8 gap-6'>
-            <div className='w-full flex justify-center items-center'>
-              {/* Lecture Video */}
-              <ThumbnailField
-                register={register}
-                setValue={setValue}
-                image={image}
-                setImage={setImage}
-                customClass='md:w-full md:aspect-ratio-video'
-                sectionId={sectionId}
-              >
-
-              </ThumbnailField>
-            </div>
-            <div className=' flex flex-col gap-1.5'>
-              {/* Lecture Title */}
-              <div className='flex flex-row gap-0.5 '>
-                <label htmlFor="title">
-
-                  <div className='font-inter text-sm font-normal
-                  leading-6 text-left text-richblack-5'>
-                    Lecture Title
-                  </div>
-                </label>
-                <div className='text-pink-200'>
-                  *
-                </div>
+                Adding Lecture
               </div>
-              <div style={{ boxShadow: "0px -1px 0px 0px #FFFFFF2E inset" }} className='bg-richblack-600
+              <div className='cursor-pointer' onClick={closeHandler}>
+                <RxCross1 />
+              </div>
+            </div>
+
+            <div className='w-full flex flex-col bg-richblack-800 p-8 gap-6'>
+              <div className='w-full flex justify-center items-center'>
+                {/* Lecture Video */}
+                <ThumbnailField
+                  register={register}
+                  setValue={setValue}
+                  customClass='md:w-full md:aspect-ratio-video'
+                />
+              </div>
+              <div className=' flex flex-col gap-1.5'>
+                {/* Lecture Title */}
+                <div className='flex flex-row gap-0.5 '>
+                  <label htmlFor="title">
+
+                    <div className='font-inter text-sm font-normal
+                  leading-6 text-left text-richblack-5'>
+                      Lecture Title
+                    </div>
+                  </label>
+                  <div className='text-pink-200'>
+                    *
+                  </div>
+                </div>
+                <div style={{ boxShadow: "0px -1px 0px 0px #FFFFFF2E inset" }} className='bg-richblack-600
                     p-3 gap-3 rounded-lg '>
 
-                <input
-                  placeholder='Enter Lecture Title'
-                  id='title'
-                  name='title'
-                  {...register("title", { required: { value: true, message: "Please enter the course title" } })}
-                  className=" 
+                  <input
+                    placeholder='Enter Lecture Title'
+                    id='title'
+                    name='title'
+                    {...register("title", { required: { value: true, message: "Please enter the course title" } })}
+                    className=" 
                     text-richblack-200
                     font-inter
                     text-base
@@ -166,128 +136,130 @@ index }) => {
                     w-full
                     " />
 
-              </div>
-              <div className='flex flex-col gap-1.5 '>
-                <div className='flex text-richblack-5 flex-row gap-0.5'>
+                </div>
+                <div className='flex flex-col gap-1.5 '>
+                  <div className='flex text-richblack-5 flex-row gap-0.5'>
 
-                  <label htmlFor="time" className='text-inter
+                    <label htmlFor="time" className='text-inter
                     text-sm font-normal leading-6 text-left'>
-                    Video Playback Time
-                  </label>
+                      Video Playback Time
+                    </label>
+                    <div className='text-pink-200'>
+                      *
+                    </div>
+                  </div>
+                  <div className='flex flex-row gap-6'>
+                    <div>
+                      {/* Hours */}
+
+                      <TimeField time={'hour'}
+                        placeholder={'HH'} register={register}
+                        errors={errors}
+                        setValue={setValue}
+                        getValues={getValues}
+                      ></TimeField>
+                    </div>
+                    <div>
+                      {/* Mins */}
+                      <TimeField time={'min'}
+                        placeholder={'MM'}
+                        register={register}
+                        errors={errors}
+                        setValue={setValue}
+                        getValues={getValues}></TimeField>
+                    </div>
+                    <div>
+                      {/* Secs */}
+                      <TimeField time={'sec'}
+                        placeholder={'SS'}
+                        register={register}
+                        errors={errors}
+                        setValue={setValue}
+                        getValues={getValues}></TimeField>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className='flex flex-col gap-1.5'>
+                {/* Lecture Description */}
+
+                <div className='flex flex-row gap-0.5 font-inter
+              text-sm font-normal leading-6 text-left'>
+                  <div className='text-richblack-5'>
+                    <label htmlFor="desc">
+                      Lecture Description
+                    </label>
+                  </div>
                   <div className='text-pink-200'>
                     *
                   </div>
                 </div>
-                <div className='flex flex-row gap-6'>
-                  <div>
-                    {/* Hours */}
 
-                    <TimeField time={'hour'}
-                      placeholder={'HH'} register={register}
-                      errors={errors}
-                      setValue={setValue}
-                      getValues={getValues}
-                    ></TimeField>
-                  </div>
-                  <div>
-                    {/* Mins */}
-                    <TimeField time={'min'}
-                      placeholder={'MM'}
-                      register={register}
-                      errors={errors}
-                      setValue={setValue}
-                      getValues={getValues}></TimeField>
-                  </div>
-                  <div>
-                    {/* Secs */}
-                    <TimeField time={'sec'}
-                      placeholder={'SS'}
-                      register={register}
-                      errors={errors}
-                      setValue={setValue}
-                      getValues={getValues}></TimeField>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className='flex flex-col gap-1.5'>
-              {/* Lecture Description */}
-
-              <div className='flex flex-row gap-0.5 font-inter
-              text-sm font-normal leading-6 text-left'>
-                <div className='text-richblack-5'>
-                  <label htmlFor="desc">
-                    Lecture Description
-                  </label>
-                </div>
-                <div className='text-pink-200'>
-                  *
-                </div>
-              </div>
-
-              <div className='text-richblack-800 p-3 gap-3 
+                <div className='text-richblack-800 p-3 gap-3 
               rounded-lg bg-richblack-600'
-                style={{ boxShadow: '0px -1px 0px 0px rgba(255, 255, 255, 0.18 inset' }} >
+                  style={{ boxShadow: '0px -1px 0px 0px rgba(255, 255, 255, 0.18 inset' }} >
 
-                <div className='font-inter
+                  <div className='font-inter
                   text-base
                   font-normal
                   leading-6
                   text-left text-richblack-200 bg-richblack-600'>
-                  <input
+                    <input
 
-                    type="text"
-                    id='desc'
-                    name='desc'
-                    {...register("desc",
-                      {
-                        required: {
-                          value: true,
-                          message: "Please enter the course description."
-                        }
-                      })}
+                      type="text"
+                      id='desc'
+                      name='desc'
+                      {...register("desc",
+                        {
+                          required: {
+                            value: true,
+                            message: "Please enter the course description."
+                          }
+                        })}
 
-                    className='focus:outline-none bg-transparent
+                      className='focus:outline-none bg-transparent
                     w-full'
-                    placeholder='Write the lecture description' />
+                      placeholder='Write the lecture description' />
 
+                  </div>
                 </div>
               </div>
+
             </div>
 
-          </div>
-
-          <div className=' px-8 pb-8 bg-richblack-800 flex 
+            <div className=' px-8 pb-8 bg-richblack-800 flex 
           flex-row justify-end
           gap-5 rounded-b-lg'>
-            {/* footer */}
+              {/* footer */}
 
-            <CTAButton active={false}
-              onClick={closeHandler}
-              bgColor={"bg-richblack-700"}>
-              <div className='text-richblack-5
+              <CTAButton active={false}
+                onClick={closeHandler}
+                bgColor={"bg-richblack-700"}>
+                <div className='text-richblack-5
               font-inter text-base 
               font-medium leading-6 text-center
               '
-              >
-                Cancel
-              </div>
-            </CTAButton>
-            <CTAButton active={true}
-              onClick={saveHandler}>
+                >
+                  Cancel
+                </div>
+              </CTAButton>
+              <CTAButton active={true}
+                onClick={saveHandler}>
 
-              <div className='text-richblack-900 
+                <div className='text-richblack-900 
               font-inter text-base 
               font-medium leading-6 text-center'>
-                Save Edits
-              </div>
-            </CTAButton>
+                  Save Edits
+                </div>
+              </CTAButton>
+            </div>
           </div>
         </div>
+        )
+      }
       </div>
-    </div>
-)
+    )
   )
 }
 

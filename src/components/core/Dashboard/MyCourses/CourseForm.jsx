@@ -14,7 +14,7 @@ import { fetchCourseDetails } from '../../../../services/operations/courseAPI';
 import { useSelector } from 'react-redux';
 import { setEditCourse,setStep } from '../../../../redux/slices/courseSlice';
 import { updateCourse } from '../../../../services/operations/courseAPI';
-const CourseForm = ({loading,setLoading}) => {
+const CourseForm = () => {
     const {
         register,
         handleSubmit,
@@ -24,9 +24,9 @@ const CourseForm = ({loading,setLoading}) => {
         setValue,
         getValues
     } = useForm({
-
+        defaultValues:{category:'AI/ML'}
     });
-
+    const [loading,setLoading] = useState(false);
     const [reqList, setReqList] = useState([]);
     const dispatch = useDispatch();
     const [category, setCategory] = useState([]);
@@ -64,48 +64,38 @@ const CourseForm = ({loading,setLoading}) => {
     }, [])
 
     const submitHandler = async () => {
-        // benefit
-// : 
-// "fdfd"
-// category
-// : 
-// "66716c1331080dde34df5047"
-// courseDec
-// : 
-// "fdfd"
-// courseTitle
-// : 
-// "abc"
-// price
-// : 
-// "12"
-// requirement
-// : 
-// ""
-// tag
-// : 
-// ""
-
-        
         const {benefit,category,courseDec,courseTitle,price,file} = getValues();
-        const courseDescription = courseDec;
-        const whatYouWillLearn = benefit;
-        const status = "Draft";
-        const courseName = courseTitle;
-        const tag = tagList.toString();
-        const instructions = reqList.toString();
-        console.log(courseDescription,whatYouWillLearn,status,courseName,price,tag,category,file,instructions);
+        // console.log(courseDescription,whatYouWillLearn,status,courseName,price,tag,category,file,instructions);
         if(!editCourse)
         {
-           dispatch(buildCourse({courseDescription,whatYouWillLearn,status,courseName,price,tag,category,status,instructions,file},setLoading,setEditCourse,setStep,true));
+           dispatch(buildCourse({courseDescription:courseDec,
+            whatYouWillLearn:benefit,
+            status:"Draft",
+            courseName:courseTitle,
+            price,
+            tag:tagList.toString(),
+            category,
+            instructions:reqList.toString(),
+            file},
+            setLoading,true));
         } 
         else{
-             dispatch(updateCourse({courseDescription,whatYouWillLearn,status,courseName,price,tag,category,status,instructions,file},setLoading,setEditCourse,setStep,true));
+             dispatch(updateCourse({courseDescription:courseDec,
+                whatYouWillLearn:benefit,
+                status:"Draft",
+                courseName:courseTitle,
+                price,
+                tag:tagList.toString(),
+                category,
+                instructions:reqList.toString(),
+                file},
+                setLoading,true));
         }
       
         
     }
     return (
+        (loading)? (<Spinner/>):
         <form className='w-[400px]   md:mt-4 md:ml-8 flex flex-col gap-4 md:w-[665px]' onSubmit={handleSubmit(submitHandler)}>
             <div className='p-2 md:p-6 gap-7 flex flex-col rounded-lg border 
             border-richblack-700 bg-richblack-800'>
@@ -254,14 +244,12 @@ const CourseForm = ({loading,setLoading}) => {
                 </div>
                 <div>
                     <TagField
-                        setValue={setValue} register={register} tag={"tag"}
+                        setValue={setValue} register={register} 
                         setTagList={setTagList}
                         tagList={tagList}></TagField>
                 </div>
                 <div>
                     <ThumbnailField
-                    setImage={setImage}
-                    image={image}
                         setValue={setValue} register={register}
                     ></ThumbnailField>
                 </div>

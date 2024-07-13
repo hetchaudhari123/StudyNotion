@@ -2,7 +2,8 @@ import React, { useState } from 'react'
 import CTAButton from "../../HomePage/Button"
 import { BsWindowSidebar } from 'react-icons/bs';
 import { IoCloudUploadOutline } from "react-icons/io5";
-const ThumbnailField = ({ register, setValue,image,setImage,customClass="" ,height=true,width=true,sectionId}) => {
+const ThumbnailField = ({ register, setValue,customClass="" ,height=true,width=true}) => {
+  const [image,setImage] = useState(null);
   const handleFileChange = (e) => {
     console.log("File is.....", e?.target?.files[0]);
     const file = e.target.files[0];
@@ -16,8 +17,8 @@ const ThumbnailField = ({ register, setValue,image,setImage,customClass="" ,heig
     }
     return;
   }
-  console.log("INSIDE SECTIONID....",sectionId);
-  console.log("IMAGE VALUE.......",image);
+  // console.log("INSIDE SECTIONID....",sectionId);
+  // console.log("IMAGE VALUE.......",image);
   return (
     <div className=' w-full gap-1.5 flex flex-col'>
 
@@ -29,8 +30,7 @@ const ThumbnailField = ({ register, setValue,image,setImage,customClass="" ,heig
         <div className='text-pink-200'>*</div>
       </div>
 
-      {/* //  ${height ?? */}
-        {/* //  */}
+ 
       <div className={`border border-richblack-600
          bg-richblack-700
           gap-2 rounded-lg

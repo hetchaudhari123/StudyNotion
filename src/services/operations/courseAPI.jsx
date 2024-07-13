@@ -2,7 +2,8 @@ import { useSelector } from "react-redux"
 import apiConnector from "../apiconnector"
 import { courseEndpoints } from "../apis"
 import toast from "react-hot-toast"
-import { setCourseDetails } from "../../redux/slices/courseSlice"
+import { setEditCourse,setStep,setCourseDetails } from "../../redux/slices/courseSlice"
+
 // CREATE_COURSE_API
 export const setImageUrl = async (value,obj = null,setImage = null) => {
     const reader = new FileReader();
@@ -35,7 +36,7 @@ export const buildCourse = ({
     instructions,
     file,
     courseName
-}, setLoading,setEditCourse,setStep, printSuccess = true) => {
+}, setLoading, printSuccess = true) => {
     return async (dispatch) => {
         let toastId = ""
         if (printSuccess) toastId = toast.loading("Loading...")
@@ -95,7 +96,7 @@ export const updateCourse = (
         instructions,
         file,
         courseName
-    }, setLoading, setEditCourse,setStep,printSuccess = true
+    }, setLoading,printSuccess = true
 ) => {
     return async (dispatch) => {
         let toastId = ""

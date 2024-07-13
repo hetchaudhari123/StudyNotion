@@ -31,6 +31,9 @@ const SectionForm = () => {
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
     const [modal, setModal] = useState(0);
+    const initialValues = {
+        'sectionName' : ''
+    }
     // 0 ----------> No Modal
     // 1 ----------> SubSectionModal
     // 
@@ -60,8 +63,16 @@ const SectionForm = () => {
     const addLectureHandler = (id) => {
         setModal(1);
         setSectionId(id);
+        
     }
-    console.log("COURSEDETAILS FROM SECTION FORM.........", courseDetails);
+    useEffect(() => {
+        if (isSubmitSuccessful) {
+            reset(initialValues, {
+                keepSubmitSuccessful: false
+            })
+        }
+    }, [isSubmitSuccessful])
+    // console.log("COURSEDETAILS FROM SECTION FORM.........", courseDetails);
     return (
         // <form className=' w-full transition-all duration-1000' onSubmit={handleSubmit(submitHandler)}>
         (loading)?(<Spinner/>):(<form className=' w-full transition-all duration-1000' >
@@ -71,7 +82,7 @@ const SectionForm = () => {
                     border-richblack-600'>
                     {
                         // render sections
-                        courseDetails?.courseContent &&
+                        courseDetails?.courseContent?.length > 0 &&
                         courseDetails.courseContent.map((ele, index) => (
 
                             // border-bottom: 1px solid #424854
@@ -114,7 +125,8 @@ const SectionForm = () => {
                                 <div>
                                     {/*Subsection*/}
                                     {
-                                        ele.subSection.length > 0 &&
+                                        
+                                        ele?.subSection?.length > 0 &&
                                         ele.subSection.map((e, i) => (
                                             /*
                                             width: Fill (569px)px;

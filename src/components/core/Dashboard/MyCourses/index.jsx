@@ -12,18 +12,14 @@ import Section from './Section';
 import { fetchCourse } from '../../../../services/operations/courseAPI';
 const MyCourses = () => {
     const {courseStep} = useSelector(state => state.course); //FOR TESTING
-    const dispatch = useDispatch(); // FOR TESTING
- 
-    const [loading,setLoading] = useState(false);
- 
+    const dispatch = useDispatch(); // FOR TESTING 
     // FOR TESTING STEP2 -------> REMOVE DURING PRODUCTION
     // useEffect(() => {
         // dispatch(fetchCourse('669263f752972ae01650c574',setLoading,false));
         // dispatch(setStep(2));
     // },[]);
     return (
-        (loading) ? (<Spinner/>)
-        :
+        
         (<div className=''>
             <div className='py-6 pr-32 pl-6 flex flex-row gap-6
                 text-richblack-300 font-inter text-sm font-normal leading-6
@@ -53,8 +49,7 @@ const MyCourses = () => {
                         {/* Form */}
                         {
                             courseStep === 1 && <CourseForm 
-                            loading={loading}
-                            setLoading={setLoading}></CourseForm>
+                            ></CourseForm>
                         }
 
                         {
