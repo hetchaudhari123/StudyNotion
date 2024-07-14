@@ -55,7 +55,7 @@ exports.createSubSection = async (req,res) => {
 exports.updateSubSection = async (req,res) => {
     try{
         //1 fetch the details to be updated
-        const {subSectionId,title,description} = req.body;
+        const {subSectionId,title,description,timeDuration} = req.body;
         const subSection = await SubSection.findById(subSectionId);
         if (!subSection) {
             return res.status(404).json({
@@ -76,7 +76,11 @@ exports.updateSubSection = async (req,res) => {
               process.env.FOLDER_NAME
             )
             subSection.videoUrl = uploadDetails.secure_url
-            subSection.timeDuration = `${uploadDetails.duration}`
+            // CHANGE THIS DURING PRODUCTION!!!!!!!!!
+            // COMMENT THIS BELOW LINE DURING PRODUCTION
+            // subSection.timeDuration = `${uploadDetails.duration}`
+            // BELOW LINE ONLY FOR TESTING
+            subSection.timeDuration = timeDuration;
           }
       
           await subSection.save()
@@ -99,7 +103,7 @@ exports.deleteSubSection = async (req, res) => {
     try {
       const { subSectionId, sectionId } = req.body
       await Section.findByIdAndUpdate(
-        { _id: sectionId },
+         sectionId,
         {
           $pull: {
             subSection: subSectionId,
@@ -122,7 +126,7 @@ exports.deleteSubSection = async (req, res) => {
       console.error(error)
       return res.status(500).json({
         success: false,
-        message: "An error occurred while deleting the SubSection",
+        message: error.message,
       })
     }
   }

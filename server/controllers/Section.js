@@ -98,7 +98,7 @@ exports.deleteSection = async (req,res) => {
 		console.error("Error deleting section:", err);
         return res.status(500).json({
             success:false,
-            message:"Error occurred while deleting the section"
+            message:err.message
         })
     }
 }

@@ -56,7 +56,7 @@ const SubSectionModal = ({
       setValue('hour',hours);
       setValue('min',minutes);
       setValue('sec',seconds);
-      setValue('file',subSection.videoUrl);
+      // setValue('file',subSection.videoUrl);
     }
   },[])
   const closeHandler = () => {
@@ -70,17 +70,19 @@ const SubSectionModal = ({
 
   
     // console.log('SECTIONID.........',sectionId);
+    let timeDuration = "";
+    if (getValues('hour') !== 'HH') {
+      timeDuration += `${getValues('hour')}h `;
+    }
+    if (getValues('min') !== 'MM') {
+      timeDuration += `${getValues('min')}m `;
+    }
+    if (getValues('sec') !== 'SS') {
+      timeDuration += `${getValues('sec')}s `
+    }
     if(!edit){
-      let timeDuration = "";
-      if (getValues('hour') !== 'HH') {
-        timeDuration += `${getValues('hour')}h `;
-      }
-      if (getValues('min') !== 'MM') {
-        timeDuration += `${getValues('min')}m `;
-      }
-      if (getValues('sec') !== 'SS') {
-        timeDuration += `${getValues('sec')}s `
-      }
+
+    
     await dispatch(addSubSection({
       sectionId,
       setSectionId,
@@ -96,22 +98,14 @@ const SubSectionModal = ({
     ));
   }
     else{
-      let timeDuration = "";
-      if (getValues('hour') !== 'HH') {
-        timeDuration += `${getValues('hour')}h `;
-      }
-      if (getValues('min') !== 'MM') {
-        timeDuration += `${getValues('min')}m `;
-      }
-      if (getValues('sec') !== 'SS') {
-        timeDuration += `${getValues('sec')}s `
-      }
+    
       await dispatch(editSubSection({
         subSectionId,title:getValues('title'),description:getValues('description'),
         setSectionId,
         setModal,
         setSubSectionId,
-        timeDuration
+        timeDuration,
+        courseId:courseDetails._id
       },
         setLoading,
         true));
@@ -162,6 +156,9 @@ const SubSectionModal = ({
                 <ThumbnailField
                   register={register}
                   setValue={setValue}
+                  defaultImage={`${edit? (
+                    courseDetails.courseContent.find(section => section._id === sectionId).subSection.find(sub => sub._id === subSectionId).videoUrl
+                  ) : (null)}`}
                   customClass='md:w-full md:aspect-ratio-video'
                 />
               </div>

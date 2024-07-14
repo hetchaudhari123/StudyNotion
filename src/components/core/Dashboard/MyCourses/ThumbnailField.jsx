@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import CTAButton from "../../HomePage/Button"
 import { BsWindowSidebar } from 'react-icons/bs';
 import { IoCloudUploadOutline } from "react-icons/io5";
-const ThumbnailField = ({ register, setValue,customClass="" ,height=true,width=true}) => {
-  const [image,setImage] = useState(null);
+const ThumbnailField = ({ register, setValue,customClass="" ,height=true,width=true,defaultImage = null}) => {
+  const [image,setImage] = useState(defaultImage);
   const handleFileChange = (e) => {
     console.log("File is.....", e?.target?.files[0]);
     const file = e.target.files[0];
