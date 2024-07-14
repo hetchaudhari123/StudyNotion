@@ -325,11 +325,15 @@ const SectionForm = () => {
                                     {
                                         required: {
                                             value: true,
-                                            message: "Please enter the name of the section."
+                                            message: "Please enter the course name."
                                         }
                                     })}
                                 placeholder='Add a section to build your course'
                             />
+
+                        
+
+
                             {
                                 modal === 5 &&
                                 (<div
@@ -342,8 +346,18 @@ const SectionForm = () => {
                                 )
                             }
                         </div>
+                        
+                              
+                        
 
                     </div>
+                    {
+                                errors.sectionName && (
+                                    <div className='text-richblack-200'>
+                                        {errors.sectionName.message}
+                                    </div>
+                                )
+                            }
                     <div>
 
 
@@ -382,9 +396,9 @@ const SectionForm = () => {
                     {/* {text1,text2,setModal,onClickBtn1,onClickBtn2,btn1,btn2} */}
 
                 </form>
-                {(modal === 1 && sectionId === ele._id) && <SubSectionModal
+                {(modal === 1) && <SubSectionModal
 
-                    sectionId={ele._id}
+                    sectionId={sectionId}
                     setSectionId={setSectionId}
                     setSubSectionId={setSubSectionId}
                     dispatch={dispatch}
@@ -397,9 +411,9 @@ const SectionForm = () => {
                     setValue={setValue}
                     getValues={getValues}
                 />}
-                {(modal === 2 && sectionId === ele._id) && <SubSectionModal
+                {(modal === 2 ) && <SubSectionModal
                     edit={true}
-                    sectionId={ele._id}
+                    sectionId={sectionId}
                     setSectionId={setSectionId}
                     subSectionId={subSectionId}
                     setSubSectionId={setSubSectionId}
@@ -414,7 +428,7 @@ const SectionForm = () => {
                     getValues={getValues}
                 />}
                 {
-                    (modal === 4 && sectionId === ele._id) &&
+                    (modal === 4) &&
                     (<ConfirmationModal
                         text1={`Delete Section ${ele.sectionName}?`}
                         text2={`Are you sure you want to delete the

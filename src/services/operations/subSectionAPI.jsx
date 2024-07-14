@@ -55,7 +55,7 @@ export const addSubSection = (
                 toast.dismiss(toastId);
             }
             if (printSuccess)  
-                toast.success("Successfully created the section");
+                toast.success("Successfully created the lecture");
               setModal(0);
               setSectionId(null);
         } catch (err) {
@@ -65,7 +65,7 @@ export const addSubSection = (
                 toast.dismiss(toastId);
             }
             if (printSuccess)
-                toast.error("Failed to create the section.");
+                toast.error("Failed to create the lecture.");
         }
     }
 }
