@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import toast from 'react-hot-toast';
 import { IoMdCloseCircleOutline } from "react-icons/io";
-const TagField = ({setValue,register,tagList,setTagList}) => {
+const TagField = ({setValue,register,tagList,setTagList,errors}) => {
+    const [throwError,setThrowError] = useState(true);
     const handleTagChange = (e) => {
         let str = e.target.value;
         str = str.trim();
@@ -9,12 +10,13 @@ const TagField = ({setValue,register,tagList,setTagList}) => {
             return;
         }
         if(str.length === 0){
-            throw new Error('The Tag Field is empty');
+            return;
         }
         if(tagList.includes(str)){
             setValue("tag",""); 
             return;
         }
+        if(throwError) setThrowError(false);
         setTagList([...tagList,str]);
         setValue("tag",""); 
     }
@@ -62,9 +64,7 @@ opacity: 0px;
             type="text" 
             name="tag"
             id="tag"
-            {...register("tag")
-            }
-            
+            {...register("tag", )}
             
             onKeyDown={(e) => {
                 handleTagChange(e);
@@ -76,8 +76,14 @@ opacity: 0px;
             className='bg-transparent focus:outline-none
             text-richblack-200 font-inter text-base font-medium leading-6 text-left'
             />
-            
         </div>
+            {
+                throwError && (
+                    <div className='text-richblack-200'>
+                        Please insert a tag
+                    </div>
+                )
+            }   
     </div>
   )
 }

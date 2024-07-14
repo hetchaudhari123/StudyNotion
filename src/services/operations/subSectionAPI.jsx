@@ -117,8 +117,8 @@ export const removeSubSection = ({subSectionId,sectionId,
         if (printSuccess) toastId = toast.loading("Loading...")
         if (printSuccess) setLoading(true)
         try{
-            console.log('SECTIONID ->',sectionId);
-            console.log('SUBSECTIONID ->',subSectionId);
+            console.log('SECTIONID FROM REMOVE SUB SECTION......',sectionId);
+            console.log('SUBSECTIONID FROM REMOVE SUB SECTION->',subSectionId);
             const response = await apiConnector('POST',courseEndpoints.DELETE_SUBSECTION_API,
                 {subSectionId,sectionId}
             );

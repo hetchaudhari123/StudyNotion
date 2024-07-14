@@ -156,9 +156,11 @@ const SubSectionModal = ({
                 <ThumbnailField
                   register={register}
                   setValue={setValue}
-                  defaultImage={`${edit? (
+                  errors = {errors}
+                  errorMessage = "Please insert the video"
+                  defaultImage={(edit)? (
                     courseDetails.courseContent.find(section => section._id === sectionId).subSection.find(sub => sub._id === subSectionId).videoUrl
-                  ) : (null)}`}
+                  ) : (null)}
                   customClass='md:w-full md:aspect-ratio-video'
                 />
               </div>
@@ -183,7 +185,9 @@ const SubSectionModal = ({
                     placeholder='Enter Lecture Title'
                     id='title'
                     name='title'
-                    {...register("title", { required: { value: true, message: "Please enter the course title" } })}
+                    {...register("title", { required: { 
+                      value: true, 
+                      message: "Please enter the course title" } })}
                     className=" 
                     text-richblack-200
                     font-inter
@@ -197,6 +201,13 @@ const SubSectionModal = ({
                     " />
 
                 </div>
+                {
+                            errors.title && (
+                                <div className='text-richblack-200'>
+                                    {errors.title.message}
+                                </div>
+                            )
+                        }
                 <div className='flex flex-col gap-1.5 '>
                   <div className='flex text-richblack-5 flex-row gap-0.5'>
 

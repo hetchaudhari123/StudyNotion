@@ -2,9 +2,11 @@ import React, { useState } from 'react'
 import { IoMdCloseCircleOutline } from "react-icons/io";
 
 const RequirementsField = ({ register, setValue, errors, reqList, setReqList, getValues }) => {
+  const [throwError,setThrowError] = useState(true);
   const addHandler = () => {
     if(getValues('requirement') === "") return;
     if (!reqList.includes(getValues('requirement'))) {
+      if(throwError) setThrowError(false);
       setReqList([...reqList, getValues('requirement')])
     }
     setValue('requirement', '');
@@ -27,19 +29,20 @@ const RequirementsField = ({ register, setValue, errors, reqList, setReqList, ge
         {/* input */}
         <input
           type="text"
-          {...register("requirement", { required: { value: true, message: "Please enter the requirements of the course." } })}
+          // {...register("requirement") }
+          {...register("requirement")}
           placeholder='Enter the requirements of the course'
 
           className='w-full focus:outline-none text-richblack-200 bg-transparent font-inter text-base font-medium leading-6
         text-left' />
       </div>
-      {/* {
-        errors.requirement &&
-        (<div className='text-richblack-5'>
-          {errors.requirement.message}
+      {
+        throwError && 
+        (<div className='text-richblack-200'>
+          Please enter the requirements
         </div>)
 
-      } */}
+      }
 
       <div
         onClick={addHandler}

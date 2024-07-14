@@ -65,7 +65,9 @@ exports.deleteSection = async (req,res) => {
     try{
         //1 fetch the id from the params
         // const {sectionId,courseId} = req.params;
-        const {courseId,sectionId} = req.params;
+        // console.log("REQ.PARAMS.......",req.body);
+        const {courseId,sectionId} = req.body;
+        
         // const {sectionId,courseId} = req.body;
         //2 validation
         if(!sectionId || !courseId){

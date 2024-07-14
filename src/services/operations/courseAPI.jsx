@@ -174,7 +174,7 @@ export const fetchCourse = (courseId,setLoading = null , printSuccess = true) =>
                 toast.dismiss(toastId);
             }
             if (printSuccess)
-                toast.error("Failed to edit the course.");
+                toast.error("Failed to edit the course");
         }
     }
 }

@@ -15,6 +15,7 @@ import { useEffect } from 'react';
 import { removeSubSection } from '../../../../services/operations/subSectionAPI';
 import ConfirmationModal from '../../../common/ConfirmationModal';
 import { removeSection } from '../../../../services/operations/sectionAPI';
+import { editSection } from '../../../../services/operations/sectionAPI';
 const SectionForm = () => {
     const {
         register,
@@ -29,10 +30,11 @@ const SectionForm = () => {
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
     const [modal, setModal] = useState(0);
+    const [expandSection, setExpandSection] = useState([]);
     const initialValues = {
         'sectionName': ''
     }
-    const deleteSectionHandler = ({ sectionId }) => {
+    const deleteSection = ({ sectionId }) => {
         dispatch(removeSection({
             courseId: courseDetails._id, sectionId,
             setSubSectionId,
@@ -44,18 +46,15 @@ const SectionForm = () => {
         ));
 
     }
-    const submitHandler = () => {
 
-        dispatch(buildSection(getValues('sectionName'),
-            courseDetails,
-            setLoading,
-            true));
+
+
+
+    const resetModal = () => {
+        setModal(0);
+        setSectionId(null);
+        setSubSectionId(null);
     }
-
-
-
-
-
     // useEffect(() => {
     // console.log("COURSE DETAILS.....",courseDetails)
     // },[courseDetails]);
@@ -64,38 +63,38 @@ const SectionForm = () => {
     //2 -> Edit Sub Section
     //3 -> Show confirmation modal for deletion of the sub-section
     //4 -> Show confirmation modal for deletion of the section
+    //5 -> Edit Section
 
     const [sectionId, setSectionId] = useState(null);
     const [subSectionId, setSubSectionId] = useState(null);
-    const resetModal = () => {
-        setModal(0);
-        setSectionId(null);
-        setSubSectionId(null);
-    }
-    const addLectureHandler = (id) => {
+
+    const addLecture = ({ sectionId }) => {
 
         setModal(1);
-        setSectionId(id);
+        setSectionId(sectionId);
 
     }
-    const editLectureHandler = ({ subSectionId, sectionId, str }) => {
+
+
+    const editLecture = ({ subSectionId, sectionId, str }) => {
         if (str === 'subsection') {
             setModal(2);
             setSubSectionId(subSectionId);
             setSectionId(sectionId);
         }
         else {
-
+            setModal(5);
+            setSectionId(sectionId);
         }
     }
     const showDeletionModal = ({ sectionId, subSectionId = null }) => {
-
-        setModal((!subSectionId) ? 3 : 4);
+        // console.log('SUBSECTIONID.....',subSectionId);
+        setModal((subSectionId) ? 3 : 4);
         setSectionId(sectionId);
         setSubSectionId(subSectionId);
 
     }
-    const deleteSubSectionHandler = ({ sectionId, subSectionId }) => {
+    const deleteSubSection = ({ sectionId, subSectionId }) => {
         dispatch(removeSubSection({
             sectionId, subSectionId,
             setModal,
@@ -107,6 +106,9 @@ const SectionForm = () => {
             true
         ));
     }
+    const hideDropDown = (id) => {
+        setExpandSection(expandSection.filter((ele) => ele !== id));
+    }
 
     useEffect(() => {
         if (isSubmitSuccessful) {
@@ -115,265 +117,319 @@ const SectionForm = () => {
             })
         }
     }, [isSubmitSuccessful])
-    // console.log("COURSEDETAILS FROM SECTION FORM.........", courseDetails);
-    // FOR TESTING
-    // if (!courseDetails || loading) {
-    //     return (
-    //         <Spinner />
-    //     )
-    // }
-    // FOR PRODUCTION
+
+
+    const submitHandler = () => {
+        console.log("EDITED SECTION");
+
+        if (modal !== 5) {
+
+            dispatch(buildSection(getValues('sectionName'),
+                courseDetails,
+                setLoading,
+                true));
+        }
+        else {
+            dispatch(editSection(
+                {
+                    sectionId, courseDetails,
+                    sectionName: getValues('sectionName'),
+                    setModal
+                },
+                setLoading,
+                true));
+        }
+    }
+
+
     return (
-        // <form className=' w-full transition-all duration-1000' onSubmit={handleSubmit(submitHandler)}>
         (loading || !courseDetails) ?
-
             (<Spinner />) :
+            (<>
+                <form onSubmit={handleSubmit(submitHandler)}
+                    className='gap-7 flex flex-col w-full transition-all duration-1000' >
+                    <div className='w-full gap-7 flex flex-col '>
 
-            (<form className=' w-full transition-all duration-1000' >
-                <div className='w-full gap-7 flex flex-col '>
-
-                    <div className=' rounded-lg border bg-richblack-700
+                        <div className=' rounded-lg border bg-richblack-700
                     border-richblack-600'>
-                        {
-                            // render sections
-                            courseDetails?.courseContent?.length > 0 &&
-                            courseDetails.courseContent.map((ele, index) => (
+                            {
+                                // render sections
+                                courseDetails?.courseContent?.length > 0 &&
+                                courseDetails.courseContent.map((ele, index) => (
 
-                                // border-bottom: 1px solid #424854
-                                <div key={index} className='flex flex-col'>
-
-                                    <div className='py-3 gap-3  bg-richblack-700
+                                    // border-bottom: 1px solid #424854
+                                    <div key={index} className='flex flex-col'>
+                                        {/* Error start */}
+                                        <div className='py-3 gap-3  bg-richblack-700
                                     border-b border-b-richblack-600 flex flex-row justify-between
                                     w-11/12 mx-auto items-center'>
-                                        <div className='gap-2 flex flex-row items-center'>
-                                            <div className='text-richblack-400'>
-                                                <RxDropdownMenu className='cursor-pointer' />
-                                            </div>
+                                            <div className='gap-2 flex flex-row items-center'>
+                                                <div className='text-richblack-400'>
+                                                    <RxDropdownMenu className='cursor-pointer' />
+                                                </div>
 
-                                            <div className='text-richblack-50
+                                                <div className='text-richblack-50
                                     font-inter text-base font-bold leading-6 text-left'>
-                                                {
-                                                    ele.sectionName
-                                                }
+                                                    {
+                                                        ele.sectionName
+                                                    }
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div className='
+                                            <div className='
                                     font-inter text-base text-richblack-400 font-bold leading-6 text-left flex flex-row gap-3'>
-                                            <div >
-                                                <HiMiniPencil className='cursor-pointer' />
-                                            </div>
-                                            <div onClick={showDeletionModal({ sectionId: ele._id })}>
-                                                <FaRegTrashAlt className='cursor-pointer' />
-                                            </div>
-                                            {/* border: 1px solid #424854 */}
-                                            <div className='border border-richblack-600 h-[20px]'>
+                                                <div onClick={() => {
+                                                    editLecture({ sectionId: ele._id });
+                                                }}>
+                                                    <HiMiniPencil className='cursor-pointer' />
+                                                </div>
+                                                <div onClick={() => showDeletionModal({ sectionId: ele._id })}>
+                                                    <FaRegTrashAlt className='cursor-pointer' />
+                                                </div>
+                                                {/* border: 1px solid #424854 */}
+                                                <div className='border border-richblack-600 h-[20px]'>
 
+                                                </div>
+                                                <div>{
+                                                    (!expandSection.includes(ele._id)) ? (
+                                                        <div onClick={() => { setExpandSection(prev => [...prev, ele._id]) }}>
+                                                            <FaCaretDown className='cursor-pointer' />
+                                                        </div>
+                                                    ) :
+                                                        (
+                                                            <div onClick={() => hideDropDown(ele._id)} className=''>
+                                                                <FaCaretUp className='cursor-pointer' />
+                                                            </div>
+                                                        )
+                                                }
+                                                </div>
                                             </div>
-                                            <div>
-                                                <FaCaretDown className='cursor-pointer' />
-                                                {/* <FaCaretUp className='cursor-pointer' /> */}
-                                            </div>
+
                                         </div>
+                                        <div>
+                                            {/*Subsection*/}
+                                            {
 
-                                    </div>
-                                    <div>
-                                        {/*Subsection*/}
-                                        {
+                                                ele?.subSection?.length > 0 &&
+                                                ele.subSection.map((e, i) => (
 
-                                            ele?.subSection?.length > 0 &&
-                                            ele.subSection.map((e, i) => (
-                                                /*
-                                                width: Fill (569px)px;
-                                                    height: Hug (46px)px;
-                                                    padding: 12px 0px 12px 24px;
-                                                    gap: 12px;
-                                                    border: 0px 0px 1px 0px;
-                                                    opacity: 0px;
-    
-                                                */
-                                                // border-bottom: 1px solid #424854
-                                                <div key={e._id}
-                                                    className=' flex flex-row 
+                                                    <div key={e._id}
+                                                        className={` flex flex-row 
                                                 justify-between items-center 
                                                 border-b border-b-richblack-600 
                                                     bg-richblack-700 py-3 px-6 
                                                     gap-3 text-richblack-400
                                                     mx-auto
-                                                    w-11/12'>
-                                                    <div className='flex flex-row gap-2 items-center '>
-                                                        <div className='cursor-pointer'>
-                                                            <RxDropdownMenu />
-                                                        </div>
+                                                    w-11/12
+                                                    ${expandSection.includes(ele._id) ? (" opacity-100") : ("hidden opacity-0")}
+                                                 
+                                                    `}>
+                                                        {/*  ${expandSection.includes(ele._id) ? ("opacity-100") : ("hidden opacity-0")} */}
+                                                        <div className='flex flex-row gap-2 items-center '>
+                                                            <div className='cursor-pointer'>
+                                                                <RxDropdownMenu />
+                                                            </div>
 
-                                                        <div className='font-inter
+                                                            <div className='font-inter
                                                         text-richblack-50
                                                         text-sm
                                                         font-medium
                                                         leading-6
                                                         text-left'>
-                                                            {e.title}
+                                                                {e.title}
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div className='flex flex-row gap-3 items-center
+                                                        <div className='flex flex-row gap-3 items-center
                                                     justify-between '>
-                                                        {/* Dustbin */}
-                                                        <div onClick={() => {
-                                                            editLectureHandler({ subSectionId: e._id, sectionId: ele._id, str: 'subsection' })
-                                                        }} className='cursor-pointer'>
-                                                            <HiMiniPencil className='cursor-pointer' />
+                                                            {/* Dustbin */}
+                                                            <div onClick={() => {
+                                                                editLecture({ subSectionId: e._id, sectionId: ele._id, str: 'subsection' })
 
-                                                        </div>
-                                                        <div className='cursor-pointer'
-                                                            onClick={() => showDeletionModal({
-                                                                sectionId: ele._id,
-                                                                subSectionId: e._id
-                                                            })
-                                                            }>
-                                                            <FaRegTrashAlt className='cursor-pointer' />
+                                                            }} className='cursor-pointer'>
+                                                                <HiMiniPencil className='cursor-pointer' />
 
+                                                            </div>
+                                                            <div className='cursor-pointer'
+                                                                onClick={() => {
+                                                                    showDeletionModal({
+
+                                                                        sectionId: ele._id,
+                                                                        subSectionId: e._id
+                                                                    })
+                                                                }}>
+                                                                <FaRegTrashAlt className='cursor-pointer' />
+
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    {
-                                                        (modal === 3 && subSectionId === e._id && sectionId === ele._id) &&
-                                                        <ConfirmationModal
-                                                            text1={`Delete Lecture ${e.title}?`}
-                                                            text2={`Are you sure you want to delete the
+                                                        {
+                                                            (modal === 3 && subSectionId === e._id && sectionId === ele._id) &&
+                                                            <ConfirmationModal
+                                                                text1={`Delete Lecture ${e.title}?`}
+                                                                text2={`Are you sure you want to delete the
                                                         lecture ${e.title}.All Data regarding it will be 
                                                         lost permanently.`}
-                                                            btn1={"Delete"}
-                                                            btn2={"Cancel"}
-                                                            onClickBtn2={resetModal}
-                                                            onClickBtn1={() => {
-                                                                deleteSubSectionHandler({
-                                                                    sectionId: ele._id,
-                                                                    subSectionId: e._id
-                                                                })
-                                                            }}
-                                                            customClassForBtn2="bg-richblack-700"
-                                                        ></ConfirmationModal>
-                                                    }
-                                                </div>
+                                                                btn1={"Delete"}
+                                                                btn2={"Cancel"}
+                                                                onClickBtn2={resetModal}
+                                                                onClickBtn1={() => {
+                                                                    deleteSubSection({
+                                                                        sectionId,
+                                                                        subSectionId
+                                                                    })
+                                                                }}
+                                                                customClassForBtn2="bg-richblack-700"
+                                                            ></ConfirmationModal>
+                                                        }
+                                                    </div>
 
-                                            ))
-                                        }
-                                    </div>
-
-                                    <div className=' py-3 gap-3  bg-richblack-700
-                                    border-b border-b-richblack-600 flex flex-row justify-between
-                                    w-11/12 mx-auto items-center cursor-pointer'
-                                        onClick={() => {
-                                            addLectureHandler(ele._id);
-                                        }}>
-                                        <div className='gap-1 flex flex-row
-                                    text-yellow-50 font-inter text-base 
-                                    font-medium text-left leading-6'>
-                                            <div className='font-semibold'>+</div>
-                                            <div>Add Lecture</div>
+                                                ))
+                                            }
                                         </div>
+
+                                        <div className=' py-3 gap-3  bg-richblack-700
+                                        border-b border-b-richblack-600 flex flex-row justify-between
+                                        w-11/12 mx-auto items-center cursor-pointer'
+                                            onClick={() => {
+                                                addLecture({ sectionId: ele._id });
+                                            }}>
+                                            <div className='gap-1 flex flex-row
+                                            text-yellow-50 font-inter text-base 
+                                            font-medium text-left leading-6'>
+                                                <div className='font-semibold'>+</div>
+                                                <div>Add Lecture</div>
+                                            </div>
+                                        </div>
+
+
                                     </div>
-                                    {(modal === 1 && sectionId === ele._id) && <SubSectionModal
 
-                                        sectionId={ele._id}
-                                        setSectionId={setSectionId}
-                                        dispatch={dispatch}
-                                        setModal={setModal} modal={modal}
-                                        register={register}
-                                        handleSubmit={handleSubmit}
-                                        errors={errors}
-                                        isSubmitSuccessful={isSubmitSuccessful}
-                                        reset={reset}
-                                        setValue={setValue}
-                                        getValues={getValues}
-                                    />}
-                                    {(modal === 2 && sectionId === ele._id) && <SubSectionModal
-                                        edit={true}
-                                        sectionId={ele._id}
-                                        setSectionId={setSectionId}
-                                        subSectionId={subSectionId}
-                                        setSubSectionId={setSubSectionId}
-                                        dispatch={dispatch}
-                                        setModal={setModal} modal={modal}
-                                        register={register}
-                                        handleSubmit={handleSubmit}
-                                        errors={errors}
-                                        isSubmitSuccessful={isSubmitSuccessful}
-                                        reset={reset}
-                                        setValue={setValue}
-                                        getValues={getValues}
-                                    />}
-                                    {
-                                        (modal === 3 && sectionId === ele._id) &&
-                                        (<ConfirmationModal
-                                            text1={`Delete Section ${ele.title}?`}
-                                            text2={`Are you sure you want to delete the
-                                        section ${ele.title}.
-                                        All Data regarding it will be 
-                                        lost permanently.`}
-                                            btn1={"Delete"}
-                                            btn2={"Cancel"}
-                                            onClickBtn2={resetModal}
-                                            onClickBtn1={() => deleteSectionHandler({ sectionId: ele._id })}
-                                            customClassForBtn2="bg-richblack-700"
-                                        />
-                                        )
-                                    }
-                                </div>
-
-                            ))
-                        }
-                    </div>
-                    {/* ))
+                                ))
+                            }
+                        </div>
+                        {/* ))
                     } */}
-                </div>
-                <div style={{ boxShadow: '0px -1px 0px 0px rgba(255, 255, 255, 0.18 inset' }} className='w-full flex flex-row gap-1.5 bg-richblack-700 rounded-lg'>
+                    </div>
+                    <div style={{ boxShadow: '0px -1px 0px 0px rgba(255, 255, 255, 0.18 inset' }}
+                        className='w-full flex flex-row gap-1.5
+                 bg-richblack-700 rounded-lg'>
+                        <div className='w-full pr-3 flex flex-row 
+                    justify-between items-center'>
 
-                    <input
-                        type="text"
-                        className='p-3 w-full flex flex-col gap-3 rounded-lg bg-transparent focus:outline-none
+                            <input
+                                type="text"
+                                className='p-3 w-full flex flex-col gap-3 rounded-lg bg-transparent focus:outline-none
                         text-richblack-200 font-inter text-base font-medium leading-6
                         text-left'
-                        name='sectionName'
-                        id='sectionName'
-                        {...register("sectionName", { required: { value: true, message: "Please enter the name of the section." } })}
-                        placeholder='Add a section to build your course'
-                    />
-                </div>
-                <div>
+                                name='sectionName'
+                                id='sectionName'
+                                {...register("sectionName",
+                                    {
+                                        required: {
+                                            value: true,
+                                            message: "Please enter the name of the section."
+                                        }
+                                    })}
+                                placeholder='Add a section to build your course'
+                            />
+                            {
+                                modal === 5 &&
+                                (<div
+                                    onClick={resetModal}
+                                    className=' hover:text-blue-300
+                     text-richblack-200 
+                     underline cursor-pointer'>
+                                    Close
+                                </div>
+                                )
+                            }
+                        </div>
+
+                    </div>
+                    <div>
 
 
-                    <div onClick={handleSubmit(submitHandler)} style={{
+                        <div onClick={handleSubmit(submitHandler)} style={{
 
-                        padding: '0.75rem',
-                        borderRadius: '0.5rem',
-                    }}
-                        className={`
+                            padding: '0.75rem',
+                            borderRadius: '0.5rem',
+                        }}
+                            className={`
                                         border border-yellow-50 
                                         cursor-pointer font-medium text-base  
                                         leading-6 text-center
                                         bg-richblack-800 px-3 py-2 lg:px-6 lg:py-3 
                                         rounded-lg transition-all 
                                         duration-200 hover:scale-95 w-fit`}>
-                        <div className='flex flex-row gap-2 w-fit items-center'>
-                            <div className='text-yellow-50'>
-                                {/* icon */}
-                                <IoIosAddCircleOutline />
-                            </div>
+                            <div className='flex flex-row gap-2 w-fit items-center'>
+                                <div className='text-yellow-50'>
+                                    {/* icon */}
+                                    <IoIosAddCircleOutline />
+                                </div>
 
 
-                            <div className='text-yellow-50 font-inter
+                                <div className='text-yellow-50 font-inter
                                 text-base font-medium leading-6 text-center'>
-                                {/* text */}
-                                Create Section
+                                    {/* text */}
+                                    {
+                                        (modal !== 5) ? "Create Section" : "Edit Section"
+                                    }
+                                </div>
                             </div>
                         </div>
+
+
                     </div>
+                    {/* </div> */}
+                    {/* {text1,text2,setModal,onClickBtn1,onClickBtn2,btn1,btn2} */}
 
+                </form>
+                {(modal === 1 && sectionId === ele._id) && <SubSectionModal
 
-                </div>
-                {/* </div> */}
-                {/* {text1,text2,setModal,onClickBtn1,onClickBtn2,btn1,btn2} */}
-
-            </form>
+                    sectionId={ele._id}
+                    setSectionId={setSectionId}
+                    setSubSectionId={setSubSectionId}
+                    dispatch={dispatch}
+                    setModal={setModal} modal={modal}
+                    register={register}
+                    handleSubmit={handleSubmit}
+                    errors={errors}
+                    isSubmitSuccessful={isSubmitSuccessful}
+                    reset={reset}
+                    setValue={setValue}
+                    getValues={getValues}
+                />}
+                {(modal === 2 && sectionId === ele._id) && <SubSectionModal
+                    edit={true}
+                    sectionId={ele._id}
+                    setSectionId={setSectionId}
+                    subSectionId={subSectionId}
+                    setSubSectionId={setSubSectionId}
+                    dispatch={dispatch}
+                    setModal={setModal} modal={modal}
+                    register={register}
+                    handleSubmit={handleSubmit}
+                    errors={errors}
+                    isSubmitSuccessful={isSubmitSuccessful}
+                    reset={reset}
+                    setValue={setValue}
+                    getValues={getValues}
+                />}
+                {
+                    (modal === 4 && sectionId === ele._id) &&
+                    (<ConfirmationModal
+                        text1={`Delete Section ${ele.sectionName}?`}
+                        text2={`Are you sure you want to delete the
+    section ${ele.sectionName}.
+    All Data regarding it will be 
+    lost permanently.`}
+                        btn1={"Delete"}
+                        btn2={"Cancel"}
+                        onClickBtn2={resetModal}
+                        onClickBtn1={() => deleteSection({ sectionId: ele._id })}
+                        customClassForBtn2="bg-richblack-700"
+                    />
+                    )
+                }
+            </>
             )
     )
 }
