@@ -1,17 +1,38 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { IoMdCloseCircleOutline } from "react-icons/io";
 
-const RequirementsField = ({ register, setValue, errors, reqList, setReqList, getValues }) => {
-  const [throwError,setThrowError] = useState(true);
+const RequirementsField = ({ name='requirement',
+  register,
+  setValue,
+  errors,
+  reqList,
+  setReqList,
+  getValues,
+clearErrors }) => {
+  // const [throwError,setThrowError] = useState(true);
+  const [display,setDisplay] = useState("")
   const addHandler = () => {
-    if(getValues('requirement') === "") return;
-    if (!reqList.includes(getValues('requirement'))) {
-      if(throwError) setThrowError(false);
-      setReqList([...reqList, getValues('requirement')])
+    if(display === "") return;
+    if (!reqList.includes(display)) {
+      setReqList([...reqList, display])
+      
+      setDisplay("")
     }
-    setValue('requirement', '');
+    // setValue(name, '');
   }
-  console.log('REQLIST.......', reqList);
+  // console.log('REQLIST.......', reqList);
+  useEffect(() => {
+       
+    register(name, 
+        { required: true, 
+            validate: (value) => value.length > 0 })
+  }, [register])
+  useEffect(() => {
+    setValue(name,reqList);
+    clearErrors(name);
+  },[reqList])
+
+  
   return (
     <div className='flex flex-col gap-1.5'>
 
@@ -29,18 +50,24 @@ const RequirementsField = ({ register, setValue, errors, reqList, setReqList, ge
         {/* input */}
         <input
           type="text"
-          // {...register("requirement") }
-          {...register("requirement")}
+          name={name}
+          id={name}
+          value={display}
+          onChange={(e) => setDisplay(e.target.value)}
           placeholder='Enter the requirements of the course'
-
           className='w-full focus:outline-none text-richblack-200 bg-transparent font-inter text-base font-medium leading-6
         text-left' />
       </div>
       {
-        throwError && 
+        (errors[name]) &&
         (<div className='text-richblack-200'>
-          Please enter the requirements
+          {` Please enter the requirements`}
         </div>)
+        // (errors[name]) ? 
+        // (<div className='text-richblack-200'>
+        //   {`Please enter the requirements`}
+        // </div>) : 
+        // (<div></div>)
 
       }
 

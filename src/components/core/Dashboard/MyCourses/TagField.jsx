@@ -1,29 +1,32 @@
 import React, { useState } from 'react'
 import toast from 'react-hot-toast';
 import { IoMdCloseCircleOutline } from "react-icons/io";
-const TagField = ({setValue,register,tagList,setTagList,errors}) => {
-    const [throwError,setThrowError] = useState(true);
+import { useEffect } from 'react';
+const TagField = ({name='tag',
+    setValue,register,tagList,setTagList
+    ,errors,clearErrors}) => {
     const handleTagChange = (e) => {
-        let str = e.target.value;
-        str = str.trim();
-        if(e.key !== 'Enter' && e.key !== ',' && e.key !== ' '){
-            return;
+        if(e.key === 'Enter' || e.key === ','){
+            e.preventDefault();
+            let str = e.target.value;
+            str = str.trim();
+            setTagList(prev => [...prev,str])
+            e.target.value = ""
         }
-        if(str.length === 0){
-            return;
-        }
-        if(tagList.includes(str)){
-            setValue("tag",""); 
-            return;
-        }
-        if(throwError) setThrowError(false);
-        setTagList([...tagList,str]);
-        setValue("tag",""); 
     }
     const removeTag = (cur) => {
         setTagList(tagList.filter((ele) => ele !== cur))
     }
-
+    useEffect(() => {
+       
+        register(name, 
+            { required: true, 
+                validate: (value) => value.length > 0 })
+      }, [])
+      useEffect(() => {
+        setValue(name,tagList);
+        clearErrors(name);
+      },[tagList])
   return (
     <div className='flex flex-col gap-1.5'>
         <div className='gap-0.5 flex flex-row'>
@@ -64,21 +67,19 @@ opacity: 0px;
             type="text" 
             name="tag"
             id="tag"
-            {...register("tag", )}
-            
             onKeyDown={(e) => {
                 handleTagChange(e);
             }}
-            onKeyUp={(e) => {
-                if(e.key === ',' || e.key === ' ' || e.key === 'Enter') 
-                setValue("tag","")
-            }}
-            className='bg-transparent focus:outline-none
+            // onKeyUp={(e) => {
+            //     if(e.key === ',' || e.key === ' ' || e.key === 'Enter') 
+            //     setValue(name,"")
+            // }}
+            className='w-full bg-transparent focus:outline-none
             text-richblack-200 font-inter text-base font-medium leading-6 text-left'
             />
         </div>
             {
-                throwError && (
+                (errors[name]) && (
                     <div className='text-richblack-200'>
                         Please insert a tag
                     </div>

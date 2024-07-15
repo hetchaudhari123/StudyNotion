@@ -25,6 +25,7 @@ const SectionForm = () => {
         getValues,
         setValue
     } = useForm({
+        
     });
     const { courseDetails } = useSelector(state => state.course);
     const dispatch = useDispatch();
@@ -34,9 +35,10 @@ const SectionForm = () => {
     const initialValues = {
         'sectionName': ''
     }
-    const deleteSection = ({ sectionId }) => {
-        dispatch(removeSection({
-            courseId: courseDetails._id, sectionId,
+    const deleteSection = async ({ sectionId }) => {
+        await dispatch(removeSection({
+            courseId: courseDetails._id, 
+            sectionId,
             setSubSectionId,
             setSectionId
         },
@@ -44,7 +46,7 @@ const SectionForm = () => {
             setLoading,
             true
         ));
-
+        console.log('after doing deletion');
     }
 
 
@@ -55,9 +57,6 @@ const SectionForm = () => {
         setSectionId(null);
         setSubSectionId(null);
     }
-    // useEffect(() => {
-    // console.log("COURSE DETAILS.....",courseDetails)
-    // },[courseDetails]);
     // MODAL
     //1 -> Add Sub Section
     //2 -> Edit Sub Section
@@ -120,7 +119,7 @@ const SectionForm = () => {
 
 
     const submitHandler = () => {
-        console.log("EDITED SECTION");
+        // console.log("EDITED SECTION");
 
         if (modal !== 5) {
 
@@ -132,7 +131,8 @@ const SectionForm = () => {
         else {
             dispatch(editSection(
                 {
-                    sectionId, courseDetails,
+                    sectionId, 
+                    courseDetails,
                     sectionName: getValues('sectionName'),
                     setModal
                 },
@@ -418,7 +418,8 @@ const SectionForm = () => {
                     subSectionId={subSectionId}
                     setSubSectionId={setSubSectionId}
                     dispatch={dispatch}
-                    setModal={setModal} modal={modal}
+                    setModal={setModal} 
+                    modal={modal}
                     register={register}
                     handleSubmit={handleSubmit}
                     errors={errors}
@@ -428,17 +429,18 @@ const SectionForm = () => {
                     getValues={getValues}
                 />}
                 {
+                    
                     (modal === 4) &&
                     (<ConfirmationModal
-                        text1={`Delete Section ${ele.sectionName}?`}
+                        text1={`Delete Section ${courseDetails.courseContent.find(ele => ele._id === sectionId).sectionName}`}
                         text2={`Are you sure you want to delete the
-    section ${ele.sectionName}.
+    section ${courseDetails.courseContent.find(ele => ele._id === sectionId).sectionName}.
     All Data regarding it will be 
     lost permanently.`}
                         btn1={"Delete"}
                         btn2={"Cancel"}
                         onClickBtn2={resetModal}
-                        onClickBtn1={() => deleteSection({ sectionId: ele._id })}
+                        onClickBtn1={() => deleteSection({ sectionId })}
                         customClassForBtn2="bg-richblack-700"
                     />
                     )

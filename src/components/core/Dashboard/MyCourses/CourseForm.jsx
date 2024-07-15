@@ -14,6 +14,7 @@ import { fetchCourseDetails } from '../../../../services/operations/courseAPI';
 import { useSelector } from 'react-redux';
 import { setEditCourse, setStep } from '../../../../redux/slices/courseSlice';
 import { updateCourse } from '../../../../services/operations/courseAPI';
+import Upload from './Upload';
 const CourseForm = () => {
     const {
         register,
@@ -22,51 +23,60 @@ const CourseForm = () => {
         reset,
         watch,
         setValue,
-        getValues
+        getValues,
+        clearErrors
     } = useForm({
 
     });
     const [loading, setLoading] = useState(false);
     const [reqList, setReqList] = useState([]);
+    const  [tagList,setTagList] = useState([])
     const dispatch = useDispatch();
     const [category, setCategory] = useState([]);
-    const [tagList, setTagList] = useState([]);
     // const [formData,setFormData] = useState(null);
-    const [image, setImage] = useState(null);
     // const [editCourse,setEditCourse] = useState(false);
     // const [editCourse,setEditCourse] = useSelector((state) => state.editCourse);
     const { editCourse, courseStep, courseDetails } = useSelector(state => state.course);
-
+    const goNext = () => {
+        dispatch(setStep(2));
+    }
     useEffect(() => {
         dispatch(fetchCategory(setCategory, setLoading, false));
-        if (courseDetails) {
-            dispatch(setEditCourse(true));
-            const formData = new FormData();
-            formData.append('thumbnailImage', courseDetails.file);
-            formData.append('courseDescription', courseDetails.courseDescription);
-            formData.append('whatYouWillLearn', courseDetails.whatYouWillLearn);
-            formData.append('price', courseDetails.price);
-            formData.append('tag', courseDetails.tag);
-            formData.append('category', courseDetails.category);
+        if (editCourse) {
+            // dispatch(setEditCourse(true));
+            // const formData = new FormData();
+            // formData.append('thumbnailImage', courseDetails.file);
+            // formData.append('courseDescription', courseDetails.courseDescription);
+            // formData.append('whatYouWillLearn', courseDetails.whatYouWillLearn);
+            // formData.append('price', courseDetails.price);
+            // formData.append('tag', courseDetails.tag);
+            // formData.append('category', courseDetails.category);
             // formData.append('status', courseDetails.status);
-            formData.append('instructions', courseDetails.instructions);
-            formData.append('courseName', courseDetails.courseName);
-            setReqList(formData.get('whatYouWillLearn'));
+            // formData.append('instructions', JSON.stringify(courseDetails.instructions));
+            // formData.append('courseName', courseDetails.courseName);
+            // formData.append('tag',JSON.stringify(courseDetails.tag));
             // setCategory(formData.get('category'));
-            setTagList(formData.get('tag'));
-            setImage(formData.get('thumbnailImage'));
-            setValue('courseTitle', formData.get('courseName'));
-            setValue('courseDesc', formData.get('courseDescription'));
-            setValue('price', formData.get('price'));
-            setValue('requirement', formData.get('instructions'));
-            // setValue('file',formData.get(thumbnailImage));
+            // setImage(formData.get('thumbnailImage'));
+            // console.log("COURSE DETAILS....",courseDetails)
+            setReqList(courseDetails.instructions);//--
+            setTagList( courseDetails.tag);//--
+            // setValue('requirement', courseDetails.whatYouWillLearn);//--
+            setValue('courseTitle', courseDetails.courseName);//--
+            setValue('courseDesc', courseDetails.courseDescription);//--
+            setValue('price', courseDetails.price);//--
+            setValue('benefit',courseDetails.whatYouWillLearn);//--
+            // setValue('tag', JSON.stringify(courseDetails.tag));//--
+            setValue('tag', courseDetails.tag);//--
+            setValue('requirement', courseDetails.instructions);//--
+            setValue('category', courseDetails.category);//--
+            // setValue('courseDesc', courseDetails.description);//--
+            // setValue('file',courseDetails.thumbnail);
         }
     }, [])
 
     const submitHandler = () => {
         const { benefit, category, courseDec, courseTitle, price, file } = getValues();
-        // console.log(courseDescription,whatYouWillLearn,status,courseName,price,tag,category,file,instructions);
-        console.log("Inside here")
+
         if (!editCourse) {
             dispatch(buildCourse({
                 courseDescription: courseDec,
@@ -85,13 +95,13 @@ const CourseForm = () => {
             dispatch(updateCourse({
                 courseDescription: courseDec,
                 whatYouWillLearn: benefit,
-                status: "Draft",
+                status: courseDetails.status,
                 courseName: courseTitle,
                 price,
                 tag: tagList.toString(),
                 category,
                 instructions: reqList.toString(),
-                file
+                file:(file && file !== "" ) ? (file) : (null)
             },
                 setLoading, true));
         }
@@ -277,13 +287,18 @@ const CourseForm = () => {
                     </div>
                     <div>
                         <TagField
-                            setValue={setValue} register={register}
+                            setValue={setValue} 
+                            register={register}
                             setTagList={setTagList}
                             tagList={tagList}
-                            errors={errors}></TagField>
+                            name='tag'
+                            errors={errors}
+                            clearErrors = {clearErrors}
+                            >
+                        </TagField>
                     </div>
                     <div>
-                        <ThumbnailField
+                        {/* <ThumbnailField
                           defaultImage={(editCourse)? (
                             courseDetails.courseContent.find(section => section._id === sectionId).subSection.find(sub => sub._id === subSectionId).videoUrl
                           ) : (null)}
@@ -291,7 +306,20 @@ const CourseForm = () => {
                             setValue={setValue} register={register}
                             errors={errors}
                             errorMessage={"Please enter the course thumbnail"}
-                        ></ThumbnailField>
+                        ></ThumbnailField> */}
+                        <Upload 
+                        errors = {errors}
+                        setValue={setValue} 
+                        register={register}
+                        name={"file"}
+                        clearErrors={clearErrors}
+                        getValues={getValues}
+                        defaultContent={editCourse?(
+                            courseDetails.thumbnail
+                        ):(null)}
+                        >
+
+                        </Upload>
                     </div>
 
                     <div className='flex flex-col gap-1.5'>
@@ -334,11 +362,32 @@ const CourseForm = () => {
                         setValue={setValue}
                         errors={errors}
                         reqList={reqList}
-                        setReqList={setReqList} />
+                        setReqList={setReqList} 
+                        clearErrors={clearErrors}
+                        />
                 </div>
+                <div className='flex flex-row mt-4 gap-2 items-center
+                justify-between'>
+ {
+                    (editCourse) &&
+                    <div className='flex justify-end mb-4' onClick={goNext}>
+                        <CTAButton active={false} customClass='bg-richblack-700'>
+                            <div className='flex flex-row gap-2 items-center w-fit'>
+                                <div className='flex text-richblack-200 font-inter
+                            text-base font-medium leading-6 text-center'>
+                                    Continue Without Changes
+                                </div>
+                                <div className='text-richblack-5'>
+                                    <FaAngleRight />
+                                </div>
+                            </div>
+                        </CTAButton>
+                    </div>
+                }
                 <div className='flex justify-end mb-4' onClick={handleSubmit(submitHandler)}>
+
                     <CTAButton active={true}>
-                        <div className='flex flex-row items-center w-fit'>
+                        <div className='flex flex-row gap-2 items-center w-fit'>
                             <div className='flex text-richblack-900 font-inter
                             text-base font-medium leading-6 text-center'>
                                 {(editCourse) ? "Save Changes" : "Next"}
@@ -349,22 +398,9 @@ const CourseForm = () => {
                         </div>
                     </CTAButton>
                 </div>
-                {
-                    (editCourse) &&
-                    <div className='flex justify-end mb-4' onClick={handleSubmit(submitHandler)}>
-                        <CTAButton active={true} >
-                            <div className='flex flex-row items-center w-fit'>
-                                <div className='flex text-richblack-900 font-inter
-                            text-base font-medium leading-6 text-center'>
-                                    Continue Without Changes
-                                </div>
-                                <div>
-                                    <FaAngleRight />
-                                </div>
-                            </div>
-                        </CTAButton>
-                    </div>
-                }
+               
+                </div>
+
             </form >
     )
 }

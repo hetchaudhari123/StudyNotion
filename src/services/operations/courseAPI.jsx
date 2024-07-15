@@ -103,6 +103,15 @@ export const updateCourse = (
         if (printSuccess) toastId = toast.loading("Loading...")
         if (printSuccess) setLoading(true)
         try {
+    console.log("FORM DATA...",file)
+    console.log("FORM DATA...",courseDescription)
+    console.log("FORM DATA...",whatYouWillLearn)
+    console.log("FORM DATA...",price)
+    console.log("FORM DATA...",tag)
+    console.log("FORM DATA...",category)
+    console.log("FORM DATA...",status)
+    console.log("FORM DATA...",instructions)
+    console.log("FORM DATA...",courseName)
             const formData = new FormData();
             formData.append('thumbnailImage', file);
             formData.append('courseDescription', courseDescription);
@@ -114,7 +123,7 @@ export const updateCourse = (
             formData.append('instructions', instructions);
             formData.append('courseName', courseName);
           
-            const response = await apiConnector('POST', courseEndpoints.EDIT_COURSE_API, formData, { 'Content-Type': 'multipart/form-data' });
+            const response = await apiConnector('PUT', courseEndpoints.EDIT_COURSE_API, formData, { 'Content-Type': 'multipart/form-data' });
             console.log("RESPONSE FROM THE EDIT COURSE API.....", response);
             if (!response.data.success) {
                 throw new Error(response.data.message);

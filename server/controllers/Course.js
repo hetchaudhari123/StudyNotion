@@ -220,8 +220,7 @@ exports.editCourse = async (req, res) => {
             !whatYouWillLearn ||
             !price ||
             !tag ||
-            !thumbnail ||
-            !category
+             !category
         ) {
             return res.status(400).json({
                 success: false,
@@ -248,8 +247,12 @@ exports.editCourse = async (req, res) => {
         }
             //3 cloudinary insertion
             // console.log('THUMBNAIL IMAGE............');
-            const thumbnailImage = await fileUploader(thumbnail, process.env.FOLDER_NAME);
-            console.log('THUMBNAIL IMAGE............', thumbnailImage);
+            let thumbnailImage = null
+            if(thumbnail){
+
+                 thumbnailImage = await fileUploader(thumbnail, process.env.FOLDER_NAME);
+                console.log('THUMBNAIL IMAGE............', thumbnailImage);
+            }
         
         //4 updation into the db
         const updatedCourse = await Course.findOneAndUpdate(
@@ -265,7 +268,7 @@ exports.editCourse = async (req, res) => {
                     tag,
                     status,
                     instructions: instructions,
-                    thumbnail: thumbnailImage?.secure_url,
+                    thumbnail: thumbnailImage ? (thumbnailImage?.secure_url) : (),
                     Category: categoryDetails._id
                 }
             },

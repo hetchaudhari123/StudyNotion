@@ -22,7 +22,8 @@ export const courseSlice = createSlice({
         },
         addSection:(state,action) => {
             state.courseDetails.courseContent = action.payload;
-        }
+        },
+        
     }
 });
 export const {setStep,setCourseDetails,setEditCourse,addSection} = courseSlice.actions;

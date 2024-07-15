@@ -10,6 +10,7 @@ import { setCourseDetails } from '../../../../redux/slices/courseSlice';
 import Spinner from '../../../common/Spinner';
 import { editSubSection } from '../../../../services/operations/subSectionAPI';
 import { useDispatch, useSelector } from 'react-redux';
+import Upload from './Upload';
 const SubSectionModal = ({
   edit = false,
   modal, setModal,
@@ -27,6 +28,7 @@ const SubSectionModal = ({
     setValue,
     formState: { errors, isSubmitSuccessful },
     getValues,
+    clearErrors
   } = useForm()
   useEffect(() => {
     if (edit) {
@@ -65,9 +67,9 @@ const SubSectionModal = ({
     setSubSectionId(null);
   }
   // console.log('COURSEDETAILS FROM SUBSECTION MODAL.......',courseDetails);  
-  const submitHandler = async () => {
+  const submitHandler =  () => {
     // console.log(getValues());
-
+console.log("INSIDE SUBMIT HANDLER....");
 
     // console.log('SECTIONID.........',sectionId);
     let timeDuration = "";
@@ -81,8 +83,6 @@ const SubSectionModal = ({
       timeDuration += `${getValues('sec')}s `
     }
     if (!edit) {
-
-
        dispatch(addSubSection({
         sectionId,
         setSectionId,
@@ -98,14 +98,18 @@ const SubSectionModal = ({
       ));
     }
     else {
-
+      console.log("INSIDE THE DISPATCH");
        dispatch(editSubSection({
-        subSectionId, title: getValues('title'), description: getValues('description'),
+        subSectionId, 
+        title: getValues('title'), 
+        description: getValues('desc'),
         setSectionId,
         setModal,
         setSubSectionId,
         timeDuration,
-        courseId: courseDetails._id
+        courseId: courseDetails._id,
+        video:((getValues('file') !== "" && getValues('file'))?
+        (getValues('file')):(undefined))
       },
         setLoading,
         true));
@@ -157,7 +161,7 @@ const SubSectionModal = ({
                   <div className='w-full flex flex-col bg-richblack-800 p-8 gap-6'>
                     <div className='w-full flex justify-center items-center'>
                       {/* Lecture Video */}
-                      <ThumbnailField
+                      {/* <ThumbnailField
                         register={register}
                         setValue={setValue}
                         errors={errors}
@@ -166,7 +170,23 @@ const SubSectionModal = ({
                           courseDetails.courseContent.find(section => section._id === sectionId).subSection.find(sub => sub._id === subSectionId).videoUrl
                         ) : (null)}
                         customClass='md:w-full md:aspect-ratio-video'
-                      />
+                      /> */}
+                      <Upload
+                       register={register}
+                       setValue={setValue}
+                       name={'file'}
+                       getValues={getValues}
+                       errors={errors}
+                       clearErrors={clearErrors}
+                       
+                       defaultContent={(edit) ? (
+                         courseDetails.courseContent.find(section => section._id === sectionId).subSection.find(sub => sub._id === subSectionId).videoUrl
+                       ) : (null)
+                      }
+                      video={true}
+                      >
+
+                      </Upload>
                     </div>
                     <div className=' flex flex-col gap-1.5'>
                       {/* Lecture Title */}
@@ -343,7 +363,10 @@ const SubSectionModal = ({
                       </div>
                     </CTAButton>
                     <CTAButton active={true}
-                      onClick={handleSubmit(submitHandler)}>
+                      onClick={() => {
+                        console.log("hey");
+                        handleSubmit(submitHandler)()
+                        }}>
 
                       <div className='text-richblack-900 
               font-inter text-base 

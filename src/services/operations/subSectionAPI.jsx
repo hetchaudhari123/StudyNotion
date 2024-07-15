@@ -69,7 +69,11 @@ export const addSubSection = (
         }
     }
 }
-export const editSubSection = ({subSectionId,title,description,setSectionId,setModal,setSubSectionId,timeDuration,courseId},
+export const editSubSection = ({subSectionId,
+    title,description,
+    setSectionId,setModal,
+    setSubSectionId,timeDuration,courseId,
+video},
     setLoading = null,
     printSuccess = true
 ) => {
@@ -79,7 +83,16 @@ export const editSubSection = ({subSectionId,title,description,setSectionId,setM
         if (printSuccess) toastId = toast.loading("Loading...")
         if (printSuccess) setLoading(true)
     try{ 
-        const response = await apiConnector('POST',courseEndpoints.UPDATE_SUBSECTION_API,{subSectionId,title,description,timeDuration});
+        const formData = new FormData();
+        formData.append('subSectionId',subSectionId);
+        formData.append('title',title);
+        formData.append('description',description);
+        formData.append('timeDuration',timeDuration);
+        formData.append('video',video);
+
+        const response = await apiConnector('POST',courseEndpoints.UPDATE_SUBSECTION_API,formData,
+            { 'Content-Type': 'multipart/form-data' }
+        );
         console.log('RESPONSE FROM UPDATE SUBSECTION API......',response);
         await dispatch(fetchCourse(courseId,null,false));
 

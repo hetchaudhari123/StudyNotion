@@ -56,6 +56,7 @@ exports.updateSubSection = async (req,res) => {
     try{
         //1 fetch the details to be updated
         const {subSectionId,title,description,timeDuration} = req.body;
+        // const video = req?.files?.video;
         const subSection = await SubSection.findById(subSectionId);
         if (!subSection) {
             return res.status(404).json({
@@ -69,7 +70,7 @@ exports.updateSubSection = async (req,res) => {
           if (description !== undefined) {
             subSection.description = description
           }
-          if (req.files && req.files.video !== undefined) {
+          if (req?.files && req?.files?.video !== undefined) {
             const video = req.files.video
             const uploadDetails = await fileUploader(
               video,
