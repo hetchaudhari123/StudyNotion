@@ -117,7 +117,8 @@ export const updateCourse = async (
     // console.log("FORM DATA...",status)
     // console.log("FORM DATA...",instructions)
     // console.log("FORM DATA...",courseName)
-    // console.log("COURSEID.....",courseDetails._id)
+    // console.log("COURSEID INSIDE COURSEAPI.....",courseDetails._id)
+    console.log("STATUS INSIDE THE COURSE API.....",status)
             const formData = new FormData();
             formData.append('thumbnailImage', file);
             formData.append('courseDescription', courseDescription);
@@ -125,7 +126,8 @@ export const updateCourse = async (
             formData.append('whatYouWillLearn', whatYouWillLearn);
             formData.append('price', price);
             formData.append('tag', tag);
-            formData.append('category', category._id);
+            formData.append('category', category?._id);
+            
             formData.append('status', status);
             formData.append('instructions', instructions);
             formData.append('courseName', courseName);

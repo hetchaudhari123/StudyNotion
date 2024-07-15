@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form';
-import CTAButton from "../../../core/HomePage/Button"
+import CTAButton from "../../../HomePage/Button"
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { useDispatch, useSelector } from 'react-redux';
 import { RxDropdownMenu } from "react-icons/rx";
@@ -8,14 +8,14 @@ import { HiMiniPencil } from "react-icons/hi2";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { FaCaretDown } from "react-icons/fa";
 import { FaCaretUp } from "react-icons/fa";
-import Spinner from '../../../common/Spinner';
-import { buildSection } from '../../../../services/operations/sectionAPI';
+import Spinner from '../../../../common/Spinner';
+import { buildSection } from '../../../../../services/operations/sectionAPI';
 import SubSectionModal from './SubSectionModal';
 import { useEffect } from 'react';
-import { removeSubSection } from '../../../../services/operations/subSectionAPI';
-import ConfirmationModal from '../../../common/ConfirmationModal';
-import { removeSection } from '../../../../services/operations/sectionAPI';
-import { editSection } from '../../../../services/operations/sectionAPI';
+import { removeSubSection } from '../../../../../services/operations/subSectionAPI';
+import ConfirmationModal from '../../../../common/ConfirmationModal';
+import { removeSection } from '../../../../../services/operations/sectionAPI';
+import { editSection } from '../../../../../services/operations/sectionAPI';
 // import { editCourse } from '../../../../../server/controllers/Course';
 const SectionForm = () => {
     const {

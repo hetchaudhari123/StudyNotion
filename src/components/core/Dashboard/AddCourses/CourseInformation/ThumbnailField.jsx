@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import CTAButton from "../../HomePage/Button"
+import CTAButton from "../../../HomePage/Button"
 import { BsWindowSidebar } from 'react-icons/bs';
 import { IoCloudUploadOutline } from "react-icons/io5";
 const ThumbnailField = ({ errorMessage,register, getValues, setValue, errors, customClass = "", defaultImage = null }) => {

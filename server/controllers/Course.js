@@ -29,8 +29,10 @@ exports.createCourse = async (req, res) => {
             !category
         ) {
             console.log("MISSING FIELDS........",
-                {courseName,
-                    courseDescription,whatYouWillLearn,price,tag,thumbnail,category}
+                {
+                    courseName,
+                    courseDescription, whatYouWillLearn, price, tag, thumbnail, category
+                }
             );
             return res.status(400).json({
                 success: false,
@@ -105,7 +107,7 @@ exports.createCourse = async (req, res) => {
 exports.showAllCourses = async (req, res) => {
     try {
         const courses = await Course.find({}, {
-            _id:true,
+            _id: true,
             courseName: true,
             price: true,
             thumbnail: true,
@@ -188,7 +190,7 @@ exports.getCourseDetails = async (req, res) => {
 
 exports.editCourse = async (req, res) => {
     try {
-
+     
         //1 fetch the details
         let { courseid, courseName,
             courseDescription,
@@ -199,25 +201,26 @@ exports.editCourse = async (req, res) => {
             status,
             instructions } = req.body;
         const thumbnail = req?.files?.thumbnailImage;
-        
+    
         // console.log("COURSEID.....",courseid)
         //2 validation 
         //2.1 validate the instructor
-
+        
         const instructorID = req.user.id;
         const instructorDetails = await User.findById(instructorID, {
             accountType: "Instructor"
         });
-     
+    
         if (!instructorDetails) {
             return res.status(404).json({
                 success: false,
                 message: "The instructor is not registered"
             })
         }
-    //   if(!status || status === undefined){
-    //     status = 'Published';
-    //   }
+        
+        //   if(!status || status === undefined){
+        //     status = 'Published';
+        //   }
         //2.2
         // if (
         //     !courseName ||
@@ -232,106 +235,113 @@ exports.editCourse = async (req, res) => {
         //         message: "All Fields are Mandatory",
         //     });
         // }
-         //2.3 validate the courseid
-         const course = await Course.findById(courseid);
-         if (!course) {
-             return res.status(400).json({
-                 success: false,
-                 message: `The course id ${courseid} doesn't exist.`,
-             })
-         } 
-         //2.4
-            //2.2 validate the tag
+        //2.3 validate the courseid
        
-        if(category){
-            // console.log("INSIDE HERE...............................................................")
-            // Error here!
-        const categoryDetails = await Category.findById(category);
-        if (!categoryDetails) {
-            return res.status(404).json({
+        // Error here
+        // console.log("COURSEID.......",courseid)
+        const course = await Course.findById(courseid)
+     
+        if (!course) {
+            return res.status(400).json({
                 success: false,
-                message: "The category is not registered"
+                message: `The course id ${courseid} doesn't exist.`,
             })
-
         }
+        //2.4
+        //2.2 validate the tag
         
-        if(category !== course.category){
-            
-            await Category.findByIdAndUpdate(course.category, {
-            $pull: { courses: courseid }
-        }, { new: true });
-            course.category = category
-            await Category.findByIdAndUpdate(category, {
-                $push: { courses: courseid }
-            }, { new: true });
-        }
-    }
-  
-            //3 cloudinary insertion
-            // console.log('THUMBNAIL IMAGE............');
-            
-            if(thumbnail){
+        if (category && category !=="undefined") {
+            console.log("INSIDE HERE...............................................................")
+            console.log(category)
+            // console.log((category === "undefined"))
+            console.log(typeof category === 'string')
+            const categoryDetails = await Category.findById(category);
+            if (!categoryDetails) {
+                return res.status(404).json({
+                    success: false,
+                    message: "The category is not registered"
+                })
 
-                const thumbnailImage = await fileUploader(thumbnail, process.env.FOLDER_NAME);
-                // console.log('THUMBNAIL IMAGE............', thumbnailImage);
-                course.thumbnail = thumbnailImage.secure_url
             }
-        if(instructions){
+
+            if (category !== course.category) {
+
+                await Category.findByIdAndUpdate(course.category, {
+                    $pull: { courses: courseid }
+                }, { new: true });
+                course.category = category
+                await Category.findByIdAndUpdate(category, {
+                    $push: { courses: courseid }
+                }, { new: true });
+            }
+        }
+     
+        //3 cloudinary insertion
+        // console.log('THUMBNAIL IMAGE............');
+      
+        if (thumbnail && thumbnail !=="undefined") {
+
+            const thumbnailImage = await fileUploader(thumbnail, process.env.FOLDER_NAME);
+            // console.log('THUMBNAIL IMAGE............', thumbnailImage);
+            course.thumbnail = thumbnailImage.secure_url
+        }
+        if (instructions && instructions !=="undefined") {
             course.instructions = instructions
         }
-        if(status){
+        if (status && status !=="undefined") {
+            console.log("STATUS......",status)
             course.status = status
         }
-        if(tag){
+        if (tag && tag !=="undefined") {
             course.tag = tag
         }
-        if(price){
+        if (price && price !=="undefined") {
             course.price = price
         }
-        if(whatYouWillLearn) course.whatYouWillLearn = whatYouWillLearn
-        if(courseDescription) {
-         
+        if (whatYouWillLearn && whatYouWillLearn !=="undefined") course.whatYouWillLearn = whatYouWillLearn
+        if (courseDescription && courseDescription !=="undefined") {
+
             course.courseDescription = courseDescription
         }
+
+        if (courseName && courseName !=="undefined") course.courseName = courseName
        
-        if(courseName) course.courseName = courseName
-   
         await course.save()
         //4 updation into the db
         // const updatedCourse = await Course.findOneAndUpdate(
-            // { _id: courseid }, // Filter: find document by courseId
-            // {
-                // $set: {
-                    // courseName,
-                    // category: categoryDetails._id,
-                    // courseDescription,
-                    // instructor: instructorDetails._id,
-                    // whatYouWillLearn,
-                    // price,
-                    // tag,
-                    // status,--
-                    // instructions: instructions,//--
-                    // thumbnail: thumbnailImage ? (thumbnailImage?.secure_url) : (),//--
-                    // Category: categoryDetails._id//--
-                // }
-            // },
-            // { new: true } // Options: return the updated document
+        // { _id: courseid }, // Filter: find document by courseId
+        // {
+        // $set: {
+        // courseName,
+        // category: categoryDetails._id,
+        // courseDescription,
+        // instructor: instructorDetails._id,
+        // whatYouWillLearn,
+        // price,
+        // tag,
+        // status,--
+        // instructions: instructions,//--
+        // thumbnail: thumbnailImage ? (thumbnailImage?.secure_url) : (),//--
+        // Category: categoryDetails._id//--
+        // }
+        // },
+        // { new: true } // Options: return the updated document
         // );
-        
+
         // await User.findByIdAndUpdate({
-            // _id: instructorDetails._id,
+        // _id: instructorDetails._id,
         // }, { $pull: { courses: courseid } }, { new: true });
         // await User.findByIdAndUpdate({
-            // _id: instructorDetails._id,
+        // _id: instructorDetails._id,
         // }, { $push: { courses: updatedCourse._id } }, { new: true });
         // await Category.findByIdAndUpdate(category, {
-            // $pull: { courses: courseid }
+        // $pull: { courses: courseid }
         // }, { new: true });
         // const categoryResponse = await Category.findByIdAndUpdate(category, {
-            // $push: { courses: updatedCourse._id }
+        // $push: { courses: updatedCourse._id }
         // }, { new: true });
         // console.log(categoryResponse);
-        
+
         return res.status(200).json({
             success: true,
             data: course,
@@ -339,7 +349,7 @@ exports.editCourse = async (req, res) => {
         })
 
     } catch (err) {
-        console.error("ERRRRRRRRRRR........",err);
+        console.error("ERRRRRRRRRRR........", err);
         return res.status(500).json({
             success: false,
             message: err.message,

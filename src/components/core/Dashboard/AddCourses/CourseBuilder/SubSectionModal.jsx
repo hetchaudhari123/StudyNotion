@@ -1,16 +1,16 @@
 import React, { useEffect } from 'react'
-import CTAButton from '../../HomePage/Button'
+import CTAButton from '../../../HomePage/Button'
 import { RxCross1 } from "react-icons/rx";
-import ThumbnailField from './ThumbnailField';
+import ThumbnailField from '../CourseInformation/ThumbnailField';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
-import { addSubSection } from '../../../../services/operations/subSectionAPI';
+import { addSubSection } from '../../../../../services/operations/subSectionAPI';
 import TimeField from './TimeField';
-import { setCourseDetails } from '../../../../redux/slices/courseSlice';
-import Spinner from '../../../common/Spinner';
-import { editSubSection } from '../../../../services/operations/subSectionAPI';
+import { setCourseDetails } from '../../../../../redux/slices/courseSlice';
+import Spinner from '../../../../common/Spinner';
+import { editSubSection } from '../../../../../services/operations/subSectionAPI';
 import { useDispatch, useSelector } from 'react-redux';
-import Upload from './Upload';
+import Upload from '../CourseInformation/Upload';
 const SubSectionModal = ({
   edit = false,
   modal, setModal,

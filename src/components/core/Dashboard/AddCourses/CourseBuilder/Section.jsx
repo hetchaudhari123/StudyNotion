@@ -1,9 +1,9 @@
 import React from 'react'
 import SectionForm from './SectionForm'
-import CTAButton from "../../HomePage/Button"
+import CTAButton from "../../../HomePage/Button"
 import { useDispatch } from 'react-redux';
 import { MdOutlineKeyboardArrowLeft,MdOutlineKeyboardArrowRight } from "react-icons/md";
-import { setEditCourse, setStep } from '../../../../redux/slices/courseSlice';
+import { setEditCourse, setStep } from '../../../../../redux/slices/courseSlice';
 
 const Section = () => {
   const dispatch = useDispatch();

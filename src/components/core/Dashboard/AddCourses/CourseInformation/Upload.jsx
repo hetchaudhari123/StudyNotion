@@ -2,7 +2,7 @@ import React from 'react'
 import { useDropzone } from 'react-dropzone'
 import { useState,useEffect } from 'react'
 import { IoCloudUploadOutline } from "react-icons/io5";
-import Spinner from '../../../common/Spinner';
+import Spinner from '../../../../common/Spinner';
 import { useFormContext } from 'react-hook-form';
 import { Player } from 'video-react';
 const Upload = ({

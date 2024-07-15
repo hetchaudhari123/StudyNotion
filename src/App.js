@@ -18,6 +18,7 @@ import PrivateRoute from "./components/core/Auth/PrivateRoute";
 import Settings from "./components/core/Dashboard/Settings";
 import EnrolledCourses from "./components/core/Dashboard/EnrolledCourses";
 import Wishlist from "./components/core/Dashboard/Wishlist";
+import AddCourses from "./components/core/Dashboard/AddCourses/CourseInformation";
 import MyCourses from "./components/core/Dashboard/MyCourses";
 function App() {
   return (
@@ -68,7 +69,7 @@ function App() {
         <Route path="settings" element={<Settings/>}/>
         <Route path="enrolled-courses" element={<EnrolledCourses/>}/>
         <Route path="wishlist" element={<Wishlist/>}/>
-        <Route path="add-courses" element={<AddCourses/>}/>
+        <Route path="add-course" element={<AddCourses/>}/>
         <Route path="my-courses" element={<MyCourses/>}/>
         </Route>
         <Route path="/*" element={<Error />}></Route>

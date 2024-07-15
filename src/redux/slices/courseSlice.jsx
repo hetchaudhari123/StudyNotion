@@ -23,8 +23,12 @@ export const courseSlice = createSlice({
         addSection:(state,action) => {
             state.courseDetails.courseContent = action.payload;
         },
-        
+        resetCourse:(state,action) => {
+            state.courseStep = 1
+            state.courseDetails = null
+            state.editCourse = false
+        }
     }
 });
-export const {setStep,setCourseDetails,setEditCourse,addSection} = courseSlice.actions;
+export const {resetCourse,setStep,setCourseDetails,setEditCourse,addSection} = courseSlice.actions;
 export default courseSlice.reducer;

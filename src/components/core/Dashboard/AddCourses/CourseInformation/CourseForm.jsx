@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { RiMoneyRupeeCircleFill } from "react-icons/ri";
-import { fetchCategory } from '../../../../services/operations/categoryAPI';
-import Spinner from "../../../common/Spinner"
+import { fetchCategory } from '../../../../../services/operations/categoryAPI';
+import Spinner from "../../../../common/Spinner"
 import { useDispatch } from 'react-redux';
 import TagField from './TagField';
 import ThumbnailField from './ThumbnailField';
 import RequirementsField from './RequirementsField';
-import CTAButton from "../../HomePage/Button"
+import CTAButton from "../../../HomePage/Button"
 import { FaAngleRight } from "react-icons/fa6";
-import { buildCourse } from '../../../../services/operations/courseAPI';
-import { fetchCourseDetails } from '../../../../services/operations/courseAPI';
+import { buildCourse } from '../../../../../services/operations/courseAPI';
+import { fetchCourseDetails } from '../../../../../services/operations/courseAPI';
 import { useSelector } from 'react-redux';
-import { setCourseDetails, setEditCourse, setStep } from '../../../../redux/slices/courseSlice';
-import { updateCourse } from '../../../../services/operations/courseAPI';
+import { setCourseDetails, setEditCourse, setStep } from '../../../../../redux/slices/courseSlice';
+import { updateCourse } from '../../../../../services/operations/courseAPI';
 import Upload from './Upload';
 
 const CourseForm = () => {
