@@ -63,16 +63,16 @@ exports.deleteAccount = async (req, res) => {
         }
         //3 delete the profile
 
-        const profileId = userDetails.additionalDetails;
-        const profileResponse = await Profile.findByIdAndDelete(profileId);
+        // const profileId = userDetails.additionalDetails;
+        // const profileResponse = await Profile.findByIdAndDelete(profileId);
         //BY ME
         //4 delete the courses if the user is a instructor
-        const courseDetails = await Course.find({ instructor: userId });
-        const coursesId = courseDetails.map((a) => a._id);
+        // const courseDetails = await Course.find({ instructor: userId });
+        // const coursesId = courseDetails.map((a) => a._id);
 
-        await CourseProgress.deleteMany({ courseId: { $in: coursesId } });
-        await Course.deleteMany({ _id: { $in: coursesId } });
-        await RatingAndReview.deleteMany({ user: userId });
+        // await CourseProgress.deleteMany({ courseId: { $in: coursesId } });
+        // await Course.deleteMany({ _id: { $in: coursesId } });
+        // await RatingAndReview.deleteMany({ user: userId });
 
         //BY ME ends
         //4 delete the user

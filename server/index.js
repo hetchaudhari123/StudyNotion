@@ -38,6 +38,12 @@ app.get("/", (req, res) => {
 		message:'Your server is up and running....'
 	});
 });
+app.use((err,req,res,next) => {
+	res.status(500).json({
+		success:false,
+		message:err.stack,
+	})
+})
 app.listen(PORT, () => {
 	console.log(`App is running at ${PORT}`)
 })

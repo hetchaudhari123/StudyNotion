@@ -3,6 +3,7 @@ const User = require("../models/User");
 const Course = require('../models/Course');
 const { fileUploader } = require("../utils/uploadFile");
 const Category = require("../models/Category");
+const { SiConcourse } = require("react-icons/si");
 // MINE
 exports.createCourse = async (req, res) => {
     try {
@@ -85,7 +86,7 @@ exports.createCourse = async (req, res) => {
         const categoryResponse = await Category.findByIdAndUpdate(category, {
             $push: { courses: course._id }
         }, { new: true });
-        console.log(categoryResponse);
+        // console.log(categoryResponse);
         return res.status(200).json({
             success: true,
             data: course,
@@ -210,23 +211,23 @@ exports.editCourse = async (req, res) => {
                 message: "The instructor is not registered"
             })
         }
-      if(!status || status === undefined){
-        status = 'Published';
-      }
+    //   if(!status || status === undefined){
+    //     status = 'Published';
+    //   }
         //2.2
-        if (
-            !courseName ||
-            !courseDescription ||
-            !whatYouWillLearn ||
-            !price ||
-            !tag ||
-             !category
-        ) {
-            return res.status(400).json({
-                success: false,
-                message: "All Fields are Mandatory",
-            });
-        }
+        // if (
+        //     !courseName ||
+        //     !courseDescription ||
+        //     !whatYouWillLearn ||
+        //     !price ||
+        //     !tag ||
+        //      !category
+        // ) {
+        //     return res.status(400).json({
+        //         success: false,
+        //         message: "All Fields are Mandatory",
+        //     });
+        // }
          //2.3 validate the courseid
          const course = await Course.findOne({ _id: courseid });
          if (!course) {
@@ -237,56 +238,85 @@ exports.editCourse = async (req, res) => {
          } 
          //2.4
             //2.2 validate the tag
-        const categoryID = category;//tags contain the id of the tag
-        const categoryDetails = await Category.findById(categoryID);
+        if(category){
+        const categoryDetails = await Category.findById(category);
         if (!categoryDetails) {
             return res.status(404).json({
                 success: false,
                 message: "The category is not registered"
             })
+
         }
+        if(category !== course.category){
+            await Category.findByIdAndUpdate(course.category, {
+            $pull: { courses: course._id }
+        }, { new: true });
+            course.category = category
+            await Category.findByIdAndUpdate(category, {
+                $push: { courses: course._id }
+            }, { new: true });
+        }
+    }
             //3 cloudinary insertion
             // console.log('THUMBNAIL IMAGE............');
-            let thumbnailImage = null
+            
             if(thumbnail){
 
-                 thumbnailImage = await fileUploader(thumbnail, process.env.FOLDER_NAME);
-                console.log('THUMBNAIL IMAGE............', thumbnailImage);
+                const thumbnailImage = await fileUploader(thumbnail, process.env.FOLDER_NAME);
+                // console.log('THUMBNAIL IMAGE............', thumbnailImage);
+                course.thumbnail = thumbnailImage.secure_url
             }
-        
+        if(instructions){
+            course.instructions = instructions
+        }
+        if(status){
+            course.status = status
+        }
+        if(tag){
+            course.tag = tag
+        }
+        if(price){
+            course.price = price
+        }
+        if(whatYouWillLearn) course.whatYouWillLearn = whatYouWillLearn
+        if(courseDescription) course.courseDescription = courseDescription
+       
+        if(courseName) course.courseName = courseName
+        await course.save()
         //4 updation into the db
-        const updatedCourse = await Course.findOneAndUpdate(
-            { _id: courseid }, // Filter: find document by courseId
-            {
-                $set: {
-                    courseName,
-                    category: categoryDetails._id,
-                    courseDescription,
-                    instructor: instructorDetails._id,
-                    whatYouWillLearn,
-                    price,
-                    tag,
-                    status,
-                    instructions: instructions,
-                    thumbnail: thumbnailImage ? (thumbnailImage?.secure_url) : (),
-                    Category: categoryDetails._id
-                }
-            },
-            { new: true } // Options: return the updated document
-        );
-        await User.findByIdAndUpdate({
-            _id: instructorDetails._id,
-        }, { $pull: { courses: courseid } }, { new: true });
-        await User.findByIdAndUpdate({
-            _id: instructorDetails._id,
-        }, { $push: { courses: updatedCourse._id } }, { new: true });
-        await Category.findByIdAndUpdate(category, {
-            $pull: { courses: courseid }
-        }, { new: true });
-        const categoryResponse = await Category.findByIdAndUpdate(category, {
-            $push: { courses: updatedCourse._id }
-        }, { new: true });
-        console.log(categoryResponse);
+        // const updatedCourse = await Course.findOneAndUpdate(
+            // { _id: courseid }, // Filter: find document by courseId
+            // {
+                // $set: {
+                    // courseName,
+                    // category: categoryDetails._id,
+                    // courseDescription,
+                    // instructor: instructorDetails._id,
+                    // whatYouWillLearn,
+                    // price,
+                    // tag,
+                    // status,--
+                    // instructions: instructions,//--
+                    // thumbnail: thumbnailImage ? (thumbnailImage?.secure_url) : (),//--
+                    // Category: categoryDetails._id//--
+                // }
+            // },
+            // { new: true } // Options: return the updated document
+        // );
+        
+        // await User.findByIdAndUpdate({
+            // _id: instructorDetails._id,
+        // }, { $pull: { courses: courseid } }, { new: true });
+        // await User.findByIdAndUpdate({
+            // _id: instructorDetails._id,
+        // }, { $push: { courses: updatedCourse._id } }, { new: true });
+        // await Category.findByIdAndUpdate(category, {
+            // $pull: { courses: courseid }
+        // }, { new: true });
+        // const categoryResponse = await Category.findByIdAndUpdate(category, {
+            // $push: { courses: updatedCourse._id }
+        // }, { new: true });
+        // console.log(categoryResponse);
         return res.status(200).json({
             success: true,
             data: course,

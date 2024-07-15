@@ -1,4 +1,7 @@
 const mongoose = require('mongoose');
+const Section = require('./Section');
+const CourseProgress = require('./CourseProgress');
+const RatingAndReview = require('./RatingAndReview');
 const coursesSchema = new mongoose.Schema({
     courseName:{
         type:String
@@ -54,5 +57,14 @@ const coursesSchema = new mongoose.Schema({
 		type: String,
 		enum: ["Draft", "Published"],
 	},
-});
+})
+coursesSchema.pre('remove',async (next) => {
+    try{
+        await Section.deleteMany({ _id: { $in: this.courseContent } })
+        await RatingAndReview.deleteMany({ _id: { $in: this.ratingAndReviews } })
+        next()
+    }catch(err){
+        next(err)
+    }
+})
 module.exports =  mongoose.model("Course",coursesSchema);
