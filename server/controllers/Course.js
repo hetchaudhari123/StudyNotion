@@ -244,7 +244,7 @@ exports.editCourse = async (req, res) => {
             //2.2 validate the tag
        
         if(category){
-            console.log("INSIDE HERE...............................................................")
+            // console.log("INSIDE HERE...............................................................")
             // Error here!
         const categoryDetails = await Category.findById(category);
         if (!categoryDetails) {

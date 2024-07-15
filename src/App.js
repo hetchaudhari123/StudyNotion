@@ -68,6 +68,7 @@ function App() {
         <Route path="settings" element={<Settings/>}/>
         <Route path="enrolled-courses" element={<EnrolledCourses/>}/>
         <Route path="wishlist" element={<Wishlist/>}/>
+        <Route path="add-courses" element={<AddCourses/>}/>
         <Route path="my-courses" element={<MyCourses/>}/>
         </Route>
         <Route path="/*" element={<Error />}></Route>

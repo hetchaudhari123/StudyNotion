@@ -10,14 +10,15 @@ import { useState, useEffect } from 'react';
 import Spinner from '../../../common/Spinner';
 import Section from './Section';
 import { fetchCourse } from '../../../../services/operations/courseAPI';
-const MyCourses = () => {
+import PublishCourse from './PublishCourse';
+const AddCourses = () => {
     const { courseStep } = useSelector(state => state.course); //FOR TESTING
     const dispatch = useDispatch(); // FOR TESTING 
     // FOR TESTING STEP2 -------> REMOVE DURING PRODUCTION
     const [loading, setLoading] = useState(false);
     useEffect(() => {
         dispatch(fetchCourse('66950dbf2a500c89cc92860d', setLoading, false));
-        dispatch(setStep(2));
+        dispatch(setStep(3));
     }, []);
     return (
 
@@ -56,6 +57,9 @@ const MyCourses = () => {
                         {
                             courseStep === 2 && <Section />
                         }
+                        {
+                            courseStep === 3 && <PublishCourse/>
+                        }
 
                     </div>
                 </div>
@@ -70,4 +74,4 @@ const MyCourses = () => {
     )
 }
 
-export default MyCourses
+export default AddCourses
