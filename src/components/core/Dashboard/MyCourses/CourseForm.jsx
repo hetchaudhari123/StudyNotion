@@ -12,9 +12,10 @@ import { FaAngleRight } from "react-icons/fa6";
 import { buildCourse } from '../../../../services/operations/courseAPI';
 import { fetchCourseDetails } from '../../../../services/operations/courseAPI';
 import { useSelector } from 'react-redux';
-import { setEditCourse, setStep } from '../../../../redux/slices/courseSlice';
+import { setCourseDetails, setEditCourse, setStep } from '../../../../redux/slices/courseSlice';
 import { updateCourse } from '../../../../services/operations/courseAPI';
 import Upload from './Upload';
+
 const CourseForm = () => {
     const {
         register,
@@ -58,11 +59,18 @@ const CourseForm = () => {
             // setCategory(formData.get('category'));
             // setImage(formData.get('thumbnailImage'));
             // console.log("COURSE DETAILS....",courseDetails)
+
             setReqList(courseDetails.instructions);//--
             setTagList( courseDetails.tag);//--
             // setValue('requirement', courseDetails.whatYouWillLearn);//--
             setValue('courseTitle', courseDetails.courseName);//--
+            console.log("coursedetails...",courseDetails)
+            console.log("coursedetails...",courseDetails.courseDescription
+            )
             setValue('courseDesc', courseDetails.courseDescription);//--
+            // console.log("DESCRIPTION........",getValues('courseDesc'))
+            // console.log("CATEGORY........",getValues('category'))
+
             setValue('price', courseDetails.price);//--
             setValue('benefit',courseDetails.whatYouWillLearn);//--
             // setValue('tag', JSON.stringify(courseDetails.tag));//--
@@ -74,12 +82,13 @@ const CourseForm = () => {
         }
     }, [])
 
-    const submitHandler = () => {
-        const { benefit, category, courseDec, courseTitle, price, file } = getValues();
+    const submitHandler = async () => {
+        const { benefit, category, courseDesc, courseTitle, price, file } = getValues();
 
         if (!editCourse) {
-            dispatch(buildCourse({
-                courseDescription: courseDec,
+            const result = await (buildCourse({
+                dispatch,
+                courseDescription: courseDesc,
                 whatYouWillLearn: benefit,
                 status: "Draft",
                 courseName: courseTitle,
@@ -90,20 +99,32 @@ const CourseForm = () => {
                 file
             },
                 setLoading, true));
+            if(result){
+                dispatch(setCourseDetails(result))
+                dispatch(setStep(2))
+            }
         }
         else {
-            dispatch(updateCourse({
-                courseDescription: courseDec,
+            const result = await (updateCourse({
+                dispatch,
+                courseDescription: courseDesc,
                 whatYouWillLearn: benefit,
                 status: courseDetails.status,
                 courseName: courseTitle,
                 price,
+                courseDetails,
                 tag: tagList.toString(),
                 category,
                 instructions: reqList.toString(),
                 file:(file && file !== "" ) ? (file) : (null)
             },
                 setLoading, true));
+                if(result){
+                    // dispatch(setCourseDetails(result))
+                    dispatch(setStep(2))
+                    // dispatch(setEditCourse(true))
+                }
+                console.log("RESPONSE FROM UPDATE COURSE....",result)
         }
 
 
@@ -156,8 +177,11 @@ const CourseForm = () => {
                             <textarea
                                 name="courseDesc"
                                 id="courseDesc"
-                                {...register("courseDec", { required: { value: true, message: "Please enter course description" } })}
-                                placeholder='Enter Description'
+                                
+                                {...register("courseDesc", 
+                                    { required: { value: true, 
+                                        message: "Please enter course description" } })}
+                                placeholder={`Enter Description`}
                                 className='p-3 gap-3 rounded-lg 
                         focus:outline-none
                         bg-richblack-700 
@@ -176,9 +200,9 @@ const CourseForm = () => {
                           
                         </div>
                         {
-                                errors.courseDec && (
+                                errors.courseDesc && (
                                     <div className='text-richblack-200'>
-                                        {errors.courseDec.message}
+                                        {errors.courseDesc.message}
                                     </div>
                                 )
                             }
@@ -253,8 +277,9 @@ const CourseForm = () => {
 
 
                             <select
-                                defaultValue={""}
-                                {...register("category", { required: { value: true, message: "Please select a category" } })}
+                                defaultValue={(editCourse) ? (""):(getValues('category'))}
+                                {...register("category", 
+                                    { required: { value: true, message: "Please select a category" } })}
                                 className='w-full bg-richblack-700 focus:outline-none' >
                                 <option value="" disabled>
                                     Choose a Category

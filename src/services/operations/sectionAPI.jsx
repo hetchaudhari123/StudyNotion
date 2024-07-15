@@ -7,13 +7,14 @@ import { fetchCourse } from "./courseAPI"
 import { TbTrack } from "react-icons/tb"
 
 
-export const buildSection = (
-    sectionName,
+export const buildSection = async (
+    {sectionName,
     courseDetails,
+    dispatch},
     setLoading = null,
     printSuccess = true
 ) => {
-    return async (dispatch) => {
+    // return async (dispatch) => {
         let toastId = ""
         if (printSuccess) toastId = toast.loading("Loading...")
         if (printSuccess) setLoading(true)
@@ -26,13 +27,14 @@ export const buildSection = (
                 throw new Error(response.data.message);
             }
             // dispatch(addSection(response.data.updatedCourse.courseContent));
-            dispatch(fetchCourse(courseDetails._id,setLoading,false));
+            await dispatch(fetchCourse(courseDetails._id,setLoading,false));
             if (printSuccess) {
                 setLoading(false);
                 toast.dismiss(toastId);
             }
             if (printSuccess)
                 toast.success("Successfully created the section");
+            return true
         } catch (err) {
             console.log("ERROR FROM THE CREATE SECTION API.......", err);
             if (printSuccess) {
@@ -41,20 +43,22 @@ export const buildSection = (
             }
             if (printSuccess)
                 toast.error("Failed to create the section.");
+            return false
         }
 
-    }
+    // }
 }
 
-export const removeSection = ({
+export const removeSection = async ({
     courseId, sectionId,
+    dispatch,
     setSubSectionId,
     setSectionId
 },
     setModal,
     setLoading = null,
     printSuccess) => {
-    return async (dispatch) => {
+    // return async (dispatch) => {
         let toastId = ""
         if (printSuccess) toastId = toast.loading("Loading...")
         if (printSuccess) setLoading(true)
@@ -78,9 +82,7 @@ export const removeSection = ({
             }
             if (printSuccess)
                 toast.success("Successfully deleted the section");
-            setModal(0);
-            setSectionId(null);
-            setSubSectionId(null);
+            return true
 
         }catch(err){
             console.log('ERROR FROM DELETE SECTION API ....',err);
@@ -90,17 +92,19 @@ export const removeSection = ({
             }
             if (printSuccess)
                 toast.error("Failed to delete the section.");
+            return false
         }
-    }
+    // }
 }
 
-export const editSection = ({sectionId,courseDetails,sectionName,
-    setModal
+export const editSection = async ({sectionId,courseDetails,sectionName,
+    setModal,
+    dispatch
 },
     setLoading = null,
     printSuccess = true
 ) => {
-    return async (dispatch) => {
+    // return async (dispatch) => {
         let toastId = ""
         if (printSuccess) toastId = toast.loading("Loading...")
         if (printSuccess) setLoading(true)
@@ -121,6 +125,7 @@ export const editSection = ({sectionId,courseDetails,sectionName,
             }
             if (printSuccess)
                 toast.success("Successfully edited and saved the section!");
+            return true
         } catch (err) {
             console.log("ERROR FROM THE EDIT SECTION API.......", err);
             if (printSuccess) {
@@ -129,7 +134,8 @@ export const editSection = ({sectionId,courseDetails,sectionName,
             }
             if (printSuccess)
                 toast.error("Failed to edit the section.");
+            return false
         }
 
-    }
+    // }
 }

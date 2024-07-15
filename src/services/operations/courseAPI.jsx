@@ -12,24 +12,25 @@ export const setImageUrl = async (value,obj = null,setImage = null) => {
             // Ensure obj is extensible by creating a new object with existing properties and the new property
             obj = { ...obj, thumbnailImage: reader.result };
         }
-       if(setImage) setImage(reader.result);
+       setImage(reader.result);
     }
     reader.readAsDataURL(value);
 }
-export const formDatatoObject = async (formData) => {
-    const obj = {};
-    formData.forEach((value, key) => {
-        if(key !== 'thumbnailImage')
-        obj[key] = value;
+// export const formDatatoObject = async (formData) => {
+//     const obj = {};
+//     formData.forEach((value, key) => {
+//         if(key !== 'thumbnailImage')
+//         obj[key] = value;
        
-    });
-    await setImageUrl(formData.get('thumbnailImage'),obj);
-    return obj;
-}
-export const buildCourse = ({
+//     });
+//     await setImageUrl(formData.get('thumbnailImage'),obj);
+//     return obj;
+// }
+export const buildCourse = async ({
     courseDescription,
     whatYouWillLearn,
     price,
+    dispatch,
     tag,
     category,
     status,
@@ -37,7 +38,7 @@ export const buildCourse = ({
     file,
     courseName
 }, setLoading, printSuccess = true) => {
-    return async (dispatch) => {
+    // return async (dispatch) => {
         let toastId = ""
         if (printSuccess) toastId = toast.loading("Loading...")
         if (printSuccess) setLoading(true)
@@ -63,16 +64,17 @@ export const buildCourse = ({
             // const formObj = await formDatatoObject(formData);
             // console.log("OBJECT....",formObj);
             // dispatch(setCourseDetails(formObj));
-            dispatch(setCourseDetails(response.data.data));
 
+            dispatch(setCourseDetails(response.data.data))
             if (printSuccess) {
                 setLoading(false);
                 toast.dismiss(toastId);
             }
             if (printSuccess)
                 toast.success("Successfully saved the course");
-            setEditCourse(true);
-            dispatch(setStep(2));
+            // setEditCourse(true);
+            // dispatch(setStep(2));
+            return true
         } catch (err) {
             console.log("ERROR FROM CREATE COURSE API........", err);
             if (printSuccess) {
@@ -81,13 +83,15 @@ export const buildCourse = ({
             }
             if (printSuccess)
                 toast.error("Failed to save the course.");
+            return false
         }
         
-    }
+    // }
 }
-export const updateCourse = (
+export const updateCourse = async (
     {
         courseDescription,
+        dispatch,
         whatYouWillLearn,
         price,
         tag,
@@ -95,52 +99,60 @@ export const updateCourse = (
         status,
         instructions,
         file,
+        courseDetails,
         courseName
     }, setLoading,printSuccess = true
 ) => {
-    return async (dispatch) => {
+    // return async (dispatch) => {
         let toastId = ""
         if (printSuccess) toastId = toast.loading("Loading...")
         if (printSuccess) setLoading(true)
         try {
-    console.log("FORM DATA...",file)
-    console.log("FORM DATA...",courseDescription)
-    console.log("FORM DATA...",whatYouWillLearn)
-    console.log("FORM DATA...",price)
-    console.log("FORM DATA...",tag)
-    console.log("FORM DATA...",category)
-    console.log("FORM DATA...",status)
-    console.log("FORM DATA...",instructions)
-    console.log("FORM DATA...",courseName)
+    // console.log("FORM DATA...",file)
+    // console.log("FORM DATA...",courseDescription)
+    // console.log("FORM DATA...",whatYouWillLearn)
+    // console.log("FORM DATA...",price)
+    // console.log("FORM DATA...",tag)
+    // console.log("FORM DATA...",category)
+    // console.log("FORM DATA...",status)
+    // console.log("FORM DATA...",instructions)
+    // console.log("FORM DATA...",courseName)
+    // console.log("COURSEID.....",courseDetails._id)
             const formData = new FormData();
             formData.append('thumbnailImage', file);
             formData.append('courseDescription', courseDescription);
+            formData.append('courseid', courseDetails._id);
             formData.append('whatYouWillLearn', whatYouWillLearn);
             formData.append('price', price);
             formData.append('tag', tag);
-            formData.append('category', category);
+            formData.append('category', category._id);
             formData.append('status', status);
             formData.append('instructions', instructions);
             formData.append('courseName', courseName);
           
-            const response = await apiConnector('PUT', courseEndpoints.EDIT_COURSE_API, formData, { 'Content-Type': 'multipart/form-data' });
+            const response = await apiConnector('PUT', 
+                courseEndpoints.EDIT_COURSE_API, 
+                formData,
+                 { 'Content-Type': 'multipart/form-data' });
             console.log("RESPONSE FROM THE EDIT COURSE API.....", response);
             if (!response.data.success) {
                 throw new Error(response.data.message);
             }
       
             const responseData = response.data.data;
-            const formObj = await formDatatoObject(formData);
-            console.log("OBJECT....",formObj);
-            dispatch(setCourseDetails(formObj));
-            setEditCourse(true);
-            dispatch(setStep(2));
+            // const formObj = await formDatatoObject(formData);
+            // console.log("OBJECT....",formObj);
+            // dispatch(setCourseDetails(formObj));
+            await dispatch(fetchCourse(courseDetails._id,setLoading,false))
+            // setEditCourse(true);
+            // dispatch(setStep(2));
             if (printSuccess) {
                 setLoading(false);
                 toast.dismiss(toastId);
             }
             if (printSuccess)
                 toast.success("Successfully edited and saved the course");
+            return true
         } catch (err) {
             console.log("ERROR FROM EDIT COURSE API........", err);
             if (printSuccess) {
@@ -150,9 +162,10 @@ export const updateCourse = (
             }
             if (printSuccess)
                 toast.error("Failed to edit the course.");
+            return false
         }
        
-    }
+    // }
 }
 export const fetchCourse = (courseId,setLoading = null , printSuccess = true) => {
     

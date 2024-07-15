@@ -188,6 +188,7 @@ exports.getCourseDetails = async (req, res) => {
 
 exports.editCourse = async (req, res) => {
     try {
+
         //1 fetch the details
         let { courseid, courseName,
             courseDescription,
@@ -198,13 +199,16 @@ exports.editCourse = async (req, res) => {
             status,
             instructions } = req.body;
         const thumbnail = req?.files?.thumbnailImage;
-
+        
+        // console.log("COURSEID.....",courseid)
         //2 validation 
         //2.1 validate the instructor
+
         const instructorID = req.user.id;
         const instructorDetails = await User.findById(instructorID, {
             accountType: "Instructor"
         });
+     
         if (!instructorDetails) {
             return res.status(404).json({
                 success: false,
@@ -229,7 +233,7 @@ exports.editCourse = async (req, res) => {
         //     });
         // }
          //2.3 validate the courseid
-         const course = await Course.findOne({ _id: courseid });
+         const course = await Course.findById(courseid);
          if (!course) {
              return res.status(400).json({
                  success: false,
@@ -238,7 +242,10 @@ exports.editCourse = async (req, res) => {
          } 
          //2.4
             //2.2 validate the tag
+       
         if(category){
+            console.log("INSIDE HERE...............................................................")
+            // Error here!
         const categoryDetails = await Category.findById(category);
         if (!categoryDetails) {
             return res.status(404).json({
@@ -247,16 +254,19 @@ exports.editCourse = async (req, res) => {
             })
 
         }
+        
         if(category !== course.category){
+            
             await Category.findByIdAndUpdate(course.category, {
-            $pull: { courses: course._id }
+            $pull: { courses: courseid }
         }, { new: true });
             course.category = category
             await Category.findByIdAndUpdate(category, {
-                $push: { courses: course._id }
+                $push: { courses: courseid }
             }, { new: true });
         }
     }
+  
             //3 cloudinary insertion
             // console.log('THUMBNAIL IMAGE............');
             
@@ -279,9 +289,13 @@ exports.editCourse = async (req, res) => {
             course.price = price
         }
         if(whatYouWillLearn) course.whatYouWillLearn = whatYouWillLearn
-        if(courseDescription) course.courseDescription = courseDescription
+        if(courseDescription) {
+         
+            course.courseDescription = courseDescription
+        }
        
         if(courseName) course.courseName = courseName
+   
         await course.save()
         //4 updation into the db
         // const updatedCourse = await Course.findOneAndUpdate(
@@ -317,6 +331,7 @@ exports.editCourse = async (req, res) => {
             // $push: { courses: updatedCourse._id }
         // }, { new: true });
         // console.log(categoryResponse);
+        
         return res.status(200).json({
             success: true,
             data: course,
@@ -324,7 +339,7 @@ exports.editCourse = async (req, res) => {
         })
 
     } catch (err) {
-        console.error(err);
+        console.error("ERRRRRRRRRRR........",err);
         return res.status(500).json({
             success: false,
             message: err.message,

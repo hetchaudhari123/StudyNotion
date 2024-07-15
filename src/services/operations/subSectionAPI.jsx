@@ -5,8 +5,9 @@ import toast from "react-hot-toast";
 import { fetchCourse } from "./courseAPI";
 import { fetchAllCourses } from "./courseAPI";
 
-export const addSubSection = (
+export const addSubSection = async (
     {sectionId,
+        dispatch,
     courseId,
     title,
     timeDuration,
@@ -21,19 +22,19 @@ export const addSubSection = (
     setLoading = null,
     printSuccess = true
 ) => {
-    return async (dispatch) => {
-        console.log('SECTION ID..........',sectionId);
+    // return async (dispatch) => {
+        // console.log('SECTION ID..........',sectionId);
         let toastId = ""
         if (printSuccess) toastId = toast.loading("Loading...")
         if (printSuccess) setLoading(true)
         try {
-            console.log({sectionId,
-                courseId,
-                title,
-                timeDuration,
-                description,
-                setCourseDetails,
-                video});
+            // console.log({sectionId,
+            //     courseId,
+            //     title,
+            //     timeDuration,
+            //     description,
+            //     setCourseDetails,
+            //     video});
             const formData = new FormData();
             formData.append('video', video);
             formData.append('timeDuration', timeDuration);
@@ -42,12 +43,12 @@ export const addSubSection = (
             formData.append('sectionId', sectionId);
             const response = await apiConnector('POST',courseEndpoints.CREATE_SUBSECTION_API,
                 formData,{ 'Content-Type': 'multipart/form-data' });
-            console.log('RESPONSE FROM CREATE SUBSECTION API......',response);
+            // console.log('RESPONSE FROM CREATE SUBSECTION API......',response);
             if(!response.data.success){
                 throw new Error(response.data.message);
             }
             // Update Course Details
-            console.log('COURSEID FROM ADD SUBSECTION.....',courseId);
+            // console.log('COURSEID FROM ADD SUBSECTION.....',courseId);
             await dispatch(fetchCourse(courseId,null,false));
            
             if (printSuccess) {
@@ -56,8 +57,8 @@ export const addSubSection = (
             }
             if (printSuccess)  
                 toast.success("Successfully created the lecture");
-              setModal(0);
-              setSectionId(null);
+              
+              return true
         } catch (err) {
             console.log('ERROR FROM CREATE SUBSECION API......',err);
             if (printSuccess) {
@@ -66,18 +67,19 @@ export const addSubSection = (
             }
             if (printSuccess)
                 toast.error("Failed to create the lecture.");
+            return false
         }
-    }
+    // }
 }
-export const editSubSection = ({subSectionId,
+export const editSubSection = async ({subSectionId,
     title,description,
     setSectionId,setModal,
-    setSubSectionId,timeDuration,courseId,
+    setSubSectionId,dispatch,timeDuration,courseId,
 video},
     setLoading = null,
     printSuccess = true
 ) => {
-    return async (dispatch) => {
+    // return async (dispatch) => {
 
         let toastId = ""
         if (printSuccess) toastId = toast.loading("Loading...")
@@ -105,9 +107,7 @@ video},
         }
         if (printSuccess)  
             toast.success("Successfully updated the lecture.");
-          setModal(0);
-          setSectionId(null);
-          setSubSectionId(null);
+         return true
     }catch(err){
         console.log('ERROR FROM UPDATE SUBSECION API.....',err);
         if (printSuccess) {
@@ -116,16 +116,17 @@ video},
         }
         if (printSuccess)
             toast.error("Failed to update the lecture.");
+        return false
     }
+// }
 }
-}
-export const removeSubSection = ({subSectionId,sectionId,
-    setModal,setSectionId,setSubSectionId,courseDetails
+export const removeSubSection = async ({subSectionId,sectionId,
+    dispatch,setModal,setSectionId,setSubSectionId,courseDetails
 },
     setLoading = null,
     printSuccess = true
 ) => {
-    return async (dispatch) => {
+    // return async (dispatch) => {
         let toastId = ""
         if (printSuccess) toastId = toast.loading("Loading...")
         if (printSuccess) setLoading(true)
@@ -148,9 +149,7 @@ export const removeSubSection = ({subSectionId,sectionId,
             }
             if (printSuccess)  
                 toast.success("Successfully deleted the lecture.");
-              setModal(0);
-              setSectionId(null);
-              setSubSectionId(null);
+            return true
 
         }catch(err){
             console.log('ERROR FROM THE DELETE SUB SECTION API......',
@@ -162,6 +161,7 @@ export const removeSubSection = ({subSectionId,sectionId,
             }
             if (printSuccess)
                 toast.error("Failed to delete the lecture.");
+            return false
         }
-    }
+    // }
 }

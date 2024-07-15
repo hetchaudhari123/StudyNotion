@@ -61,13 +61,13 @@ const SubSectionModal = ({
       // setValue('file',subSection.videoUrl);
     }
   }, [])
-  const closeHandler = () => {
-    setModal(0);
-    setSectionId(null);
-    setSubSectionId(null);
+  const resetModal = () => {
+    setModal(0)
+    setSectionId(null)
+    setSubSectionId(null)
   }
   // console.log('COURSEDETAILS FROM SUBSECTION MODAL.......',courseDetails);  
-  const submitHandler =  () => {
+  const submitHandler =  async () => {
     // console.log(getValues());
 console.log("INSIDE SUBMIT HANDLER....");
 
@@ -83,11 +83,12 @@ console.log("INSIDE SUBMIT HANDLER....");
       timeDuration += `${getValues('sec')}s `
     }
     if (!edit) {
-       dispatch(addSubSection({
+       const result = await (addSubSection({
         sectionId,
         setSectionId,
         courseId: courseDetails._id,
         timeDuration,
+        dispatch,
         title: getValues('title'),
         description: getValues('desc'),
         setCourseDetails,
@@ -96,12 +97,16 @@ console.log("INSIDE SUBMIT HANDLER....");
       },
         setLoading
       ));
+      if(result){
+        resetModal()
+      }
     }
     else {
-      console.log("INSIDE THE DISPATCH");
-       dispatch(editSubSection({
+      // console.log("INSIDE THE DISPATCH");
+       const result = await (editSubSection({
         subSectionId, 
         title: getValues('title'), 
+        dispatch,
         description: getValues('desc'),
         setSectionId,
         setModal,
@@ -112,7 +117,11 @@ console.log("INSIDE SUBMIT HANDLER....");
         (getValues('file')):(undefined))
       },
         setLoading,
-        true));
+        true))
+        if(result){
+          resetModal()
+        }
+
     }
 
 
@@ -153,7 +162,7 @@ console.log("INSIDE SUBMIT HANDLER....");
                         (!edit) ? "Adding Lecture" : "Editing Lecture"
                       }
                     </div>
-                    <div className='cursor-pointer' onClick={closeHandler}>
+                    <div className='cursor-pointer' onClick={resetModal}>
                       <RxCross1 />
                     </div>
                   </div>
@@ -352,7 +361,7 @@ console.log("INSIDE SUBMIT HANDLER....");
                     {/* footer */}
 
                     <CTAButton active={false}
-                      onClick={closeHandler}
+                      onClick={resetModal}
                       bgColor={"bg-richblack-700"}>
                       <div className='text-richblack-5
               font-inter text-base 

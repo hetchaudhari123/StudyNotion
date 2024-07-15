@@ -16,6 +16,7 @@ import { removeSubSection } from '../../../../services/operations/subSectionAPI'
 import ConfirmationModal from '../../../common/ConfirmationModal';
 import { removeSection } from '../../../../services/operations/sectionAPI';
 import { editSection } from '../../../../services/operations/sectionAPI';
+// import { editCourse } from '../../../../../server/controllers/Course';
 const SectionForm = () => {
     const {
         register,
@@ -35,28 +36,32 @@ const SectionForm = () => {
     const initialValues = {
         'sectionName': ''
     }
+    const resetModal = () => {
+        setModal(0);
+        setSectionId(null);
+        setSubSectionId(null);
+    }
     const deleteSection = async ({ sectionId }) => {
-        await dispatch(removeSection({
+        const result = await (removeSection({
             courseId: courseDetails._id, 
             sectionId,
+            dispatch,
             setSubSectionId,
             setSectionId
         },
             setModal,
             setLoading,
             true
-        ));
-        console.log('after doing deletion');
+        ))
+        if(result){
+            resetModal()
+        }
     }
 
 
 
 
-    const resetModal = () => {
-        setModal(0);
-        setSectionId(null);
-        setSubSectionId(null);
-    }
+   
     // MODAL
     //1 -> Add Sub Section
     //2 -> Edit Sub Section
@@ -93,17 +98,21 @@ const SectionForm = () => {
         setSubSectionId(subSectionId);
 
     }
-    const deleteSubSection = ({ sectionId, subSectionId }) => {
-        dispatch(removeSubSection({
+    const deleteSubSection = async ({ sectionId, subSectionId }) => {
+        const result = await (removeSubSection({
             sectionId, subSectionId,
             setModal,
+            dispatch,
             setSectionId,
             setSubSectionId,
             courseDetails
         },
             setLoading,
             true
-        ));
+        ))
+        if(result){
+            resetModal()
+        }
     }
     const hideDropDown = (id) => {
         setExpandSection(expandSection.filter((ele) => ele !== id));
@@ -116,23 +125,31 @@ const SectionForm = () => {
             })
         }
     }, [isSubmitSuccessful])
+    // useEffect(() => {
+
+    // },[])
 
 
-    const submitHandler = () => {
+    const submitHandler = async  () => {
         // console.log("EDITED SECTION");
 
         if (modal !== 5) {
 
-            dispatch(buildSection(getValues('sectionName'),
+            const result = await (buildSection({
+                sectionName:getValues('sectionName'),
                 courseDetails,
+                dispatch},
                 setLoading,
-                true));
+                true,
+                
+            ))
         }
         else {
-            dispatch(editSection(
+            const result = await (editSection(
                 {
                     sectionId, 
                     courseDetails,
+                    dispatch,
                     sectionName: getValues('sectionName'),
                     setModal
                 },
