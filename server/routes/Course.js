@@ -9,7 +9,7 @@ const { auth, isInstructor, isStudent, isAdmin } = require('../middlewares/auth'
 // TODO:updateCourseProgress(COMMENT BY ME)
 // TODO:getProgressPercentage(COMMENT BY ME)
 
-const { createCourse, showAllCourses, getCourseDetails, editCourse,getInstructorCourses } = require('../controllers/Course');
+const { createCourse, showAllCourses, getCourseDetails, editCourse,getInstructorCourses, deleteCourse } = require('../controllers/Course');
 const { createRating, getAverageRating, getAllReviews, getAllCourseReviews } = require('../controllers/RatingAndReview');
 const { createSection, updateSection, deleteSection } = require('../controllers/Section');
 const { createSubSection, updateSubSection, deleteSubSection } = require('../controllers/SubSection');
@@ -46,6 +46,7 @@ router.post('/update-section',auth,isInstructor,updateSection);
 // router.post('/delete-section',auth,isInstructor,deleteSection);
 // Define the route with parameters and apply the middleware
 router.post('/delete-section', auth, isInstructor, deleteSection);
+router.delete('/delete-course', auth, isInstructor, deleteCourse);
 
 // createSubSection
 router.post('/create-subsection',auth,isInstructor,createSubSection);

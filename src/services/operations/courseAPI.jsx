@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import apiConnector from "../apiconnector"
 import { courseEndpoints } from "../apis"
 import toast from "react-hot-toast"
@@ -190,6 +190,7 @@ export const fetchCourse = (courseId,setLoading = null , printSuccess = true) =>
             }
             if (printSuccess)
                 toast.success("Successfully edited and saved the course");
+            return true
         }catch(err){
             console.log('ERROR FROM GET COURSE DETAILS API.....',err);
             if (printSuccess) {
@@ -199,6 +200,7 @@ export const fetchCourse = (courseId,setLoading = null , printSuccess = true) =>
             }
             if (printSuccess)
                 toast.error("Failed to edit the course");
+            return false
         }
     }
 }
@@ -257,5 +259,35 @@ export const fetchInstructorCourses = async (setLoading = null,printSuccess = tr
         if (printSuccess)
             toast.error("Failed to fetch the courses.")
         return null
+    }
+}
+export const deleteCourse = async ({dispatch,courseId},setLoading = null,printSuccess = true) => {
+    let toastId = ""
+    if (printSuccess) toastId = toast.loading("Loading...")
+    if (printSuccess) setLoading(true)
+    try{
+        console.log("COURSE ID INSIDE DELETE COURSE.....",courseId)
+        const response = await apiConnector('DELETE',courseEndpoints.DELETE_COURSE_API,{courseId})
+        console.log("RESPONSE FROM DELETE COURSE API.....",response)
+        if(!response.data.success){
+            throw new Error(response.data.message)
+        }
+        dispatch(setCourseDetails(null))
+        if (printSuccess) {
+            setLoading(false)
+            toast.dismiss(toastId)
+        }
+        if (printSuccess)
+            toast.success("Successfully fetched the courses")
+        return true
+    }catch(err){
+        console.log("ERROR FROM DELETE COURSE API.....",err)
+        if (printSuccess) {
+            setLoading(false)
+            toast.dismiss(toastId)
+        }
+        if (printSuccess)
+            toast.error("Failed to fetch the courses.")
+        return false
     }
 }

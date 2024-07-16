@@ -330,3 +330,45 @@ exports.getInstructorCourses = async (req,res) => {
         })
     }
 }
+exports.deleteCourse = async (req,res) => {
+    try{
+        let { courseId } = req.body;
+        const instructorID = req.user.id;
+        const instructorDetails = await User.findById(instructorID, {
+            accountType: "Instructor"
+        });
+    
+        if (!instructorDetails) {
+            return res.status(404).json({
+                success: false,
+                message: "The instructor is not registered"
+            })
+        }
+        
+      
+        const course = await Course.findById(courseId)
+     
+        if (!course) {
+            return res.status(400).json({
+                success: false,
+                message: `The course id ${courseId} doesn't exist.`,
+            })
+        }
+
+        const response = await Course.findByIdAndDelete(courseId)
+
+        
+
+        return res.status(200).json({
+            success: true,
+            message: "Successfully deleted the course",
+        })
+
+    }catch(err){
+        console.error("ERROR FROM DELETE COURSE CONTROLLER........", err);
+        return res.status(500).json({
+            success: false,
+            message: err.message,
+        })
+    }
+}

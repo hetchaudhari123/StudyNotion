@@ -30,5 +30,6 @@ export const courseSlice = createSlice({
         }
     }
 });
+
 export const {resetCourse,setStep,setCourseDetails,setEditCourse,addSection} = courseSlice.actions;
 export default courseSlice.reducer;

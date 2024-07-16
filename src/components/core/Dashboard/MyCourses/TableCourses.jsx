@@ -1,15 +1,27 @@
 import React, { useEffect, useState } from 'react'
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
-import { fetchInstructorCourses } from '../../../../services/operations/courseAPI';
+import { deleteCourse, fetchCourse, fetchInstructorCourses } from '../../../../services/operations/courseAPI';
 import { COURSE_STATUS } from '../../../../utils/constants';
 import { FaCheck } from "react-icons/fa"
 import { FiEdit2 } from "react-icons/fi"
 import { HiClock } from "react-icons/hi"
 import { RiDeleteBin6Line } from "react-icons/ri"
+import { HiCheckCircle } from "react-icons/hi2";
+import { HiMiniClock } from "react-icons/hi2";
+import { HiMiniPencil } from "react-icons/hi2";
+import { FiTrash2 } from "react-icons/fi";
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setEditCourse, setStep } from '../../../../redux/slices/courseSlice';
+import ConfirmationModal from "../../../common/ConfirmationModal"
 const TableCourses = () => {
     const [courses, setCourses] = useState([])
     const [loading, setLoading] = useState(false)
+    const [modal, setModal] = useState(false)
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const TRUNCATE_LENGTH = 120
     const fetchCourses = async () => {
         const result = await fetchInstructorCourses(setLoading, true)
         if (result) {
@@ -17,127 +29,215 @@ const TableCourses = () => {
             console.log("COURSES.....", courses)
         }
     }
-  const TRUNCATE_LENGTH = 30
+    const deleteHandler = async (courseId) => {
+        const result = await deleteCourse({ dispatch, courseId }, null, false)
+        setModal(false)
+        fetchCourses()
+    }
     useEffect(() => {
         fetchCourses()
     }, [])
+
+    const handleEdit = async (courseId) => {
+        const result = await dispatch(fetchCourse(courseId, null, false))
+        if (result) {
+            dispatch(setEditCourse(true))
+            dispatch(setStep(1))
+            navigate("/dashboard/add-course")
+        }
+    }
+    const descriptionHandler = (desc) => {
+        if (desc.length > TRUNCATE_LENGTH)
+             return desc.substring(0, TRUNCATE_LENGTH) + "...";
+        return desc
+        
+    }
     return (
 
 
         <div className='border border-richblack-800
-    rounded-lg'>
+            rounded-lg'>
+            {/* HEADING */}
+            <div className='border-b border-b-text-richblack-800
+                text-richblack-100
+                font-inter text-sm font-medium leading-6 text-left
+                flex flex-row'>
 
-            <Table style={{ borderSpacing: '20px' }} className="">
-                <Thead className="border border-richblack-800">
+                <div className='w-3/4 2/3'>
 
-                <Tr className="flex gap-x-10 rounded-t-md border-b border-b-richblack-800 px-6 py-2">
-            <Th className="flex-1 text-left text-sm font-medium uppercase text-richblack-100 border-2 border-white">
-              Courses
-            </Th>
-            <Th className="text-left text-sm font-medium uppercase text-richblack-100">
-              Duration
-            </Th>
-            <Th className="text-left text-sm font-medium uppercase text-richblack-100">
-              Price
-            </Th>
-            <Th className="text-left text-sm font-medium uppercase text-richblack-100">
-              Actions
-            </Th>
-          </Tr>
+                    <div className='p-4 
+                flex justify-center items-center
+                
+                '>
 
-                </Thead>
-                <Tbody>
-                    {
-                        courses.length > 0 &&
+                        COURSES
+                    </div>
+                </div>
 
-                        courses.map((course) => (
-                            <Tr
-                key={course._id}
-                className="flex gap-x-10 border-b border-richblack-800 px-6 py-8"
-              >
-                <Td className="flex flex-1 gap-x-4">
-                  <img
-                    src={course?.thumbnail}
-                    alt={course?.courseName}
-                    className="h-[148px] w-[220px] rounded-lg object-contain"
-                  />
-                  <div className="flex flex-col justify-between">
-                    <p className="text-lg font-semibold text-richblack-5">
-                      {course.courseName}
-                    </p>
-                    <p className="text-xs text-richblack-300">
-                      {course.courseDescription.split(" ").length >
-                      TRUNCATE_LENGTH
-                        ? course.courseDescription
-                            .split(" ")
-                            .slice(0, TRUNCATE_LENGTH)
-                            .join(" ") + "..."
-                        : course.courseDescription}
-                    </p>
-                    <p className="text-[12px] text-white">
-                      {/* Created: {course.createdAt} */}
-                      Created: PENDING
-                    </p>
-                    {course.status === COURSE_STATUS.DRAFT ? (
-                      <p className="flex w-fit flex-row items-center gap-2 rounded-full bg-richblack-700 px-2 py-[2px] text-[12px] font-medium text-pink-100">
-                        <HiClock size={14} />
-                        Drafted
-                      </p>
-                    ) : (
-                      <p className="flex w-fit flex-row items-center gap-2 rounded-full bg-richblack-700 px-2 py-[2px] text-[12px] font-medium text-yellow-100">
-                        <div className="flex h-3 w-3 items-center justify-center rounded-full bg-yellow-100 text-richblack-700">
-                          <FaCheck size={8} />
+                <div className='p-4  w-1/12 flex justify-center items-center
+                '>
+                    {/* second */}
+                    DURATION
+                </div>
+                <div className='p-4 
+                gap-2.5 w-1/12 flex justify-center items-center
+                '>
+                    {/* third */}
+                    PRICE
+                </div>
+
+                <div className='p-4 gap-2.5 w-1/12 flex justify-center items-center
+                '>
+                    {/* fourth */}
+                    ACTIONS
+                </div>
+            </div>
+            {/* BODY */}
+            <div className='w-full '>
+                {
+                    (!(courses && courses.length > 0)) ? (
+                        <div className='py-10 text-center text-2xl font-medium text-richblack-100 '>
+                            No Content Here
                         </div>
-                        Published
-                      </p>
-                    )}
-                  </div>
-                </Td>
-                <Td className="text-sm font-medium text-richblack-100">
-                  2hr 30min
-                </Td>
-                <Td className="text-sm font-medium text-richblack-100">
-                  ₹{course.price}
-                </Td>
-                <Td className="text-sm font-medium text-richblack-100 ">
-                  <button
-                    disabled={loading}
-                    onClick={() => {
-                      navigate(`/dashboard/edit-course/${course._id}`)
-                    }}
-                    title="Edit"
-                    className="px-2 transition-all duration-200 hover:scale-110 hover:text-caribbeangreen-300"
-                  >
-                    <FiEdit2 size={20} />
-                  </button>
-                  <button
-                    disabled={loading}
-                    onClick={() => {
-                    //   setConfirmationModal({
-                    //     text1: "Do you want to delete this course?",
-                    //     text2:
-                    //       "All the data related to this course will be deleted",
-                    //     btn1Text: !loading ? "Delete" : "Loading...  ",
-                    //     btn2Text: "Cancel",
-                    //     btn1Handler: !loading
-                    //       ? () => handleCourseDelete(course._id)
-                    //       : () => {},
-                    //     btn2Handler: !loading
-                    //       ? () => setConfirmationModal(null)
-                    //       : () => {},
-                    //   })
-                    }}
-                    title="Delete"
-                    className="px-1 transition-all duration-200 hover:scale-110 hover:text-[#ff0000]"
-                  >
-                    <RiDeleteBin6Line size={20} />
-                  </button>
-                </Td>
-              </Tr>
+                    ) : (
+                        courses.map((course) => (
+
+                            modal ? <ConfirmationModal
+                                key={course._id}
+                                text1={`Delete Course ${course.courseName}?`}
+                                text2={`Are you sure you want to delete
+                                ${course.courseName}?All the data regarding it will 
+                                be permanently deleted`}
+                                setModal={setModal}
+                                onClickBtn1={() => { deleteHandler(course._id) }}
+                                onClickBtn2={() => { setModal(false) }}
+                                btn1={"Delete"}
+                                btn2={"Cancel"}
+                            />
+                                :
+                                <div className='
+                             flex flex-row w-full
+                                ' key={course._id}>
+                                    <div className='w-3/4 2/3'>
+                                        <div className='w-full flex flex-row 
+                                    text-richblack-100 p-4 gap-6
+                                     '>
+                                            <div className='flex items-center'>
+                                                <img src={course?.thumbnail} alt={course?.courseName}
+                                                    className='rounded-lg 
+                                            w-[221px] 
+                                            object-contain'/>
+                                            </div>
+                                            <div className=' flex flex-col
+                                            gap-3'>
+                                                {/* content */}
+                                                <div className='gap-2 flex flex-col'>
+                                                    {/* Header */}
+
+                                                    <div className="text-richblack-5
+                                                    font-inter text-xl font-semibold leading-7
+                                                    text-left">
+                                                        {course.courseName}
+                                                    </div>
+
+                                                    <div className='text-richblack-100
+                                                    font-inter text-sm font-normal
+                                                    leading-6 text-left'>
+                                                        {/* This course provides an overview of the design process, design thinking, and basic design principles. */}
+                                                        {
+                                                            descriptionHandler(course.courseDescription)
+                                                        }
+                                                    </div>
+                                                </div>
+
+                                                <div className='text-richblack-25
+                                                font-inter text-xs font-medium leading-5 text-left'>
+                                                    Created: April 27, 2023 | 05:15 PM
+                                                    {course.createdAt}
+                                                </div>
+
+                                                {
+                                                    (course?.status === COURSE_STATUS.PUBLISHED) ? <div className='bg-richblack-700
+                                                    py-0.5 px-2 gap-1.5 rounded-[200px]
+                                                    flex items-center w-fit'>
+                                                        <div className='text-yellow-50
+                                                        text-[12.8px]'>
+                                                            <HiCheckCircle />
+
+                                                        </div>
+                                                        <div className='text-yellow-100
+                                                        font-inter text-xs font-medium leading-5 text-left'>
+                                                            Published
+                                                        </div>
+                                                    </div> :
+                                                        <div className='bg-richblack-700
+                                                        py-0.5 px-2 gap-1.5 rounded-[200px]
+                                                        flex items-center w-fit'>
+                                                            {/* Footer */}
+                                                            <div className='text-pink-100
+                                                        text-[12.8px]'>
+                                                                <HiMiniClock />
+
+                                                            </div>
+                                                            <div className='text-pink-100
+                                        font-inter text-xs font-medium leading-5 text-left
+                                        '>
+                                                                Drafted
+                                                            </div>
+                                                        </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className='text-richblack-100
+                                    font-inter text-sm font-medium leading-6 text-left
+                                    flex items-center
+                                    
+                                    justify-center
+                                    w-1/12'>
+                                        {/* second */}
+                                        {/* ADD THE TOTAL TIME DURATION OF THE COURSE */}
+                                        20h 10m
+                                    </div>
+                                    <div className='text-richblack-100
+                                    font-inter text-sm font-medium leading-6 text-left
+                                    flex items-center
+                                    
+                                    justify-center
+                                    w-1/12
+                                '>
+                                        {/* third */}
+                                        ₹{course?.price}
+                                    </div>
+                                    <div className='text-richblack-100
+                                
+                                    font-inter text-sm font-medium leading-6 text-left
+                                    flex items-center
+                                    
+                                    justify-center
+                                    w-1/12 gap-2.5
+                                    p-4
+                                    cursor-pointer'>
+                                        {/* fourth */}
+                                        <div onClick={() => { handleEdit(course._id) }} className='hover:text-richblue-100
+                                    text-2xl duration-200 transition-all'>
+                                            <HiMiniPencil />
+                                        </div>
+                                        <div onClick={() => setModal(true)} className='hover:text-richblue-100
+                                    text-2xl duration-200 transition-all'>
+                                            <FiTrash2 />
+                                        </div>
+                                    </div>
+
+                                </div>
+
                         ))
-                    }
-                </Tbody>
-            </Table>
+
+                    )
+                }
+
+            </div>
         </div>
     )
 }

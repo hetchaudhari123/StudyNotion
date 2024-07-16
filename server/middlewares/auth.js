@@ -14,11 +14,13 @@ exports.auth = async (req,res,next) => {
             })
         }
         //verfiy
+
         try{
             const decode = jwt.verify(token,process.env.JWT_SECRET);
-            console.log(decode);
+            console.log("DECODING THE TOKEN.....",decode);
             req.user = decode;
         }catch(err){
+            console.log("ERROR FROM VERIFICATION OF THE TOKEN.......",err)
             return res.status(401).json({
                 success:false,
                 message:"Token is invalid"
