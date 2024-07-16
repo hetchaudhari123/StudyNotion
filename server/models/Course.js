@@ -57,9 +57,14 @@ const coursesSchema = new mongoose.Schema({
 		type: String,
 		enum: ["Draft", "Published"],
 	},
+    // createdAt:{
+    //     type:Date,
+    //     default:Date.now()
+    // }
 })
 coursesSchema.pre('remove',async (next) => {
     try{
+        console.log("GETTING REMOVED,THE COURSE.....")
         await Section.deleteMany({ _id: { $in: this.courseContent } })
         await RatingAndReview.deleteMany({ _id: { $in: this.ratingAndReviews } })
         next()

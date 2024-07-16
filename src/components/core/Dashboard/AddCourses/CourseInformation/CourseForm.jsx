@@ -80,6 +80,7 @@ const CourseForm = () => {
             // setValue('courseDesc', courseDetails.description);//--
             // setValue('file',courseDetails.thumbnail);
         }
+        // console.log("CATEGORIES....",getValues('category') === "")
     }, [])
 
     const submitHandler = async () => {
@@ -100,7 +101,7 @@ const CourseForm = () => {
             },
                 setLoading, true));
             if(result){
-                dispatch(setCourseDetails(result))
+                // dispatch(setCourseDetails(result))
                 dispatch(setStep(2))
             }
         }
@@ -277,8 +278,10 @@ const CourseForm = () => {
 
 
                             <select
-                                defaultValue={(editCourse) ? (""):(getValues('category'))}
+                                defaultValue={(!editCourse) ? (""):(getValues('category'))}
+                                // defaultValue={getValues('category')}
                                 {...register("category", 
+
                                     { required: { value: true, message: "Please select a category" } })}
                                 className='w-full bg-richblack-700 focus:outline-none' >
                                 <option value="" disabled>

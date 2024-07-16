@@ -143,6 +143,7 @@ const SectionForm = () => {
                 true,
                 
             ))
+            
         }
         else {
             const result = await (editSection(

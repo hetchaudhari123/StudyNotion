@@ -67,9 +67,9 @@ const SubSectionModal = ({
     setSubSectionId(null)
   }
   // console.log('COURSEDETAILS FROM SUBSECTION MODAL.......',courseDetails);  
-  const submitHandler =  async () => {
+  const submitHandler = async () => {
     // console.log(getValues());
-console.log("INSIDE SUBMIT HANDLER....");
+    console.log("INSIDE SUBMIT HANDLER....");
 
     // console.log('SECTIONID.........',sectionId);
     let timeDuration = "";
@@ -83,7 +83,7 @@ console.log("INSIDE SUBMIT HANDLER....");
       timeDuration += `${getValues('sec')}s `
     }
     if (!edit) {
-       const result = await (addSubSection({
+      const result = await (addSubSection({
         sectionId,
         setSectionId,
         courseId: courseDetails._id,
@@ -97,15 +97,15 @@ console.log("INSIDE SUBMIT HANDLER....");
       },
         setLoading
       ));
-      if(result){
+      if (result) {
         resetModal()
       }
     }
     else {
       // console.log("INSIDE THE DISPATCH");
-       const result = await (editSubSection({
-        subSectionId, 
-        title: getValues('title'), 
+      const result = await (editSubSection({
+        subSectionId,
+        title: getValues('title'),
         dispatch,
         description: getValues('desc'),
         setSectionId,
@@ -113,14 +113,14 @@ console.log("INSIDE SUBMIT HANDLER....");
         setSubSectionId,
         timeDuration,
         courseId: courseDetails._id,
-        video:((getValues('file') !== "" && getValues('file'))?
-        (getValues('file')):(undefined))
+        video: ((getValues('file') !== "" && getValues('file')) ?
+          (getValues('file')) : (undefined))
       },
         setLoading,
         true))
-        if(result){
-          resetModal()
-        }
+      if (result) {
+        resetModal()
+      }
 
     }
 
@@ -133,10 +133,14 @@ console.log("INSIDE SUBMIT HANDLER....");
     (
       <div style={{ backgroundColor: 'rgba(189, 189, 189, 0.9)' }}
         className={`fixed ${true ? ("opacity-100") :
-          ("hidden opacity-0")} top-0 left-0 bottom-0 
-    right-0 transition-all duration-200
+          ("hidden opacity-0")}  transition-all duration-200
+          top-0
+          bottom-0 
+          left-0
+          right-0
     overflow-y-auto 
     flex justify-center 
+    items-center
         p-4
      `}>
         {
@@ -149,7 +153,8 @@ console.log("INSIDE SUBMIT HANDLER....");
                   flex flex-col gap-6 
                   rounded-lg  
                   relative
-                  h-[786px]'>
+                  
+                  w-[665px]'>
 
                 <div className=' w-full rounded-lg text-white'>
                   <div className='rounded-t-lg flex flex-row items-center py-4 px-6 gap-3
@@ -181,18 +186,18 @@ console.log("INSIDE SUBMIT HANDLER....");
                         customClass='md:w-full md:aspect-ratio-video'
                       /> */}
                       <Upload
-                       register={register}
-                       setValue={setValue}
-                       name={'file'}
-                       getValues={getValues}
-                       errors={errors}
-                       clearErrors={clearErrors}
-                       
-                       defaultContent={(edit) ? (
-                         courseDetails.courseContent.find(section => section._id === sectionId).subSection.find(sub => sub._id === subSectionId).videoUrl
-                       ) : (null)
-                      }
-                      video={true}
+                        register={register}
+                        setValue={setValue}
+                        name={'file'}
+                        getValues={getValues}
+                        errors={errors}
+                        clearErrors={clearErrors}
+
+                        defaultContent={(edit) ? (
+                          courseDetails.courseContent.find(section => section._id === sectionId).subSection.find(sub => sub._id === subSectionId).videoUrl
+                        ) : (null)
+                        }
+                        video={true}
                       >
 
                       </Upload>
@@ -245,7 +250,7 @@ console.log("INSIDE SUBMIT HANDLER....");
                         )
                       }
                       <div className='flex flex-col gap-1.5 '>
-                        <div className='flex text-richblack-5 flex-row gap-0.5'>
+                        {/* <div className='flex text-richblack-5 flex-row gap-0.5'>
 
                           <label htmlFor="time" className='text-inter
                     text-sm font-normal leading-6 text-left'>
@@ -257,7 +262,6 @@ console.log("INSIDE SUBMIT HANDLER....");
                         </div>
                         <div className='flex flex-row gap-6'>
                           <div>
-                            {/* Hours */}
 
                             <TimeField time={'hour'}
                               placeholder={'HH'} register={register}
@@ -266,9 +270,8 @@ console.log("INSIDE SUBMIT HANDLER....");
                               getValues={getValues}
                             ></TimeField>
                           </div>
-                        
+
                           <div>
-                            {/* Mins */}
                             <TimeField time={'min'}
                               placeholder={'MM'}
                               register={register}
@@ -277,7 +280,6 @@ console.log("INSIDE SUBMIT HANDLER....");
                               getValues={getValues}></TimeField>
                           </div>
                           <div>
-                            {/* Secs */}
                             <TimeField time={'sec'}
                               placeholder={'SS'}
                               register={register}
@@ -287,15 +289,15 @@ console.log("INSIDE SUBMIT HANDLER....");
                           </div>
                         </div>
                         {
-                (errors.hour && 
-                  errors.sec && 
-                  errors.min
-                ) && (
-                    <div className='text-richblack-200'>
-                        {`Please enter the time limit.`}
-                    </div>
-                )
-            }
+                          (errors.hour &&
+                            errors.sec &&
+                            errors.min
+                          ) && (
+                            <div className='text-richblack-200'>
+                              {`Please enter the time limit.`}
+                            </div>
+                          )
+                        } */}
                       </div>
                     </div>
 
@@ -344,13 +346,13 @@ console.log("INSIDE SUBMIT HANDLER....");
 
                       </div>
                       {
-                (errors.desc
-                ) && (
-                    <div className='text-richblack-200'>
-                        {`Please enter the lecture description`}
-                    </div>
-                )
-            }
+                        (errors.desc
+                        ) && (
+                          <div className='text-richblack-200'>
+                            {`Please enter the lecture description`}
+                          </div>
+                        )
+                      }
                     </div>
 
                   </div>
@@ -375,7 +377,7 @@ console.log("INSIDE SUBMIT HANDLER....");
                       onClick={() => {
                         console.log("hey");
                         handleSubmit(submitHandler)()
-                        }}>
+                      }}>
 
                       <div className='text-richblack-900 
               font-inter text-base 

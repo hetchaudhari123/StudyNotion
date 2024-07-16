@@ -1,8 +1,8 @@
 import React from 'react'
 
-const Header = ({text1,text2}) => {
+const Header = ({text1,text2,customClass=""}) => {
   return (
-    <div className=' flex flex-col py-6 px-6 gap-6 w-full'>
+    <div className={`flex flex-col py-6 px-6 gap-6 w-full ${customClass}`}>
         <div className=' flex flex-col gap-3'>
             <div className='flex flex-row gap-2'>
                

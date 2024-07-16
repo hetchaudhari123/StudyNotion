@@ -202,7 +202,7 @@ exports.editCourse = async (req, res) => {
             instructions } = req.body;
         const thumbnail = req?.files?.thumbnailImage;
     
-        // console.log("COURSEID.....",courseid)
+      
         //2 validation 
         //2.1 validate the instructor
         
@@ -218,27 +218,7 @@ exports.editCourse = async (req, res) => {
             })
         }
         
-        //   if(!status || status === undefined){
-        //     status = 'Published';
-        //   }
-        //2.2
-        // if (
-        //     !courseName ||
-        //     !courseDescription ||
-        //     !whatYouWillLearn ||
-        //     !price ||
-        //     !tag ||
-        //      !category
-        // ) {
-        //     return res.status(400).json({
-        //         success: false,
-        //         message: "All Fields are Mandatory",
-        //     });
-        // }
-        //2.3 validate the courseid
-       
-        // Error here
-        // console.log("COURSEID.......",courseid)
+      
         const course = await Course.findById(courseid)
      
         if (!course) {
@@ -247,7 +227,7 @@ exports.editCourse = async (req, res) => {
                 message: `The course id ${courseid} doesn't exist.`,
             })
         }
-        //2.4
+        
         //2.2 validate the tag
         
         if (category && category !=="undefined") {
@@ -307,40 +287,7 @@ exports.editCourse = async (req, res) => {
         if (courseName && courseName !=="undefined") course.courseName = courseName
        
         await course.save()
-        //4 updation into the db
-        // const updatedCourse = await Course.findOneAndUpdate(
-        // { _id: courseid }, // Filter: find document by courseId
-        // {
-        // $set: {
-        // courseName,
-        // category: categoryDetails._id,
-        // courseDescription,
-        // instructor: instructorDetails._id,
-        // whatYouWillLearn,
-        // price,
-        // tag,
-        // status,--
-        // instructions: instructions,//--
-        // thumbnail: thumbnailImage ? (thumbnailImage?.secure_url) : (),//--
-        // Category: categoryDetails._id//--
-        // }
-        // },
-        // { new: true } // Options: return the updated document
-        // );
-
-        // await User.findByIdAndUpdate({
-        // _id: instructorDetails._id,
-        // }, { $pull: { courses: courseid } }, { new: true });
-        // await User.findByIdAndUpdate({
-        // _id: instructorDetails._id,
-        // }, { $push: { courses: updatedCourse._id } }, { new: true });
-        // await Category.findByIdAndUpdate(category, {
-        // $pull: { courses: courseid }
-        // }, { new: true });
-        // const categoryResponse = await Category.findByIdAndUpdate(category, {
-        // $push: { courses: updatedCourse._id }
-        // }, { new: true });
-        // console.log(categoryResponse);
+       
 
         return res.status(200).json({
             success: true,
@@ -350,6 +297,33 @@ exports.editCourse = async (req, res) => {
 
     } catch (err) {
         console.error("ERRRRRRRRRRR........", err);
+        return res.status(500).json({
+            success: false,
+            message: err.message,
+        })
+    }
+}
+exports.getInstructorCourses = async (req,res) => {
+    try{
+        const instructorID = req.user.id;
+        const instructorDetails = await User.findById(instructorID, {
+            accountType: "Instructor"
+        }).sort({ createdAt: -1 })
+    
+        if (!instructorDetails) {
+            return res.status(404).json({
+                success: false,
+                message: "The instructor is not registered"
+            })
+        }
+        const courses = await Course.find({instructor:instructorID})
+        return res.status(200).json({
+            success: true,
+            data:courses,
+            message: "Successfully fetched the courses of the instructor."
+        })
+    }catch(err){
+        console.error("ERROR FROM GET INSTRUCTOR COURSES........", err);
         return res.status(500).json({
             success: false,
             message: err.message,

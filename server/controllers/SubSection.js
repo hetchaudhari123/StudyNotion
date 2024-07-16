@@ -25,12 +25,12 @@ exports.createSubSection = async (req,res) => {
           console.log(video)
         //3 upload to cloudinary 
         const file = await fileUploader(video,process.env.FOLDER_NAME);
-      console.log(file)
+      // console.log(file)
         //4 insert into the sub-section
         const subSectionDetails = await SubSection.create({
             title,
-            // timeDuration: `${timeDuration ?? file.duration}`,
-            timeDuration: `${timeDuration}`,
+            timeDuration: `${file.duration}`,
+            // timeDuration: `${timeDuration}`,
             description,
             videoUrl:file.secure_url,
         });
@@ -81,7 +81,7 @@ exports.updateSubSection = async (req,res) => {
             // COMMENT THIS BELOW LINE DURING PRODUCTION
             // subSection.timeDuration = `${uploadDetails.duration}`
             // BELOW LINE ONLY FOR TESTING
-            subSection.timeDuration = timeDuration;
+            subSection.timeDuration =  uploadDetails.duration;
           }
       
           await subSection.save()

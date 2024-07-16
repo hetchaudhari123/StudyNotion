@@ -88,14 +88,18 @@ const Upload = ({
                 {
             (previewSrc)? (
               <div className='bg-richblack-700 rounded-lg flex justify-center
-              items-center'>
+              items-center
+              '>
             {
             (!video)
             ?
             (<img
               src={`${previewSrc}`}
               alt={'Thumbnail Image'}
-              className='  text-richblack-5  gap-6 object-contain  
+              className='  text-richblack-5  
+              gap-6 object-contain
+              w-full
+              aspect-video
               '
             />
           ):(
@@ -110,7 +114,8 @@ const Upload = ({
             // <div className="videoDiv xl:w-[50%] mx-auto relative">
               // <div className="xl:video-circle xl:absolute xl:top-[50%] xl:translate-y-[-50%] xl:left-[50%] xl:translate-x-[-50%]"></div>
               <video muted loop className="video relative
-              h-[206px] aspect-video">
+              aspect-video
+              w-full">
                   <source src={previewSrc} type="video/mp4"
                    />
               </video>
@@ -126,7 +131,7 @@ const Upload = ({
                 <div className={` flex flex-col justify-center items-center 
                   rounded-lg gap-2
                    bg-richblack-700 
-                  h-[206px]
+                  
                   w-full aspect-video
                   ${customClass}`}>
 

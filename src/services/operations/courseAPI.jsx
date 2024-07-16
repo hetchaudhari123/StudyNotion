@@ -64,7 +64,7 @@ export const buildCourse = async ({
             // const formObj = await formDatatoObject(formData);
             // console.log("OBJECT....",formObj);
             // dispatch(setCourseDetails(formObj));
-
+            
             dispatch(setCourseDetails(response.data.data))
             if (printSuccess) {
                 setLoading(false);
@@ -229,5 +229,33 @@ export const fetchAllCourses = (setLoading = null,printSuccess = true) => {
             if (printSuccess)
                 toast.error("Failed to edit the course.");
         }
+    }
+}
+export const fetchInstructorCourses = async (setLoading = null,printSuccess = true) => {
+    let toastId = ""
+    if (printSuccess) toastId = toast.loading("Loading...")
+    if (printSuccess) setLoading(true)
+    try{
+        const response = await apiConnector('GET',courseEndpoints.GET_ALL_INSTRUCTOR_COURSES_API)
+        console.log("RESPONSE FROM GET ALL INSTRUCTOR COURSES......",response)
+        if(!response.data.success){
+            throw new Error(response.data.message)
+        }
+        if (printSuccess) {
+            setLoading(false)
+            toast.dismiss(toastId)
+        }
+        if (printSuccess)
+            toast.success("Successfully fetched the courses")
+        return response.data.data
+    }catch(err){
+        console.log("ERROR FROM GET ALL INSTRUCTOR COURSES......",err)
+        if (printSuccess) {
+            setLoading(false)
+            toast.dismiss(toastId)
+        }
+        if (printSuccess)
+            toast.error("Failed to fetch the courses.")
+        return null
     }
 }

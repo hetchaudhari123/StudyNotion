@@ -109,6 +109,7 @@ export const editSection = async ({sectionId,courseDetails,sectionName,
         if (printSuccess) toastId = toast.loading("Loading...")
         if (printSuccess) setLoading(true)
         const courseId = courseDetails._id;
+        console.log("DETAILS....",sectionId,courseDetails,sectionName)
         try {
             const response = await apiConnector('POST', courseEndpoints.UPDATE_SECTION_API,
                 { sectionId,sectionName });
