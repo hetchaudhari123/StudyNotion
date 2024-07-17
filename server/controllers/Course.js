@@ -316,7 +316,12 @@ exports.getInstructorCourses = async (req,res) => {
                 message: "The instructor is not registered"
             })
         }
-        const courses = await Course.find({instructor:instructorID})
+        const courses = await Course.find({instructor:instructorID}).populate({
+            path: "courseContent",
+            populate: ({
+                path: "subSection"
+            })
+        })
         return res.status(200).json({
             success: true,
             data:courses,
@@ -357,7 +362,7 @@ exports.deleteCourse = async (req,res) => {
 
         const response = await Course.findByIdAndDelete(courseId)
 
-        
+
 
         return res.status(200).json({
             success: true,

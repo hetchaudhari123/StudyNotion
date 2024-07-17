@@ -249,6 +249,7 @@ export const fetchInstructorCourses = async (setLoading = null,printSuccess = tr
         }
         if (printSuccess)
             toast.success("Successfully fetched the courses")
+        
         return response.data.data
     }catch(err){
         console.log("ERROR FROM GET ALL INSTRUCTOR COURSES......",err)

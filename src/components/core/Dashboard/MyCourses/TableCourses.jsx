@@ -15,6 +15,8 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setEditCourse, setStep } from '../../../../redux/slices/courseSlice';
 import ConfirmationModal from "../../../common/ConfirmationModal"
+import { formatDate } from '../../../../services/formatDate';
+import { totalDuration } from '../../../../services/totalDuration';
 const TableCourses = () => {
     const [courses, setCourses] = useState([])
     const [loading, setLoading] = useState(false)
@@ -26,7 +28,7 @@ const TableCourses = () => {
         const result = await fetchInstructorCourses(setLoading, true)
         if (result) {
             setCourses(result)
-            console.log("COURSES.....", courses)
+            console.log("COURSES.....", result)
         }
     }
     const deleteHandler = async (courseId) => {
@@ -152,8 +154,8 @@ const TableCourses = () => {
 
                                                 <div className='text-richblack-25
                                                 font-inter text-xs font-medium leading-5 text-left'>
-                                                    Created: April 27, 2023 | 05:15 PM
-                                                    {course.createdAt}
+                                                    {/* Created: April 27, 2023 | 05:15 PM */}
+                                                    Created:{formatDate(course.createdAt)}
                                                 </div>
 
                                                 {
@@ -198,7 +200,8 @@ const TableCourses = () => {
                                     w-1/12'>
                                         {/* second */}
                                         {/* ADD THE TOTAL TIME DURATION OF THE COURSE */}
-                                        20h 10m
+                                        {/* 20h 10m */}
+                                        {totalDuration(course)}
                                     </div>
                                     <div className='text-richblack-100
                                     font-inter text-sm font-medium leading-6 text-left
