@@ -73,7 +73,7 @@ export default function CourseSliderAdv({ courses,delay=null }) {
                             return (
                                 <SwiperSlide
                                     key={index}
-
+                                    // onClick={()}
                                     className='flex 
                 
                 justify-center

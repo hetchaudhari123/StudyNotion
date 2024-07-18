@@ -5,5 +5,5 @@ const router = express.Router();
 // capturePayments
 router.post('/capture-payments',auth,isStudent,capturePayments);
 // verifySignature
-router.post('/verify-signature',verifySignature);
+router.post('/verify-signature',auth,isStudent,verifySignature);
 module.exports = router;
