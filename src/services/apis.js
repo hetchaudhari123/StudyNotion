@@ -62,7 +62,7 @@ export const categories = {
 
 // CATALOG PAGE DATA
 export const catalogData = {
-  CATALOGPAGEDATA_API: BASE_URL + "/course/get-category-page-details",
+  CATALOGPAGEDATA_API: BASE_URL + "/course/category-page-details",
 }
 // CONTACT-US API
 export const contactusEndpoint = {

@@ -20,6 +20,7 @@ export const fetchCategory = (setCategory,setLoading,printSuccess = true) => {
                 toast.dismiss(toastId);
               }
             setCategory(response.data.data);
+            return response.data.data
         }catch(err){
             console.log("ERROR FROM FETCH CATEGORY........",err);
             if(printSuccess){
@@ -28,6 +29,7 @@ export const fetchCategory = (setCategory,setLoading,printSuccess = true) => {
               }
               if(printSuccess)
               toast.error("Failed to fetch the categories.");
+            return null
         }
     }
 }

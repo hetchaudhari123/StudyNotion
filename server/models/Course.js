@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Section = require('./Section');
 const CourseProgress = require('./CourseProgress');
 const RatingAndReview = require('./RatingAndReview');
+const Category = require('./Category');
 const coursesSchema = new mongoose.Schema({
     courseName:{
         type:String
@@ -50,6 +51,7 @@ const coursesSchema = new mongoose.Schema({
             required:true
         }
     ],
+  
     instructions: {
 		type: [String],
 	},
@@ -67,6 +69,8 @@ coursesSchema.pre('remove',async (next) => {
         console.log("GETTING REMOVED,THE COURSE.....")
         await Section.deleteMany({ _id: { $in: this.courseContent } })
         await RatingAndReview.deleteMany({ _id: { $in: this.ratingAndReviews } })
+        await Category.findByIdAndUpdate(this.category, { $pull: { courses: this._id } });
+
         next()
     }catch(err){
         next(err)

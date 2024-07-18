@@ -17,7 +17,9 @@ export default function Navbar() {
         const response = await apiConnector('GET', categories.CATEGORIES_API);
         //Putting a new property of link inside the response.data.data
         const updatedResponse = response.data.data.map((ele, index) => {
-            return { ...ele, link: `${'/catalog/' + ele.name}` }
+            const name = ele.name.replace(/[\s/]+/g, '-').toLowerCase();
+            // return { ...ele, link: `${'/catalog/' + ele.name}` }
+            return { ...ele, link: `${'/catalog/' + name}` }
         })
         // setSubLinks(response.data.data);
         setSubLinks(updatedResponse);

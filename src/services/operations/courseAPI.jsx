@@ -1,8 +1,9 @@
 import { useDispatch, useSelector } from "react-redux"
 import apiConnector from "../apiconnector"
-import { courseEndpoints } from "../apis"
+import { catalogData, courseEndpoints } from "../apis"
 import toast from "react-hot-toast"
 import { setEditCourse,setStep,setCourseDetails } from "../../redux/slices/courseSlice"
+// import { categoryPageDetails } from "../../../server/controllers/Category"
 
 // CREATE_COURSE_API
 export const setImageUrl = async (value,obj = null,setImage = null) => {
@@ -290,5 +291,33 @@ export const deleteCourse = async ({dispatch,courseId},setLoading = null,printSu
         if (printSuccess)
             toast.error("Failed to fetch the courses.")
         return false
+    }
+}
+export const fetchCategoryPageDetails = async ({categoryId},setLoading = null,printSuccess = true) => {
+    let toastId = ""
+    if (printSuccess) toastId = toast.loading("Loading...")
+    if (printSuccess) setLoading(true)
+    try{
+        console.log("CATEGORYID.....",categoryId)
+        const response = await apiConnector('POST',catalogData.CATALOGPAGEDATA_API,{categoryId})
+        if(!response.data.success){
+            throw new Error(response.data.message)
+        }
+        if (printSuccess) {
+            setLoading(false)
+            toast.dismiss(toastId)
+        }
+        if (printSuccess)
+            toast.success("Successfully fetched the courses")
+        return response
+    }catch(err){
+        console.log("ERROR FROM FETCH CATEGORY PAGE DETAILS.....",err)
+        if (printSuccess) {
+            setLoading(false)
+            toast.dismiss(toastId)
+        }
+        if (printSuccess)
+            toast.error("Failed to fetch the courses.")
+        return null
     }
 }
