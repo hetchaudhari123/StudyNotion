@@ -20,6 +20,7 @@ app.use(
 	cors({
 		origin:"http://localhost:3000",
 		credentials:true,
+		allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept'],
 	})
 )
 app.use(fileUpload({
@@ -27,6 +28,13 @@ app.use(fileUpload({
 	tempFileDir:"/tmp",
 }));
 //routes
+// app.use((req, res, next) => {
+//     res.header('Access-Control-Allow-Origin', 'http://localhost:3000'); // Replace with your frontend URL
+//     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+//     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+//     res.header('Access-Control-Allow-Credentials', 'true'); // Required for cookies
+//     next();
+// });
 app.use("/api/v1/auth", userRoutes);
 app.use("/api/v1/profile", profileRoutes);
 app.use("/api/v1/course", courseRoutes);
@@ -38,6 +46,7 @@ app.get("/", (req, res) => {
 		message:'Your server is up and running....'
 	});
 });
+
 app.use((err,req,res,next) => {
 	res.status(500).json({
 		success:false,

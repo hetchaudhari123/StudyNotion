@@ -83,7 +83,6 @@ function App() {
         {/* <Route path="swiper" element={<CourseSliderPrac/>}></Route> */}
         {/* <Route path="side-bar-ref" element={<SidebarRef/>}></Route> */}
         {/* <Route path="side-bar" element={<Sidebar/>}></Route> */}
-        <Route path="/test" element={<Test />}></Route>
         <Route path="/*" element={<Error />}></Route>
       </Routes>
     </div>
