@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import Header from './Header'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getEnrolledCourses } from '../../../services/operations/profileAPI';
 import Spinner from '../../common/Spinner';
 import ProgressBar from "@ramonak/react-progress-bar";
 import CTAButton from "../HomePage/Button"
 import HighlightText from '../HomePage/HighlightText';
 import { formatString } from '../../../services/formatString';
+import { useNavigate } from 'react-router-dom';
+import { fetchCourse } from '../../../services/operations/courseAPI';
 const EnrolledCourses = () => {
     const VALUES = {
         ALL: 'All',
@@ -22,10 +24,16 @@ const EnrolledCourses = () => {
     const [filterSelect, setFilterSelect] = useState(VALUES.ALL);
     const [loading, setLoading] = useState(false);
     const [courses, setCourses] = useState(null);
+    // const [courseDetails,setCourseDetails] = useSelector(state => state.course)
+    const navigate = useNavigate()
+    // const [isNavigate,setIsNavigate] = useState(false)
     const courseProgress = 60;
     useEffect(() => {
-        dispatch(getEnrolledCourses(setLoading, setCourses, false));
+            dispatch(getEnrolledCourses(setLoading, setCourses, false))
     }, []);
+    const handleCourseSelect = async (course) => {
+        navigate(`/view-course/${course._id}/section/${course?.courseContent[0]._id}/sub-section/${course?.courseContent[0]?.subSection[0]._id}`)
+    }
     if (loading) return <Spinner />
     return (
         <div className=''>
@@ -72,12 +80,15 @@ const EnrolledCourses = () => {
                                 courses.length ? (courses.map((ele, index) => {
                                     return (
                                         <div key={index}
-                                            className={`w-full flex flex-row `}>
+                                            className={`w-full flex flex-row`}>
 
                                             {/* <div className={`w-1/3 p-4 gap-5 justify-start  flex flex-row border
                                             border-richblack-700    */}
-                                            <div className={`flex-1 p-4 gap-5 justify-start  flex flex-row border
+                                            <div onClick={() => handleCourseSelect(ele)} className={`flex-1 p-4 cursor-pointer
+                                            
+                                            gap-5 justify-start  flex flex-row border
                                             border-richblack-700   items-center
+                                            
                                             ${(courses.length - 1 === index) && "rounded-bl-lg"}
                                             `}>
 

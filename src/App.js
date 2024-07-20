@@ -10,6 +10,7 @@ import ForgotPassword from "./pages/ForgotPassword";
 import UpdatePassword from "./pages/UpdatePassword";
 import ResetPasswordSuccessful from "./pages/ResetPasswordSuccessful";
 import VerifyEmail from "./pages/VerifyEmail";
+import VideoPage from "./pages/VideoPage";
 import Aboutus from "./pages/Aboutus";
 import Contactus from "./pages/Contactus";
 import Dashboard from "./pages/Dashboard";
@@ -55,6 +56,7 @@ function App() {
           </OpenRoute>
         }></Route>
         <Route path="/reset-password-successful" element={<ResetPasswordSuccessful />}></Route>
+        <Route path="/view-course/:courseId/section/:sectionId/sub-section/:subSectionId" element={<VideoPage />}></Route>
         <Route path="/verify-email" element={<VerifyEmail />}></Route>
         <Route path="/about" element={<Aboutus />}></Route>
         <Route path="/contact" element={<Contactus />}></Route>
