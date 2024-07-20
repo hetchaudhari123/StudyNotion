@@ -30,7 +30,7 @@ app.use(fileUpload({
 app.use("/api/v1/auth", userRoutes);
 app.use("/api/v1/profile", profileRoutes);
 app.use("/api/v1/course", courseRoutes);
-app.use("/api/v1/payments", paymentsRoutes);
+app.use("/api/v1/payment", paymentsRoutes);
 app.use("/api/v1/contactus", contactUsRoutes);
 app.get("/", (req, res) => {
 	return res.json({

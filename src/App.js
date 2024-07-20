@@ -24,6 +24,7 @@ import Catalog from "./pages/Catalog";
 import CourseSliderPrac from "./components/core/Catalog/CourseSliderPrac";
 import Sidebar from "./components/common/Sidebar";
 import SidebarRef from "./components/common/SidebarRef";
+import BuyCourse from "./pages/BuyCourse";
 function App() {
   return (
     <div className="overflow-y-auto w-screen 
@@ -76,11 +77,13 @@ function App() {
         <Route path="add-course" element={<AddCourses/>}/>
         <Route path="my-courses" element={<MyCourses/>}/>
         </Route>
+        <Route path="course/:courseId" element={<BuyCourse/>}/>
         {/* http://localhost:3000/catalog/ai-ml */}
         <Route path="catalog/:catalogName" element={<Catalog/>}></Route>
         {/* <Route path="swiper" element={<CourseSliderPrac/>}></Route> */}
         {/* <Route path="side-bar-ref" element={<SidebarRef/>}></Route> */}
         {/* <Route path="side-bar" element={<Sidebar/>}></Route> */}
+        <Route path="/test" element={<Test />}></Route>
         <Route path="/*" element={<Error />}></Route>
       </Routes>
     </div>

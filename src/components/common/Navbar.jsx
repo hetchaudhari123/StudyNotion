@@ -59,7 +59,7 @@ export default function Navbar() {
 
                                                     {/* </div> */}
                                                     {/* <div className='invisible group-hover:visible text-white absolute'> */}
-                                                    <div className='absolute invisible rounded-md bg-richblack-5 p-4 text-richblack-900  lg:w-[300px] top-0 translate-y-[100%] right-0 translate-x-[6.32rem]  opacity-0  group-hover:visible group-hover:opacity-100 transition-all duration-200 group-hover:translate-y-[2rem]'>
+                                                    <div className='z-10 absolute invisible rounded-md bg-richblack-5 p-4 text-richblack-900  lg:w-[300px] top-0 translate-y-[100%] right-0 translate-x-[6.32rem]  opacity-0  group-hover:visible group-hover:opacity-100 transition-all duration-200 group-hover:translate-y-[2rem]'>
                                                         <div className='select-none bg-richblack-5 rounded absolute h-6 w-6 -z-10  origin-center rotate-45 top-0 right-[6rem] translate-y-[-0.5rem]'>
                                                         </div>
 

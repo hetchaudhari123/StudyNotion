@@ -13,11 +13,17 @@ import RatingStars from './RatingStars'
 import { FaAngleRight } from "react-icons/fa6";
 // import required modules
 import { Autoplay,EffectCoverflow, Pagination } from 'swiper/modules';
+import { useNavigate } from 'react-router-dom';
 
 export default function CourseSliderAdv({ courses,delay=null }) {
+    const navigate = useNavigate()
     const [avgRatingCourse, setAvgRatingCourse] = useState(null)
     const [loading, setLoading] = useState(true)
     const [grabbing,setGrabbing] = useState(false)
+    const courseClickHandler = (course) => {
+        console.log("Course...",course)
+        navigate(`/course/${course._id}`)
+    }
     useEffect(() => {
         // avgRating(course)
         setAvgRatingCourse(courses.map((course) => {
@@ -73,7 +79,7 @@ export default function CourseSliderAdv({ courses,delay=null }) {
                             return (
                                 <SwiperSlide
                                     key={index}
-                                    // onClick={()}
+                                    onClick={() => courseClickHandler(course)}
                                     className='flex 
                 
                 justify-center

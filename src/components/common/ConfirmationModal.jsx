@@ -19,7 +19,8 @@ const ConfirmationModal = ({text1,text2,setModal,onClickBtn1,onClickBtn2,btn1,bt
             {text2}
         </div>
         <div>
-            <div className='flex flex-row justify-evenly '>
+            {/* <div className='flex flex-row justify-evenly '> */}
+            <div className='flex flex-row gap-4 '>
                 <div className=''>
 
                 <CTAButton active={true} onClick={onClickBtn1}

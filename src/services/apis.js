@@ -22,8 +22,8 @@ export const profileEndpoints = {
 // STUDENTS ENDPOINTS
 export const studentEndpoints = {
   COURSE_PAYMENT_API: BASE_URL + "/payment/capture-payments",
-  COURSE_VERIFY_API: BASE_URL + "/payment/verifyPayment",
-  SEND_PAYMENT_SUCCESS_EMAIL_API: BASE_URL + "/payment/sendPaymentSuccessEmail",
+  COURSE_VERIFY_API: BASE_URL + "/payment/verify-payment",
+  SEND_PAYMENT_SUCCESS_EMAIL_API: BASE_URL + "/payment/send-payment-success-email",
 }
 
 // COURSE ENDPOINTS
@@ -76,3 +76,4 @@ export const settingsEndpoints = {
   CHANGE_PASSWORD_API: BASE_URL + "/auth/reset-password",
   DELETE_PROFILE_API: BASE_URL + "/profile/delete-profile",
 }
+

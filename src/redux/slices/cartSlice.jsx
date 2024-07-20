@@ -114,8 +114,7 @@ const cartSlice = createSlice({
                 localStorage.setItem('total',JSON.stringify(state.total));
                 localStorage.setItem('totalItems',JSON.stringify(state.totalItems));
                 localStorage.setItem('cart',JSON.stringify(state.cart));
-                // toast.success("Course added to cart")
-
+                toast.success("Course added to cart")
             }
         },
         removeCart : (state,action) => {
