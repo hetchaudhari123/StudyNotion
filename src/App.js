@@ -30,7 +30,7 @@ function App() {
     <div className="overflow-y-auto w-screen 
     min-h-screen h-[100%] 
     bg-richblack-900 flex flex-col font-inter ">
-      
+
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />}></Route>
@@ -67,19 +67,19 @@ function App() {
 
         <Route path="/dashboard" element={
           <PrivateRoute>
-            <Dashboard/>
+            <Dashboard />
           </PrivateRoute>
-          }>
-        <Route path="my-profile" element={<MyProfile/>}/>
-        <Route path="settings" element={<Settings/>}/>
-        <Route path="enrolled-courses" element={<EnrolledCourses/>}/>
-        <Route path="wishlist" element={<Wishlist/>}/>
-        <Route path="add-course" element={<AddCourses/>}/>
-        <Route path="my-courses" element={<MyCourses/>}/>
+        }>
+          <Route path="my-profile" element={<MyProfile />} />
+          <Route path="settings" element={<Settings />} />
+          <Route path="enrolled-courses" element={<EnrolledCourses />} />
+          <Route path="wishlist" element={<Wishlist />} />
+          <Route path="add-course" element={<AddCourses />} />
+          <Route path="my-courses" element={<MyCourses />} />
         </Route>
-        <Route path="course/:courseId" element={<BuyCourse/>}/>
+        <Route path="course/:courseId" element={<BuyCourse />} />
         {/* http://localhost:3000/catalog/ai-ml */}
-        <Route path="catalog/:catalogName" element={<Catalog/>}></Route>
+        <Route path="catalog/:catalogName" element={<Catalog />}></Route>
         {/* <Route path="swiper" element={<CourseSliderPrac/>}></Route> */}
         {/* <Route path="side-bar-ref" element={<SidebarRef/>}></Route> */}
         {/* <Route path="side-bar" element={<Sidebar/>}></Route> */}

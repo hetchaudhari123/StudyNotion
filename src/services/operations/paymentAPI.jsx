@@ -4,7 +4,7 @@ import rzpLogo from "../../assets/Logo/rzp_logo.png"
 import toast from "react-hot-toast"
 // import mailSender from "../../../server/utils/mailSender"
 // import { courseEnrollmentEmail } from "../../../server/mail/templates/courseEnrollmentEmail"
-export const buyCourse = async ({user,courses,refBtn},setLoading = null,printSuccess = true) => {
+export const buyCourse = async ({user,courses},setLoading = null,printSuccess = true) => {
 
     let toastId = ""
     if(printSuccess) toastId = toast.loading("Loading...")

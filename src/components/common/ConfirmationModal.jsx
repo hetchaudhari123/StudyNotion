@@ -1,6 +1,6 @@
 import React from 'react'
 import CTAButton from '../core/HomePage/Button'
-const ConfirmationModal = ({text1,text2,setModal,onClickBtn1,onClickBtn2,btn1,btn2,customClassBtn1 = "",customClassBtn2 = ""}) => {
+const ConfirmationModal = ({text1,text2,onClickBtn1,onClickBtn2,btn1,btn2,customClassBtn1 = "",customClassBtn2 = ""}) => {
   return (
     <div style={{ backgroundColor: 'rgba(189, 189, 189, 0.9)' }} className={`fixed ("opacity-100")  top-0 left-0 bottom-0 right-0 transition-all duration-200`}>
 
@@ -19,8 +19,9 @@ const ConfirmationModal = ({text1,text2,setModal,onClickBtn1,onClickBtn2,btn1,bt
             {text2}
         </div>
         <div>
+     
             {/* <div className='flex flex-row justify-evenly '> */}
-            <div className='flex flex-row gap-4 '>
+            <div className='flex flex-row gap-4 justify-evenly'>
                 <div className=''>
 
                 <CTAButton active={true} onClick={onClickBtn1}

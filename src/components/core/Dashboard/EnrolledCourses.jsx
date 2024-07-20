@@ -6,6 +6,7 @@ import Spinner from '../../common/Spinner';
 import ProgressBar from "@ramonak/react-progress-bar";
 import CTAButton from "../HomePage/Button"
 import HighlightText from '../HomePage/HighlightText';
+import { formatString } from '../../../services/formatString';
 const EnrolledCourses = () => {
     const VALUES = {
         ALL: 'All',
@@ -53,13 +54,13 @@ const EnrolledCourses = () => {
 
                     <div className='flex w-full justify-between'>
 
-                        <div className='rounded-tl-lg p-4 gap-1 flex justify-center w-1/3 border-b-richblack-700 bg-richblack-700 font-inter text-sm font-medium leading-6 text-left text-richblack-50 '>
+                        <div className='flex-1 rounded-tl-lg p-4 gap-1 flex justify-center w-1/3 border-b-richblack-700 bg-richblack-700 font-inter text-sm font-medium leading-6 text-left text-richblack-50 '>
                             Course Name
                         </div>
                         <div className='p-4 gap-1 flex justify-center w-1/3 border-b-richblack-700 bg-richblack-700 font-inter text-sm font-medium leading-6 text-left text-richblack-50'>
                             Duration
                         </div>
-                        <div className='p-4 gap-1 flex justify-center w-1/3 border-b-richblack-700 bg-richblack-700 font-inter text-sm font-medium leading-6 text-left text-richblack-50 rounded-tr-lg'>
+                        <div className=' p-4 gap-1 flex justify-center w-1/3 border-b-richblack-700 bg-richblack-700 font-inter text-sm font-medium leading-6 text-left text-richblack-50 rounded-tr-lg'>
                             Progress
                         </div>
                     </div>
@@ -73,31 +74,36 @@ const EnrolledCourses = () => {
                                         <div key={index}
                                             className={`w-full flex flex-row `}>
 
-                                            <div className={`w-1/3 p-4 gap-5 justify-start  flex flex-row border
-                                            border-richblack-700  
+                                            {/* <div className={`w-1/3 p-4 gap-5 justify-start  flex flex-row border
+                                            border-richblack-700    */}
+                                            <div className={`flex-1 p-4 gap-5 justify-start  flex flex-row border
+                                            border-richblack-700   items-center
                                             ${(courses.length - 1 === index) && "rounded-bl-lg"}
                                             `}>
 
 
 
                                                 <div className=''>
-                                                    <img className=' object-cover w-[52px] aspect-square rounded-lg text-richblack-5' src={`${ele.thumbnail}`}
+                                                    <img className=' object-contain w-[52px] aspect-square rounded-lg text-richblack-5' src={`${ele.thumbnail}`}
                                                         alt={`${ele.courseName + " course image"} `} />
                                                 </div>
 
-                                                <div className='flex flex-col gap-0.5'>
+                                                <div className='flex flex-col gap-0.5 w-full'>
                                                     <div className='font-inter text-base font-medium text-richblack-5 leading-6 text-left'>{ele.courseName}</div>
 
+                                                    {/* <div className='font-inter text-base font-normal leading-6 text-left text-richblack-300'>{formatString(ele.courseDescription)}</div> */}
                                                     <div className='font-inter text-base font-normal leading-6 text-left text-richblack-300'>{ele.courseDescription}</div>
                                                 </div>
 
                                             </div>
 
+                                            {/* <div className={`w-1/3 p-4 gap-5 border border-richblack-700 font-inter text-base font-medium  leading-6 text-left text-richblack-50 flex justify-center items-center`}> */}
                                             <div className={`w-1/3 p-4 gap-5 border border-richblack-700 font-inter text-base font-medium  leading-6 text-left text-richblack-50 flex justify-center items-center`}>
                                                 {/* Time */}
                                                 2hr 30 mins
                                             </div>
                                             {/* border-bottom: 1px solid #2C333F */}
+                                            {/* <div className={`w-1/3  p-4 gap-5 flex ${(index === courses.length - 1) && "rounded-br-lg"} border border-richblack-700`}> */}
                                             <div className={`w-1/3  p-4 gap-5 flex ${(index === courses.length - 1) && "rounded-br-lg"} border border-richblack-700`}>
                                                 {/* Progress */}
 

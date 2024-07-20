@@ -52,7 +52,7 @@ const BuyCourse = () => {
     }
   }, [courseDetails])
   const clickHandler = () => {
-    buyCourse({ user, refBtn, courses: [courseId] }, setLoading, true)
+    buyCourse({ user, courses: [courseId] }, setLoading, true)
   }
   const collapseHandler = () => {
     setIsActive([])

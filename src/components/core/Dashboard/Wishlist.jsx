@@ -7,20 +7,36 @@ import { FiTrash2 } from 'react-icons/fi'
 import CTAButton from "../../core/HomePage/Button"
 import { removeCart } from '../../../redux/slices/cartSlice'
 import HighlightText from  "../HomePage/HighlightText"
+import { buyCourse } from '../../../services/operations/paymentAPI'
+import { formatString } from '../../../services/formatString'
+import ConfirmationModal from '../../common/ConfirmationModal'
 const Wishlist = () => {
     const { total, totalItems, cart } = useSelector(state => state.cart);
     console.log(total);
     console.log(totalItems);
     console.log(cart);
+    const { user } = useSelector(state => state.profile)
+    const [loading,setLoading] = useState(false)
+    const [confirmationModal,setConfirmationModal] = useState(false)
+    const [removeCourse,setRemoveCourse] = useState(null)
+    // const {user} = useSelector(state => state.auth)
     const avgRating = [];
     const dispatch = useDispatch();
     const fetchAvgRating = async (id) => {
         const res = await fetchAverageRating(id, null, false);
         avgRating.push(res);
     }
-    const removeFromCart = (courseid) => {
-        dispatch(removeCart(courseid));
+
+    const buyCourseHandler = () => {
+    buyCourse({ user, courses: cart }, setLoading, true)
     }
+    const removeHandler = (course) => {
+        // console.log("COURSE INSIDE THE REMOVE HANDLER....",course)
+        setConfirmationModal(true)
+        setRemoveCourse(course)
+    }
+    
+
     // UNCOMMENT THIS TO GET THE DATA
     // useEffect(() => {
     //     cart.forEach(ele => {
@@ -28,7 +44,19 @@ const Wishlist = () => {
     //     });
     // },[]);
     return (
-        <div>
+        (confirmationModal)?(
+            <div>
+                <ConfirmationModal
+                text1={'Remove from Cart'}
+                text2={`Are you sure you want to remove the course ${removeCourse.courseName} from the cart`}
+                onClickBtn1={() => {dispatch(removeCart(removeCourse._id));setConfirmationModal(false)} }
+                onClickBtn2={() => setConfirmationModal(false)}
+                btn1={'Remove'}
+                btn2={'Cancel'}
+                customClassBtn2='bg-richblack-700'
+                />
+            </div>
+        ):<div>
             <Header text1={'Wishlist'} text2={'Wishlist'}></Header>
             {
 
@@ -49,21 +77,21 @@ const Wishlist = () => {
                                     return (
 
 
-                                        <div key={index} className='py-4 border border-richblack-700 flex flex-col md:flex-row px-6 gap-5 rounded-lg'>
+                                        <div key={index} className='py-4 border border-richblack-700 items-center flex flex-col md:flex-row px-6 gap-5 rounded-lg'>
                                             <div>
 
                                                 <img
                                                     src={`${course.thumbnail}`}
                                                     alt={`${course.courseName + " course image"}`}
-                                                    className='object-cover rounded-lg h-[148px] w-[185px]'
+                                                    className='object-contain rounded-lg h-[148px] w-[185px]'
                                                 />
                                             </div>
-                                            <div className="flex flex-col gap-2.5">
+                                            <div className="w-full  flex flex-col gap-2.5">
                                                 <div className='flex flex-col gap-2.5'>
                                                     <div className='flex flex-col gap-2'>
 
                                                         <div className='font-inter text-lg font-medium leading-7 text-left text-richblack-5 '>
-                                                            {course.courseDescription}
+                                                            {formatString(course.courseDescription,30)}
                                                         </div>
 
 
@@ -105,13 +133,14 @@ const Wishlist = () => {
                                             <div className='flex flex-col gap-5'>
                                                 {/* price */}
 
-                                                <div className='cursor-pointer flex items-center p-3 gap-2 rounded-lg border border-richblack-700 bg-richblack-800'>
+                                                <div onClick={() => {removeHandler(course)}} className=' cursor-pointer flex items-center p-3 gap-2 rounded-lg border border-richblack-700 bg-richblack-800
+                                                '>
                                                     <div className=' rounded-full  text-pink-200 text-lg'>
                                                         <FiTrash2 />
                                                     </div>
 
 
-                                                    <div onClick={() => removeFromCart(course._id)} className='text-pink-200 font-inter text-base font-normal leading-6 text-center'>
+                                                    <div  className='text-pink-200 font-inter text-base font-normal leading-6 text-center'>
                                                         Remove
                                                     </div>
                                                 </div>
@@ -129,7 +158,12 @@ const Wishlist = () => {
 
                             </div>
                             {/* Fixed (282px) */}
-                            <div className='w-[282px] mx-auto lg:mx-0'>
+                            {/* <div className='w-[282px] mx-auto lg:mx-0 */}
+                            <div className='w-[282px]  mx-auto 
+                            
+                            
+                            '
+                            > 
                                 <div className='p-6 gap-4 flex flex-col rounded-lg border text-richblack-700 bg-richblack-800'>
                                     <div className='flex flex-col gap-1'>
 
@@ -144,12 +178,30 @@ const Wishlist = () => {
                                 </div> */}
                                     </div>
                                     <div>
-                                        <CTAButton active={true} >
+                                        {/* <CTAButton active={true} >
 
                                             <div className='text-richblack-900 font-inter text-base font-medium leading-6 text-center'>
                                                 Buy Now
                                             </div>
-                                        </CTAButton>
+                                        </CTAButton> */}
+                                         <CTAButton active={true}
+                      bgColor='bg-richblack-800'
+                      onClick={buyCourseHandler}
+                    >
+
+                      <div className='text-richblack-5
+                          font-inter text-base font-medium leading-6
+                          text-center '>
+
+                        <button
+                          // className='bg-white p-4
+                          // w-fit h-fit absolute left-1/2 bottom-1/2 '
+                          className='text-richblack-900 font-inter text-base font-medium leading-6 text-center'
+                        >
+                          Buy Now
+                        </button>
+                      </div>
+                    </CTAButton>
                                     </div>
                                 </div>
                             </div>

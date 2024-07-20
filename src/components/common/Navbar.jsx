@@ -131,13 +131,13 @@ export default function Navbar() {
                                 {/* </div> */}
                                 {/* <div className='border border-richblack-700 bg-richblack-800 px-[12px] py-[8px] rounded-md text-richblack-5 transition-all duration-200'> */}
                                 <div className='flex flex-col justify-center text-2xl   text-richblack-5'>
-                                    <Link to="/login">
+                                    <Link to="/wishlist">
 
                                         <FiShoppingCart />
                                     </Link>
                                 </div>
                                 {/* </div> */}
-                                <Link to="/signup">
+                                <Link to="/dashboard">
                                     <div className='border border-richblack-700 bg-richblack-800 px-[12px] py-[8px] rounded-md text-richblack-5 transition-all duration-200'>
                                         Profile
                                     </div>
