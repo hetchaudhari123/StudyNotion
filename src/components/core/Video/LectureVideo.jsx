@@ -2,13 +2,17 @@ import React, { useEffect,useState } from 'react'
 import { Player } from 'video-react'
 // import "node_modules/video-react/dist/video-react.css";
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import VideoEndModal from './VideoEndModal';
 import Spinner from '../../common/Spinner';
 import { useRef } from 'react';
+import { updateCourseProgress } from '../../../services/operations/courseAPI';
+import toast from 'react-hot-toast';
+import { addCompletedVideos, setCompletedVideos } from '../../../redux/slices/courseProgressSlice';
 const LectureVideo = () => {
-
+    const dispatch = useDispatch()
     const {subSectionId} = useParams()
+    const {sectionId} = useParams()
     const {courseId} = useParams()
     const videoRef = useRef(null)
     const location = useLocation()
@@ -21,6 +25,7 @@ const LectureVideo = () => {
     const [nextSection,setNextSection] = useState(null)
     const [endModal,setEndModal] = useState(false)
     const navigate = useNavigate()
+    const {completedVideos} = useSelector(state => state.courseProgress)
     useEffect(() => {
         const fetch = () => {
            courseDetails.courseContent.forEach(section => {
@@ -103,8 +108,14 @@ const LectureVideo = () => {
             setNextSection(null)
             return 
         }
+
+        const showMarkAsCompletedHandler = () => {
+            completedVideos.includes(subSectionId)
+        }
+
         showPrevHandler()
         showNextHandler()
+        showMarkAsCompletedHandler()
     },[location.pathname])
   
     useEffect(() => {
@@ -137,8 +148,26 @@ const LectureVideo = () => {
         }
     }
 
-    const markAsCompletedHandler = () => {
-        console.log("MARK AS COMPLETED....")
+
+    const markAsCompletedHandler = async () => {
+        // console.log("REF...",videoRef.current)
+        // const subSection = courseDetails.courseContent.filter((section) => {
+        //     const res = section.subSection.find((ss) => {
+        //         if(ss._id === subSectionId){
+        //             return true
+        //         }
+        //     })
+        //     if(res){
+        //         return true
+        //     }
+        // })
+        const section = courseDetails.courseContent.find(section => section._id === sectionId)
+        const subSection = section.subSection.find(ss => ss._id === subSectionId)
+        const courseProgress = await updateCourseProgress({courseId,subSection},setLoading,true)
+        // console.log("COURSE PROGRESS COMPLETED VIDEOS....",courseProgress)
+        console.log("COMPLETED VIDEOS FROM THE UPDATE COURSE PROGRESS API....",courseProgress.completedVideos)
+        dispatch(setCompletedVideos(courseProgress.completedVideos))
+        nextHandler()
         setEndModal(false)
     }
 
@@ -170,6 +199,7 @@ const LectureVideo = () => {
             onClickPlayNext={nextHandler}
             onClickRewatch={rewatchHandler}
             onClickClose={() => {setEndModal(false)}}
+            showMarkAsCompleted = {!completedVideos.includes(subSectionId)}
             showPrev={prevSection && prevSubSection}
             showNext={nextSection && nextSubSection}
             />}

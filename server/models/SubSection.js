@@ -12,6 +12,10 @@ const subSectionSchema = new mongoose.Schema({
     },
    videoUrl:{
     type:String
-   } 
+   },
+   createdAt:{
+    type:Date,
+    default:Date.now(),
+   }
 });
 module.exports =  mongoose.model("SubSection",subSectionSchema);

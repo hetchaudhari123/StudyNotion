@@ -8,7 +8,8 @@ import CTAButton from "../HomePage/Button"
 import HighlightText from '../HomePage/HighlightText';
 import { formatString } from '../../../services/formatString';
 import { useNavigate } from 'react-router-dom';
-import { fetchCourse } from '../../../services/operations/courseAPI';
+import { fetchCourse, fetchCourseProgress } from '../../../services/operations/courseAPI';
+import { formatTime } from '../../../services/formatTime';
 const EnrolledCourses = () => {
     const VALUES = {
         ALL: 'All',
@@ -24,17 +25,63 @@ const EnrolledCourses = () => {
     const [filterSelect, setFilterSelect] = useState(VALUES.ALL);
     const [loading, setLoading] = useState(false);
     const [courses, setCourses] = useState(null);
-    // const [courseDetails,setCourseDetails] = useSelector(state => state.course)
+    const [progPercent,setProgPercent] = useState([])
     const navigate = useNavigate()
-    // const [isNavigate,setIsNavigate] = useState(false)
-    const courseProgress = 60;
     useEffect(() => {
             dispatch(getEnrolledCourses(setLoading, setCourses, false))
     }, []);
+    useEffect(() => {
+        const fetchProgresses = async () => {
+          try {
+            const results = await Promise.all(courses.map(ele => calcProgress(ele)));
+            setProgPercent(results);
+          } catch (error) {
+            console.error("Error fetching progress:", error);
+          }
+        };
+    
+        fetchProgresses();
+      }, [courses]);
     const handleCourseSelect = async (course) => {
         navigate(`/view-course/${course._id}/section/${course?.courseContent[0]._id}/sub-section/${course?.courseContent[0]?.subSection[0]._id}`)
     }
+   
     if (loading) return <Spinner />
+    const totalTimeDuration = (course) => {
+        return Math.round(course.courseContent.reduce((prev,section) => {
+            return prev + section.subSection.reduce((previ,ss) => {
+                return previ + Number(ss.timeDuration)
+            },0)
+        },0))
+    }
+
+    const showCourse = (course,index) => {
+        const percent = (progPercent.length > index) ? (progPercent[index]) : (0)
+        if(percent === 100 ){
+            return filterSelect === VALUES.ALL || filterSelect === VALUES.COMPLETED
+        }
+        return filterSelect === VALUES.ALL || filterSelect === VALUES.PENDING
+        
+    }
+
+    const calcProgress = async (course) => {
+        const completedLectures = await fetchCourseProgress({courseId:course._id},null,false)
+        console.log("START......................")
+        if(null){
+            console.log("RETURNED NULL....")
+            return 0
+        }
+        console.log("COMPLETED LECTURES....",completedLectures.length)
+        const completed = completedLectures.length
+        console.log("COURSE.....",completed)
+        const total = course.courseContent.reduce((prev,section) => {
+            return prev + section.subSection.length
+        },0)
+        console.log((completed * 100) / total)
+        console.log("END............................")
+        return (completed * 100) / total
+    }
+
     return (
         <div className=''>
             <Header text1={"Enrolled Courses"} text2={"Enrolled Courses"}></Header>
@@ -50,7 +97,11 @@ const EnrolledCourses = () => {
 
                         filter.map((ele, index) => (
 
-                            <div key={index} onClick={() => { setFilterSelect(ele.name) }} className={`cursor-pointer py-1.5 px-4 flex gap-2.5 rounded-[100px] ${ele.name === filterSelect ? ("bg-richblack-900 font-inter text-base font-bold leading-6 text-center text-richblack-5 ") : (" font-inter text-base font-medium leading-6 text-center text-richblack-200")}`}>
+                            <div key={index} onClick={() => { setFilterSelect(ele.name) }} 
+                            className={`cursor-pointer py-1.5 px-4 flex 
+                            gap-2.5 rounded-[100px] 
+                            ${ele.name === filterSelect ? ("bg-richblack-900 font-inter text-base font-bold leading-6 text-center text-richblack-5 ") 
+                            : (" font-inter text-base font-medium leading-6 text-center text-richblack-200")}`}>
                                 {ele.name}
                             </div>
                         ))
@@ -79,7 +130,7 @@ const EnrolledCourses = () => {
                             courses ? (
                                 courses.length ? (courses.map((ele, index) => {
                                     return (
-                                        <div key={index}
+                                        showCourse(ele,index) && <div key={index}
                                             className={`w-full flex flex-row`}>
 
                                             {/* <div className={`w-1/3 p-4 gap-5 justify-start  flex flex-row border
@@ -111,7 +162,8 @@ const EnrolledCourses = () => {
                                             {/* <div className={`w-1/3 p-4 gap-5 border border-richblack-700 font-inter text-base font-medium  leading-6 text-left text-richblack-50 flex justify-center items-center`}> */}
                                             <div className={`w-1/3 p-4 gap-5 border border-richblack-700 font-inter text-base font-medium  leading-6 text-left text-richblack-50 flex justify-center items-center`}>
                                                 {/* Time */}
-                                                2hr 30 mins
+                                                {totalTimeDuration(ele)}
+                                                
                                             </div>
                                             {/* border-bottom: 1px solid #2C333F */}
                                             {/* <div className={`w-1/3  p-4 gap-5 flex ${(index === courses.length - 1) && "rounded-br-lg"} border border-richblack-700`}> */}
@@ -121,7 +173,9 @@ const EnrolledCourses = () => {
                                                 <div className='flex flex-col gap-1 w-full '>
                                                     <div className='flex gap-2 text-richblack-50 font-inter text-xs font-semibold leading-5 text-left'>
                                                         {/* Progress Percentage */}
-                                                        Progress<span>{'65%'}</span>
+                                                        Progress<span>
+                                                        {progPercent ? progPercent[index] : "Loading..."}    
+                                                        </span>
                                                     </div>
 
                                                     <div className=' rounded-[200px]  h-2 bg-richblack-700 w-full'>
@@ -129,13 +183,14 @@ const EnrolledCourses = () => {
                                                         {/* <ProgressBar bgColor={`${courseProgress !== 100}?"#47A5C5":"#06D6A0"`} height='8px' 
                                                         animateOnRender={true} completed={courseProgress}
                                                         labelClassName='text-[0px]' /> */}
-                                                        <ProgressBar bgColor={`${courseProgress === 100 ? "#06D6A0" : "#47A5C5"}`} height='8px'
-                                                            animateOnRender={true} completed={courseProgress}
+                                                        <ProgressBar bgColor={`${(progPercent && progPercent[index] === 100) ? "#06D6A0" : "#47A5C5"}`} height='8px'
+                                                            animateOnRender={true} completed={progPercent ? progPercent[index]:0}
                                                             labelClassName='text-[0px]' />
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+                                        
                                     )
                                 })) :
                                     (

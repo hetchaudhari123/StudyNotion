@@ -161,6 +161,12 @@ exports.getEnrolledCourses = async (req, res) => {
                   },
                 },
               })
+        // for(let i = 0 ; i < userDetails.courseContent.length ; i++) {//iterate over all the courses
+        //     let course =  userDetails.courseContent[i]
+        //     for(let j = 0 ; j < course.subSection.length ; j++){     //iterate over all the subSections
+
+        //     }
+        // }
         if (!userDetails) {
             return res.status(400).json({
                 success: false,

@@ -1,9 +1,9 @@
 import React from 'react'
 import CTAButton from "../HomePage/Button"
 import { useRef } from 'react'
-const VideoEndModal = ({onClickPlayNext,onClickMarkAsCompleted,onClickPlayPrev,onClickRewatch,onClickClose,showPrev = true,showNext = true}) => {
+const VideoEndModal = ({onClickPlayNext,onClickMarkAsCompleted,onClickPlayPrev,onClickRewatch,onClickClose,showMarkAsCompleted = true,showPrev = true,showNext = true}) => {
     const data = [
-        {onClick:onClickMarkAsCompleted,content:'Mark As Completed',display:true},
+        {onClick:onClickMarkAsCompleted,content:'Mark As Completed',display:showMarkAsCompleted},
         {onClick:onClickPlayPrev,content:'Play Previous',display:showPrev},
         {onClick:onClickRewatch,content:'Rewatch',display:true},
         {onClick:onClickPlayNext,content:'Play Next',display:showNext},
@@ -11,7 +11,6 @@ const VideoEndModal = ({onClickPlayNext,onClickMarkAsCompleted,onClickPlayPrev,o
     ]
 
     let evenRef = useRef(false)
-    // console.log("EVEN REF START...",evenRef)
   return (
     <div style={{ backgroundColor: 'rgba(189, 189, 189, 0.9)' }} className={`fixed ("opacity-100")  top-0 left-0 bottom-0 right-0 transition-all duration-200`}>
 
@@ -28,9 +27,7 @@ const VideoEndModal = ({onClickPlayNext,onClickMarkAsCompleted,onClickPlayPrev,o
     {
         data.map((ele,index) => {
             if(ele.display){
-                console.log("EVEN REF...",evenRef)
                 evenRef.current = !evenRef.current;
-                console.log("EVEN REF...",evenRef)
             }
             return ( 
             

@@ -298,7 +298,7 @@ export const fetchCategoryPageDetails = async ({categoryId},setLoading = null,pr
     if (printSuccess) toastId = toast.loading("Loading...")
     if (printSuccess) setLoading(true)
     try{
-        console.log("CATEGORYID.....",categoryId)
+        // console.log("CATEGORYID.....",categoryId)
         const response = await apiConnector('POST',catalogData.CATALOGPAGEDATA_API,{categoryId})
         if(!response.data.success){
             throw new Error(response.data.message)
@@ -320,4 +320,63 @@ export const fetchCategoryPageDetails = async ({categoryId},setLoading = null,pr
             toast.error("Failed to fetch the courses.")
         return null
     }
+}
+
+
+export const fetchCourseProgress = async ({courseId},setLoading = null,printSuccess = true) => {
+    let toastId = ""
+    if (printSuccess) toastId = toast.loading("Loading...")
+    if (printSuccess) setLoading(true)
+    try{
+        const response = await apiConnector('POST',courseEndpoints.GET_COURSE_PROGRESS,{courseId})
+        console.log("RESPONSE FROM GET COURSE PROGRESS API.......",response)
+        if(!response.data.success){
+            throw new Error(response.data.message)
+        }
+        if (printSuccess) {
+            setLoading(false)
+            toast.dismiss(toastId)
+        }
+        if (printSuccess)
+            toast.success("Successfully fetched the course progress")
+        return response.data.data
+    }catch(err){
+        console.log("ERROR FROM GET COURSE PROGRESS API.....",err)
+        if (printSuccess) {
+            setLoading(false)
+            toast.dismiss(toastId)
+        }
+        if (printSuccess)
+            toast.error("Failed to fetch the course progress.")
+    }
+    return null
+}
+
+export const updateCourseProgress = async ({courseId,subSection},setLoading = null,printSuccess = true) => {
+    let toastId = ""
+    if (printSuccess) toastId = toast.loading("Loading...")
+    if (printSuccess) setLoading(true)
+    try{
+        const response = await apiConnector('POST',courseEndpoints.UPDATE_COURSE_PROGRESS_API,{courseId,subSection})
+        console.log("RESPONSE FROM UPDATE COURSE PROGRESS API.....",response)
+        if(!response.data.success){
+            throw new Error(response.data.message)
+        }
+        if (printSuccess) {
+            setLoading(false)
+            toast.dismiss(toastId)
+        }
+        if (printSuccess)
+            toast.success("Successfully updated the course progress")
+        return response.data.data
+    }catch(err){
+        console.log("ERROR FROM UPDATE COURSE PROGRESS....",err)
+        if (printSuccess) {
+            setLoading(false)
+            toast.dismiss(toastId)
+        }
+        if (printSuccess)
+            toast.error("Failed to update the course progress.")
+    }
+    return null
 }

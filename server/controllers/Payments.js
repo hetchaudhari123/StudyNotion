@@ -5,7 +5,8 @@ const { instance } = require('../config/razorpay');
 const mailSender = require('../utils/mailSender');
 const {courseEnrollmentEmail} = require('../mail/templates/courseEnrollmentEmail');
 const { v4: uuidv4 } = require('uuid');
-const crypto = require('crypto')
+const crypto = require('crypto');
+const CourseProgress = require('../models/CourseProgress');
 // exports.capturePayments = async (req, res) => {
 //     try {
 //         //1 fetch the details (CourseID,UserID)
@@ -204,6 +205,13 @@ exports.enrollStudent = async (userId,courses,res) => {
                 // })
                 return false
             }
+
+
+
+            // Initialise the Course Progress
+            const courseProgress = await CourseProgress.create({courseID:course_id,userId,completedVideos:[]})
+            await User.findByIdAndUpdate(userId,{$push:{courseProgress:courseProgress}})
+
             // console.log("CORUSE ENROLLMENTS....",courseEnrollmentEmail(course.courseName,user.firstName))
             const emailResponse = await mailSender(
                 user.email,

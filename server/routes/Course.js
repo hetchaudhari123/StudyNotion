@@ -9,7 +9,7 @@ const { auth, isInstructor, isStudent, isAdmin } = require('../middlewares/auth'
 // TODO:updateCourseProgress(COMMENT BY ME)
 // TODO:getProgressPercentage(COMMENT BY ME)
 
-const { createCourse, showAllCourses, getCourseDetails, editCourse,getInstructorCourses, deleteCourse } = require('../controllers/Course');
+const { createCourse, showAllCourses, getCourseDetails, editCourse,getInstructorCourses, deleteCourse, getCourseProgress, updateCourseProgress } = require('../controllers/Course');
 const { createRating, getAverageRating, getAllReviews, getAllCourseReviews } = require('../controllers/RatingAndReview');
 const { createSection, updateSection, deleteSection } = require('../controllers/Section');
 const { createSubSection, updateSubSection, deleteSubSection } = require('../controllers/SubSection');
@@ -54,6 +54,8 @@ router.post('/create-subsection',auth,isInstructor,createSubSection);
 router.post('/update-subsection',auth,isInstructor,updateSubSection);
 // deleteSubSection
 router.post('/delete-subsection',auth,isInstructor,deleteSubSection);
+router.post('/get-course-progress',auth,getCourseProgress);
+router.post('/update-course-progress',auth,updateCourseProgress);
 router.put('/edit-course',auth,isInstructor,editCourse);
 router.get('/get-instructor-courses',auth,isInstructor,getInstructorCourses);
 module.exports = router;
