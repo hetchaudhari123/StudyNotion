@@ -16,6 +16,7 @@ import Contactus from "./pages/Contactus";
 import Dashboard from "./pages/Dashboard";
 import MyProfile from "./components/core/Dashboard/MyProfile";
 import PrivateRoute from "./components/core/Auth/PrivateRoute";
+import VideoContent from "./components/core/Video/VideoContent";
 import Settings from "./components/core/Dashboard/Settings";
 import EnrolledCourses from "./components/core/Dashboard/EnrolledCourses";
 import Wishlist from "./components/core/Dashboard/Wishlist";
@@ -26,6 +27,8 @@ import CourseSliderPrac from "./components/core/Catalog/CourseSliderPrac";
 import Sidebar from "./components/common/Sidebar";
 import SidebarRef from "./components/common/SidebarRef";
 import BuyCourse from "./pages/BuyCourse";
+import VideoSideBar from "./components/core/Video/VideoSideBar";
+import LectureVideo from "./components/core/Video/LectureVideo";
 function App() {
   return (
     <div className="overflow-y-auto w-screen 
@@ -56,7 +59,6 @@ function App() {
           </OpenRoute>
         }></Route>
         <Route path="/reset-password-successful" element={<ResetPasswordSuccessful />}></Route>
-        <Route path="/view-course/:courseId/section/:sectionId/sub-section/:subSectionId" element={<VideoPage />}></Route>
         <Route path="/verify-email" element={<VerifyEmail />}></Route>
         <Route path="/about" element={<Aboutus />}></Route>
         <Route path="/contact" element={<Contactus />}></Route>
@@ -66,7 +68,16 @@ function App() {
         {/* </Route>
          */}
         {/* <Route path="/dashboard/my-profile" element={<Dashboard />} /> */}
-
+        {/* <Route path="/view-course/:courseId/section/:sectionId/sub-section/:subSectionId" 
+            element={<VideoPage />}></Route> */}
+          <Route path="view-course" element={<VideoPage/>}>
+            <Route path=":courseId/section/:sectionId/sub-section/:subSectionId" 
+            element={<VideoContent/>}>
+            </Route>
+          </Route>
+          {/* <Route path=":courseId/section/:sectionId/sub-section/:subSectionId"
+          element={VideoContent}/>
+          </Route> */}
         <Route path="/dashboard" element={
           <PrivateRoute>
             <Dashboard />

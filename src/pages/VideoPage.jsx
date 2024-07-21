@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+// import { fetchCourse } from '../services/operations/courseAPI'
 import { fetchCourse } from '../services/operations/courseAPI'
 import { useLocation, useParams } from 'react-router-dom'
 import VideoSideBar from '../components/core/Video/VideoSideBar'
 import Spinner from '../components/common/Spinner'
+import LectureVideo from '../components/core/Video/LectureVideo'
+import { Outlet } from 'react-router-dom'
+import VideoDescription from '../components/core/Video/VideoDescription'
 const VideoPage = () => {
     const courseDetails = useSelector(state => state.course)
     const dispatch = useDispatch()
@@ -11,8 +15,11 @@ const VideoPage = () => {
     const [loading,setLoading] = useState(true)
     const location = useLocation()
     useEffect(() => {
-        dispatch(fetchCourse(courseId,null,false))
-        setLoading(false)
+        const fetch = async () => {
+            await dispatch(fetchCourse(courseId,null,false))
+            setLoading(false)
+        }
+        fetch()
     },[location.pathname])
   return (
     (loading) ? (
@@ -21,13 +28,21 @@ const VideoPage = () => {
             <Spinner></Spinner>
         </div>
     ) :
-    (<div className='flex flex-row'>
+    (<div className='flex flex-row  flex-1
+        gap-4  
+    '>
         
         {/* Sidebar */}
+        <div className='w-[150px] xl:w-[300px]'>
         <VideoSideBar></VideoSideBar>
-        <div>
+        </div>
+        <div className='flex-1 flex flex-col gap-2 
+        
+        '>
+           
         {/* Video */}
-        {/* Video Description */}
+
+      <Outlet/>
         </div>
     </div>
     )
