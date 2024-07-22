@@ -5,6 +5,7 @@ import ReactStars from 'react-stars';
 import { useForm } from 'react-hook-form';
 import { buildRating } from '../../../services/operations/courseAPI';
 import { useParams } from 'react-router-dom';
+import Spinner from '../../common/Spinner';
 import { useSelector } from 'react-redux';
 const ReviewModal = ({
     setReviewModal}) => {
@@ -25,8 +26,6 @@ const ReviewModal = ({
     // console.log("USER....",user.image)
 
     const {courseDetails} = useSelector(state => state.course)
-    const [loading,setLoading] = useState(false)
-    const [rating,setRating] = useState(0)
 
     const submitHandler = async () => {
         // console.log("RATING.....",getValues('rating'))
@@ -37,6 +36,7 @@ const ReviewModal = ({
 
 
   return (
+    (courseDetails) ? 
     <div style={{ backgroundColor: 'rgba(189, 189, 189, 0.9)' }} className={`fixed ("opacity-100")  top-0 left-0 bottom-0 right-0 transition-all duration-200`}>
 
     <div className='bg-richblack-800 
@@ -141,7 +141,13 @@ const ReviewModal = ({
         </div>
        
     </div>
-    </div>
+    </div> : (
+        <div>
+            <Spinner>
+
+            </Spinner>
+        </div>
+    )
   )
 }
 

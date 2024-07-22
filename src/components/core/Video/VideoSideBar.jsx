@@ -9,7 +9,7 @@ import { HiTv } from "react-icons/hi2";
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { FaPlay } from "react-icons/fa";
 import { setCompletedVideos } from '../../../redux/slices/courseProgressSlice';
-import { fetchCourseProgress } from '../../../services/operations/courseAPI';
+import { fetchCourse, fetchCourseProgress } from '../../../services/operations/courseAPI';
 import CTAButton from "../HomePage/Button"
 import ReviewModal from './ReviewModal';
 const VideoSideBar = ({ reviewModal, setReviewModal }) => {
@@ -23,26 +23,21 @@ const VideoSideBar = ({ reviewModal, setReviewModal }) => {
     const { sectionId } = useParams()
     const { subSectionId } = useParams()
     const { courseId } = useParams()
-    const [loading, setLoading] = useState(true)
     const navigate = useNavigate()
     const selectVideoHandler = (sectionId, subSectionId) => {
         navigate(`/view-course/${courseId}/section/${sectionId}/sub-section/${subSectionId}`)
     }
 
     useEffect(() => {
-        const fetch = async () => {
-            const completedVideos = await fetchCourseProgress({ courseId }, null, false)
-            dispatch(setCompletedVideos(completedVideos))
-            setLoading(false)
-        }
         setCurrentVideo(subSectionId)
         setCurrentSection(sectionId)
-        fetch()
+
     }, [location.pathname])
     const isActiveHandler = (sectionId) => {
         !isActive.includes(sectionId) ?
             setIsActive([...isActive, sectionId]) : setIsActive(isActive.filter(ele => ele !== sectionId))
     }
+
 
     return (
 
@@ -77,7 +72,7 @@ const VideoSideBar = ({ reviewModal, setReviewModal }) => {
                         {/* Heading */}
                         <div>
                             {/* CourseName */}
-                            {courseDetails.courseName}
+                            {courseDetails ? courseDetails.courseName : "Loading"}
                         </div>
                         <div className='font-inter text-sm font-semibold leading-6
                         text-left text-richblack-500
@@ -85,7 +80,7 @@ const VideoSideBar = ({ reviewModal, setReviewModal }) => {
                         '>
                             {/* Completed lectures */}
                             {
-                                loading ? ("Loading") :
+                                (!completedVideos || !courseDetails) ? ("Loading") :
                                     <div>
                                         {completedVideos.length} /
                                         {courseDetails.courseContent.reduce((prev, section) => {
@@ -109,7 +104,10 @@ const VideoSideBar = ({ reviewModal, setReviewModal }) => {
             {/* Sections */}
             <div>
                 {
-
+                    !courseDetails ? (
+                        <div className='text-richblack-5'>
+                            Loading
+                        </div>) :
                     courseDetails.courseContent.map((section) => (
                         <div key={section._id}>
 

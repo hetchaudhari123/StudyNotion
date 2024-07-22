@@ -33,6 +33,7 @@ import ReviewModal from "./components/core/Video/ReviewModal";
 import { useState } from "react";
 import ReviewSlider from "./components/common/ReviewSlider";
 import InstructorDashboard from "./components/core/Dashboard/InstructorDashboard/InstructorDashboard";
+import PieChart from "./components/core/Dashboard/InstructorDashboard/PieChart";
 function App() {
 
   return (
@@ -102,6 +103,7 @@ function App() {
         {/* http://localhost:3000/catalog/ai-ml */}
         <Route path="catalog/:catalogName" element={<Catalog />}></Route>
         <Route path="/slider" element={<ReviewSlider />}></Route>
+        <Route path="/pie" element={<PieChart />}></Route>
         
         {/* <Route path="swiper" element={<CourseSliderPrac/>}></Route> */}
         {/* <Route path="side-bar-ref" element={<SidebarRef/>}></Route> */}

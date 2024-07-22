@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import VideoEndModal from './VideoEndModal';
 import Spinner from '../../common/Spinner';
 import { useRef } from 'react';
-import { updateCourseProgress } from '../../../services/operations/courseAPI';
+import { fetchCourse, fetchCourseProgress, updateCourseProgress } from '../../../services/operations/courseAPI';
 import toast from 'react-hot-toast';
 import { addCompletedVideos, setCompletedVideos } from '../../../redux/slices/courseProgressSlice';
 const LectureVideo = () => {
@@ -26,23 +26,22 @@ const LectureVideo = () => {
     const [endModal,setEndModal] = useState(false)
     const navigate = useNavigate()
     const {completedVideos} = useSelector(state => state.courseProgress)
+
+
+ 
+
+
     useEffect(() => {
         const fetch = () => {
-           courseDetails.courseContent.forEach(section => {
-                section.subSection.forEach(ss => {
-                    if(ss._id === subSectionId){
-                        console.log("THE LECTURE....",ss)
-                        setLecture(ss)
-                    }
-                })
-           })
-           setLoading(false)
-        }
-
-        fetch()
-
-    },[location.pathname])
-    useEffect(() => {
+            courseDetails.courseContent.forEach(section => {
+                 section.subSection.forEach(ss => {
+                     if(ss._id === subSectionId){
+                         console.log("THE LECTURE....",ss)
+                         setLecture(ss)
+                     }
+                 })
+            })
+         }
         const showPrevHandler = () => {
             for(let i = 0 ; i < courseDetails.courseContent.length ; i++){
                 for(let j = 0 ; j < courseDetails.courseContent[i].subSection.length ; j++){
@@ -77,6 +76,7 @@ const LectureVideo = () => {
             // return null
         }
         const showNextHandler = () => {
+            
             for(let i = 0 ; i < courseDetails.courseContent.length ; i++){
                 for(let j = 0 ; j < courseDetails.courseContent[i].subSection.length ; j++){
                     if(courseDetails.courseContent[i].subSection[j]._id === subSectionId){
@@ -113,18 +113,22 @@ const LectureVideo = () => {
             completedVideos.includes(subSectionId)
         }
 
-        showPrevHandler()
-        showNextHandler()
-        showMarkAsCompletedHandler()
-    },[location.pathname])
+        if(courseDetails && completedVideos){
+            fetch()
+            showPrevHandler()
+            showNextHandler()
+            showMarkAsCompletedHandler()
+            setLoading(false)
+        }
+    },[completedVideos,courseDetails])
   
-    useEffect(() => {
-        console.log("SUB SECTION ID....",subSectionId)
-        console.log("PREV SECTION......",prevSection)
-        console.log("PREV SUB SECTION......",prevSubSection)
-        console.log("NEXT SECTION......",nextSection)
-        console.log("NEXT SUB SECTION......",nextSubSection)
-    },[prevSection,nextSection,prevSubSection,nextSubSection])
+    // useEffect(() => {
+    //     console.log("SUB SECTION ID....",subSectionId)
+    //     console.log("PREV SECTION......",prevSection)
+    //     console.log("PREV SUB SECTION......",prevSubSection)
+    //     console.log("NEXT SECTION......",nextSection)
+    //     console.log("NEXT SUB SECTION......",nextSubSection)
+    // },[prevSection,nextSection,prevSubSection,nextSubSection])
    
 
     const prevHandler = () => {
@@ -173,11 +177,11 @@ const LectureVideo = () => {
 
 
   return (
-    (loading) ? (
-        <div className=' h-full '>
-            <Spinner></Spinner>
-        </div>
-    ) : (
+  (!courseDetails || !completedVideos || loading) ? (
+    <div>
+        <Spinner></Spinner>
+    </div>
+  ) : (
     <div
     //  style={{ width: 'calc(100% - )' }}
      className='

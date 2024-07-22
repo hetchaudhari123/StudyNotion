@@ -20,6 +20,10 @@ export default function CourseCard({ courses }) {
     const [avgRatingCourse, setAvgRatingCourse] = useState(null)
     const [loading, setLoading] = useState(true)
     const [grabbing, setGrabbing] = useState(false)
+    const courseClickHandler = (course) => {  
+        // http://localhost:3000/view-course/669750c8107ff5f3542be1f5/section/669750ce107ff5f3542be1f9/sub-section/669750e4107ff5f3542be20b
+        navigate(`/view-course/${course._id}/section/${course.courseContent[0]._id}/sub-section/${course.courseContent[0].subSection[0]._id}`)
+    }
 
     useEffect(() => {
         // avgRating(course)
@@ -48,7 +52,7 @@ export default function CourseCard({ courses }) {
                                 <div
 
                                     key={index}
-                                    onClick={() => { }}
+                                    onClick={() => {courseClickHandler(course)}}
                                     className='flex
                                     cursor-pointer
                                     bg-richblack-800

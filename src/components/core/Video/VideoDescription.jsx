@@ -10,10 +10,8 @@ const VideoDescription = () => {
     const {subSectionId} = useParams()
     const location = useLocation()
     const {courseDetails} = useSelector(state => state.course)
-
     const [lecture,setLecture] = useState(null)
 
-    const [loading,setLoading] = useState(true)
     useEffect(() => {
         const fetch = () => {
            courseDetails.courseContent.forEach(section => {
@@ -24,24 +22,19 @@ const VideoDescription = () => {
                     }
                 })
            })
-           setLoading(false)
         }
-
+        if(courseDetails)
         fetch()
 
-    },[location.pathname])
+    },[location.pathname,courseDetails])
   return (
-     (loading) ? (
-        <div className=' h-full '>
-        <Spinner></Spinner>
-    </div>
-    ) : (
+  (
     <div className='
       w-[100%] md:w-[80%]  flex flex-col gap-2'>
         <div className='  text-richblack-5 font-inter text-lg
         font-medium leading-8 text-left'>
             {/* SubSection title */}
-            {lecture.title}
+            {lecture ? lecture.title : "Loading"}
         </div>
         <div className='
          gap-2 flex flex-col'>
@@ -49,14 +42,14 @@ const VideoDescription = () => {
       
             <div className='font-inter text-richblack-50 text-sm font-normal leading-6
             text-left'>
-            {lecture.description}
+            {lecture ? lecture.description : "Loading"}
             </div>
         </div>
       
         <div className='text-richblack-5 font-inter text-base font-normal
         leading-6 text-left'>
             {/* Date */}
-            {formatTime(lecture?.createdAt)}
+            {lecture ? formatTime(lecture?.createdAt) : "Loading"}
         </div>
     </div>
     )

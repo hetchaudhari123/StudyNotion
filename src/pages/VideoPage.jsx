@@ -11,28 +11,24 @@ import VideoDescription from '../components/core/Video/VideoDescription'
 import { setCompletedVideos } from '../redux/slices/courseProgressSlice'
 import ReviewModal from '../components/core/Video/ReviewModal'
 const VideoPage = () => {
-    const courseDetails = useSelector(state => state.course)
-    const dispatch = useDispatch()
-    const {courseId} = useParams()
-    const [loading,setLoading] = useState(true)
-    const location = useLocation()
     const [reviewModal,setReviewModal] = useState(false)
+
+    const location = useLocation()    
+    const dispatch = useDispatch()
+
+    const {courseId} = useParams()
+
     useEffect(() => {
         const fetch = async () => {
+            const completedVideos = await fetchCourseProgress({courseId},null,false)
             await dispatch(fetchCourse(courseId,null,false))
-            setLoading(false)
+            dispatch(setCompletedVideos(completedVideos))
         }
         fetch()
     },[location.pathname])
-    
-  
+
   return (
-    (loading) ? (
-        <div className='
-        fixed h-screen w-screen'>
-            <Spinner></Spinner>
-        </div>
-    ) :
+
     (<div className='flex flex-row  flex-1
         gap-4  
     '>
