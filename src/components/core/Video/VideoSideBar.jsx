@@ -10,7 +10,9 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { FaPlay } from "react-icons/fa";
 import { setCompletedVideos } from '../../../redux/slices/courseProgressSlice';
 import { fetchCourseProgress } from '../../../services/operations/courseAPI';
-const VideoSideBar = () => {
+import CTAButton from "../HomePage/Button"
+import ReviewModal from './ReviewModal';
+const VideoSideBar = ({ reviewModal, setReviewModal }) => {
     const { courseDetails } = useSelector(state => state.course)
     const dispatch = useDispatch()
     const { completedVideos } = useSelector(state => state.courseProgress)
@@ -20,19 +22,17 @@ const VideoSideBar = () => {
     const location = useLocation()
     const { sectionId } = useParams()
     const { subSectionId } = useParams()
-    const {courseId} = useParams()
-    const [loading,setLoading] = useState(true)
+    const { courseId } = useParams()
+    const [loading, setLoading] = useState(true)
     const navigate = useNavigate()
-    const selectVideoHandler = (sectionId,subSectionId) => {
+    const selectVideoHandler = (sectionId, subSectionId) => {
         navigate(`/view-course/${courseId}/section/${sectionId}/sub-section/${subSectionId}`)
     }
 
     useEffect(() => {
         const fetch = async () => {
-            const completedVideos = await fetchCourseProgress({courseId},null,false)
-            console.log("COMPLETED VIDEOS....",completedVideos)
+            const completedVideos = await fetchCourseProgress({ courseId }, null, false)
             dispatch(setCompletedVideos(completedVideos))
-            console.log("HERE.....")
             setLoading(false)
         }
         setCurrentVideo(subSectionId)
@@ -44,24 +44,8 @@ const VideoSideBar = () => {
             setIsActive([...isActive, sectionId]) : setIsActive(isActive.filter(ele => ele !== sectionId))
     }
 
-    useEffect(() => {
-        completedVideos.map((video) => {
-            console.log("VIDEO...",video)
-        })
-        console.log("CONTAINED VIDEOS...")
-        courseDetails && (
-            courseDetails.courseContent.map(section => {
-                section.subSection.map(ss => {
-                    console.log(ss._id)
-                })
-            })
-        )
-        console.log("VIDEOS END....")
-    },[completedVideos])
-
-    // console.log("COMPLETED VIDEOS.....",completedVideos)
-
     return (
+
         <div className=' border-r border-r-richblack-700
         bg-richblack-800 py-8 gap-2.5 flex flex-col
         h-full
@@ -72,26 +56,50 @@ const VideoSideBar = () => {
          items-center  py-4 px-6 gap-3
          
          '>
-                {/* Heading */}
-                <div>
-                    {/* CourseName */}
-                    {courseDetails.courseName}
-                </div>
-                <div className='font-inter text-sm font-semibold leading-6
-        text-left text-richblack-500
-        
-        '>
-                    {/* Completed lectures */}
-                    {
-                        loading ? ("Loading"):
+
+
+                <div className=' w-full
+                flex flex-col
+                gap-2'>
+                    <div className='  flex flex-row justify-start '>
+                        <CTAButton
+                            active={true}
+                            onClick={() => setReviewModal(true)}
+                        >
+                            <div className='text-richblack-800 font-inter text-md
+                          font-medium leading-6 text-left'>
+                                Add Review
+                            </div>
+                        </CTAButton>
+                    </div>
+                    <div className='flex flex-row items-center justify-between'>
+
+                        {/* Heading */}
                         <div>
-                            {completedVideos.length} / 
-                            {courseDetails.courseContent.reduce((prev, section) => {
-                            return prev + section.subSection.length
-                        }, 0)}
+                            {/* CourseName */}
+                            {courseDetails.courseName}
                         </div>
-                    }
+                        <div className='font-inter text-sm font-semibold leading-6
+                        text-left text-richblack-500
+                
+                        '>
+                            {/* Completed lectures */}
+                            {
+                                loading ? ("Loading") :
+                                    <div>
+                                        {completedVideos.length} /
+                                        {courseDetails.courseContent.reduce((prev, section) => {
+                                            return prev + section.subSection.length
+                                        }, 0)}
+                                    </div>
+                            }
+                        </div>
+                    </div>
+                  
+
+
                 </div>
+
             </div>
 
             <div className='w-full py-1 px-4 gap-3'>
@@ -136,10 +144,10 @@ const VideoSideBar = () => {
                                 <div className='py-4 px-6 flex flex-col gap-3'>
                                     {
                                         section.subSection.map((ss) => (
-                                            <div onClick={() => {selectVideoHandler(section._id,ss._id)}} className='cursor-pointer  gap-2 flex flex-row
+                                            <div onClick={() => { selectVideoHandler(section._id, ss._id) }} className='cursor-pointer  gap-2 flex flex-row
                                     items-center' key={ss._id}>
                                                 <div className={`${(ss._id !== currentVideo) ? "text-richblack-300" : "text-richblue-200"} text-lg`}>
-                                                    {(ss._id === currentVideo) ? (<FaPlay />) : (completedVideos.includes(ss._id)) ? (<MdCheckBox/>) : (<MdCheckBoxOutlineBlank />)}
+                                                    {(ss._id === currentVideo) ? (<FaPlay />) : (completedVideos.includes(ss._id)) ? (<MdCheckBox />) : (<MdCheckBoxOutlineBlank />)}
                                                 </div>
 
                                                 <div className={` font-inter
@@ -160,6 +168,7 @@ const VideoSideBar = () => {
                     ))
                 }
             </div>
+
         </div>
     )
 }

@@ -9,6 +9,7 @@ import HighlightText from '../components/core/HomePage/HighlightText'
 import LearningGrid from '../components/core/Aboutus/LearningGrid'
 import ContactUsForm from '../components/core/Aboutus/ContactUsForm'
 import Footer from '../components/common/Footer'
+import ReviewSlider from '../components/common/ReviewSlider'
 const Aboutus = () => {
     return (
         // <div className='w-11/12 max-w-maxContent mx-auto'>
@@ -132,14 +133,12 @@ opacity: 0px;
                 <ContactUsForm></ContactUsForm>
             </section>
             
-            <section className='flex flex-col py-24 px-32 gap-14'>
-                <div className='text-richblack-5 text-center text-4xl font-semibold mt-8'>
+            <div className="p-20 flex flex-col gap-20">
+                <div className="flex flex-row justify-center text-richblack-5 font-inter text-4xl font-semibold leading-10 tracking-tight text-left w-full  ">
                     Reviews from other learners
                 </div>
-                <div>
-                    {/* Review Slider */}
-                </div>
-            </section>
+                <ReviewSlider></ReviewSlider>
+            </div>
             <Footer></Footer>
         </div>
 

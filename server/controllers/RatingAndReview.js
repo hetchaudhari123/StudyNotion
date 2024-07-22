@@ -47,10 +47,10 @@ exports.createRating = async (req, res) => {
         const ratingResponse = await RatingAndReview.create({ user: userID, rating, review, course: courseId });
         // console.log(response);
         //4 include the rating and review inside the course
-        const courseResponse = await Course.findByIdAndUpdate(courseID,
+        const courseResponse = await Course.findByIdAndUpdate(courseId,
             {
                 $push: {
-                    ratingAndReviews: response._id
+                    ratingAndReviews: ratingResponse._id
                 }
             },
             {
@@ -67,8 +67,7 @@ exports.createRating = async (req, res) => {
         console.log(error);
         return res.status(500).json({
             success: false,
-            message: "Error occurred while creating the rating",
-            error:error.message
+            message:error.message
         })
     }
 }
@@ -142,8 +141,7 @@ exports.getAllReviews = async (req,res) => {
         console.log(err);
         return res.status(500).json({
             success:false,
-            message:"Error occurred while fetching all the reviews.",
-            error:err.message
+            message:err.message
         })
     }
 }

@@ -380,3 +380,34 @@ export const updateCourseProgress = async ({courseId,subSection},setLoading = nu
     }
     return null
 }
+
+
+export const buildRating = async ({rating,review,courseId},setLoading = null,printSuccess = true) => {
+    let toastId = ""
+    if (printSuccess) toastId = toast.loading("Loading...")
+    if (printSuccess) setLoading(true)
+    try{
+        const response = await apiConnector('POST',courseEndpoints.CREATE_RATING_API,{rating,review,courseId})
+        console.log("RESPONSE FROM CREATE RATING API....",response)
+        if(!response.data.success){
+            throw new Error(response.data.message)
+        }
+        if (printSuccess) {
+            setLoading(false)
+            toast.dismiss(toastId)
+        }
+        if (printSuccess)
+            toast.success("Successfully rated the course!")
+        return response.data.ratingResponse
+
+    }catch(err){
+        console.log("ERROR FROM CREATE RATING API.....",err)
+        if (printSuccess) {
+            setLoading(false)
+            toast.dismiss(toastId)
+        }
+        if (printSuccess)
+            toast.error("Failed to rate the course.")
+    }
+    return null
+}

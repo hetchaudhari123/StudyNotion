@@ -28,6 +28,7 @@ import { FaAngleUp } from "react-icons/fa";
 import { FaAngleDown } from "react-icons/fa";
 import { FiClock } from "react-icons/fi";
 import { addToCart } from '../redux/slices/cartSlice'
+import ReviewSlider from '../components/common/ReviewSlider'
 const BuyCourse = () => {
   const { user } = useSelector(state => state.profile)
   const [loading, setLoading] = useState(true)
@@ -607,6 +608,12 @@ const BuyCourse = () => {
 
 
           {/*Review Slider  */}
+          <div className="p-20 flex flex-col gap-20">
+                <div className="flex flex-row justify-center text-richblack-5 font-inter text-4xl font-semibold leading-10 tracking-tight text-left w-full  ">
+                    Reviews from other learners
+                </div>
+                <ReviewSlider></ReviewSlider>
+            </div>
 
         </div>
         <div>

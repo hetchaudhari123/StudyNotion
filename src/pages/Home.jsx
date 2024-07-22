@@ -9,6 +9,7 @@ import LearningLanguageSection from "../components/core/HomePage/LearningLanguag
 import InstructorSection from "../components/core/HomePage/InstructorSection"
 import ExploreMore from "../components/core/HomePage/ExploreMore"
 import Footer from "../components/common/Footer";
+import ReviewSlider from "../components/common/ReviewSlider";
 const Home = () => {
     return (
         <div>
@@ -145,8 +146,14 @@ const Home = () => {
                 </div>
             </div>
             {/* Section 3 */}
-            <div class="text-white ">
+            <div class="text-richblack-5 ">
                 <InstructorSection />
+            </div>
+            <div className="p-20 flex flex-col gap-20">
+                <div className="flex flex-row justify-center text-richblack-5 font-inter text-4xl font-semibold leading-10 tracking-tight text-left w-full  ">
+                    Reviews from other learners
+                </div>
+                <ReviewSlider></ReviewSlider>
             </div>
             {/* Footer */}
             <Footer/>

@@ -29,8 +29,13 @@ import SidebarRef from "./components/common/SidebarRef";
 import BuyCourse from "./pages/BuyCourse";
 import VideoSideBar from "./components/core/Video/VideoSideBar";
 import LectureVideo from "./components/core/Video/LectureVideo";
+import ReviewModal from "./components/core/Video/ReviewModal";
+import { useState } from "react";
+import ReviewSlider from "./components/common/ReviewSlider";
 function App() {
+
   return (
+
     <div className="overflow-y-auto w-screen 
     min-h-screen h-[100%] 
     bg-richblack-900 flex flex-col font-inter ">
@@ -70,9 +75,9 @@ function App() {
         {/* <Route path="/dashboard/my-profile" element={<Dashboard />} /> */}
         {/* <Route path="/view-course/:courseId/section/:sectionId/sub-section/:subSectionId" 
             element={<VideoPage />}></Route> */}
-          <Route path="view-course" element={<VideoPage/>}>
+          <Route path="view-course" element={<VideoPage />}>
             <Route path=":courseId/section/:sectionId/sub-section/:subSectionId" 
-            element={<VideoContent/>}>
+            element={<VideoContent />}>
             </Route>
           </Route>
           {/* <Route path=":courseId/section/:sectionId/sub-section/:subSectionId"
@@ -91,8 +96,10 @@ function App() {
           <Route path="my-courses" element={<MyCourses />} />
         </Route>
         <Route path="course/:courseId" element={<BuyCourse />} />
+        {/* <Route path="review-modal" element={<ReviewModal />} /> */}
         {/* http://localhost:3000/catalog/ai-ml */}
         <Route path="catalog/:catalogName" element={<Catalog />}></Route>
+        <Route path="/slider" element={<ReviewSlider />}></Route>
         {/* <Route path="swiper" element={<CourseSliderPrac/>}></Route> */}
         {/* <Route path="side-bar-ref" element={<SidebarRef/>}></Route> */}
         {/* <Route path="side-bar" element={<Sidebar/>}></Route> */}

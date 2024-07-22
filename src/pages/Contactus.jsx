@@ -3,6 +3,7 @@ import { HiChatBubbleLeftEllipsis } from "react-icons/hi2";
 import { FaGlobeAfrica } from "react-icons/fa";
 import { FaPhoneAlt } from "react-icons/fa";
 import Form from '../components/common/Form';
+import ReviewSlider from '../components/common/ReviewSlider';
 const data = [
     {
         heading: "Chat on us",
@@ -27,6 +28,7 @@ const Contactus = () => {
 
     return (
         // 
+        <div className=''>
         <div className='px-2 py-4 md:py-24 md:px-32 gap-14 flex flex-col xl:flex-row justify-center'>
 
             <div className='flex flex-col h-fit  py-6 gap-6 rounded-xl bg-richblack-800 w-fit mx-auto'>
@@ -73,6 +75,15 @@ const Contactus = () => {
                 <div>
                 <Form padding={false}></Form>
                 </div>
+                
+            </div>
+            
+        </div>
+        <div className="p-20 flex flex-col gap-20">
+                <div className="flex flex-row justify-center text-richblack-5 font-inter text-4xl font-semibold leading-10 tracking-tight text-left w-full  ">
+                    Reviews from other learners
+                </div>
+                <ReviewSlider></ReviewSlider>
             </div>
         </div>
     )
