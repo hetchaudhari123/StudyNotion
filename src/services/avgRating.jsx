@@ -6,9 +6,11 @@ const avgRating = (course) => {
             review_cnt:0}
     }
     const totalRating = course.ratingAndReviews.reduce((prev,cur) => {
-        return prev + cur.rating
+        return prev + Number(cur.rating)
     },0) 
-    return {avg:totalRating / course.ratingAndReviews.length,
+    console.log("TOTAL RATING...",totalRating)
+    console.log("COURSE RATING AND REVIEW LENGTH...",course.ratingAndReviews.length)
+    return {avg:(totalRating / course.ratingAndReviews.length),
         review_cnt:course.ratingAndReviews.length}
 }
 

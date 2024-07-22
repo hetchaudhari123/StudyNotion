@@ -32,6 +32,7 @@ import LectureVideo from "./components/core/Video/LectureVideo";
 import ReviewModal from "./components/core/Video/ReviewModal";
 import { useState } from "react";
 import ReviewSlider from "./components/common/ReviewSlider";
+import InstructorDashboard from "./components/core/Dashboard/InstructorDashboard/InstructorDashboard";
 function App() {
 
   return (
@@ -94,12 +95,14 @@ function App() {
           <Route path="wishlist" element={<Wishlist />} />
           <Route path="add-course" element={<AddCourses />} />
           <Route path="my-courses" element={<MyCourses />} />
+          <Route path="instructor" element={<InstructorDashboard />} />
         </Route>
         <Route path="course/:courseId" element={<BuyCourse />} />
         {/* <Route path="review-modal" element={<ReviewModal />} /> */}
         {/* http://localhost:3000/catalog/ai-ml */}
         <Route path="catalog/:catalogName" element={<Catalog />}></Route>
         <Route path="/slider" element={<ReviewSlider />}></Route>
+        
         {/* <Route path="swiper" element={<CourseSliderPrac/>}></Route> */}
         {/* <Route path="side-bar-ref" element={<SidebarRef/>}></Route> */}
         {/* <Route path="side-bar" element={<Sidebar/>}></Route> */}

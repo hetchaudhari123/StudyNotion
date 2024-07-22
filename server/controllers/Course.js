@@ -323,6 +323,8 @@ exports.getInstructorCourses = async (req, res) => {
                 path: "subSection"
             })
         })
+        .populate('ratingAndReviews')
+        .populate('instructor')
         return res.status(200).json({
             success: true,
             data: courses,
