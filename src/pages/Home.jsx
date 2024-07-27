@@ -10,6 +10,7 @@ import InstructorSection from "../components/core/HomePage/InstructorSection"
 import ExploreMore from "../components/core/HomePage/ExploreMore"
 import Footer from "../components/common/Footer";
 import ReviewSlider from "../components/common/ReviewSlider";
+import Reviews from "../components/common/Reviews";
 const Home = () => {
     return (
         <div>
@@ -109,13 +110,20 @@ const Home = () => {
                         <div></div>
                         <div className=" flex  xl:mb-8  justify-center items-center gap-6  ">
 
-                            <CTAButton active={true}>
+                            {/* <CTAButton active={true}
+
+>                   
                                 <div className="flex font-inter font-bold text-base leading-6 text-center gap-2 items-center">
                                     Explore Full Catalog
                                     <FaArrowRightLong />
                                 </div>
-                            </CTAButton>
-                            <CTAButton active={false}>
+                            </CTAButton> */}
+                            {/* <CTAButton linkto={"/login"} active={false} >
+                                <div className="flex font-inter font-bold text-base leading-6 text-center gap-2 items-center">
+                                    Learn More
+                                </div>
+                            </CTAButton> */}
+                            <CTAButton linkto={"/login"} active={true} >
                                 <div className="flex font-inter font-bold text-base leading-6 text-center gap-2 items-center">
                                     Learn More
                                 </div>
@@ -151,12 +159,13 @@ const Home = () => {
             <div class="text-richblack-5 ">
                 <InstructorSection />
             </div>
-            <div className="p-20 flex flex-col gap-20">
+            {/* <div className="p-20 flex flex-col gap-20">
                 <div className="flex flex-row justify-center text-richblack-5 font-inter text-4xl font-semibold leading-10 tracking-tight text-left w-full  ">
                     Reviews from other learners
                 </div>
                 <ReviewSlider></ReviewSlider>
-            </div>
+            </div> */}
+            <Reviews></Reviews>
             {/* Footer */}
             <Footer/>
         </div>

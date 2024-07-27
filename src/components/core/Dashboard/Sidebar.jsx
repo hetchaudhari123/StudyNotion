@@ -7,15 +7,20 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { logout } from "../../../services/operations/authAPI"
 import { useEffect } from 'react';
+import { useMediaQuery } from '@uidotdev/usehooks'
+
 const Sidebar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [modal, setModal] = useState(false);
+  const isSmallDevice = useMediaQuery("only screen and (max-width : 768px)");
+
   return (
 
 
 
-    <div className='hidden h-full p-8 xl:flex xl:flex-col gap-3 border border-richblack-700 bg-richblack-800'>
+    <div className='  h-full p-8 xl:flex xl:flex-col gap-3 border border-richblack-700  bg-richblack-800 
+    '>
 
       {
         sidebarLinks.map((ele, index) => {

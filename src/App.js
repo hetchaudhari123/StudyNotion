@@ -39,7 +39,6 @@ import { useSelector } from "react-redux";
 function App() {
   const [navVis,setNavVis] = useState(false)
   const [subLinks, setSubLinks] = useState([]);
-  const {token} = useSelector(state=>state.auth);
   return (
 
     <div className="overflow-y-auto w-screen 
@@ -53,10 +52,6 @@ function App() {
                         setSubLinks={setSubLinks}
                         onLinkClick={() => setNavVis(false)} 
                         subLinks={subLinks}
-                        title1={!token ? "Login" : "Shopping Cart"}
-                        path1={!token ? "/login" : "/dashboard/wishlist"}
-                        title2={!token ? "Signup" : "Profile"}
-                        path2={!token ? "/signup" : "/dashboard/profile"}
                         ></ModalNavBar>
                     }
       <Navbar navVis={navVis} setNavVis={setNavVis}

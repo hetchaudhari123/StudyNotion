@@ -10,6 +10,7 @@ import LearningGrid from '../components/core/Aboutus/LearningGrid'
 import ContactUsForm from '../components/core/Aboutus/ContactUsForm'
 import Footer from '../components/common/Footer'
 import ReviewSlider from '../components/common/ReviewSlider'
+import Reviews from '../components/common/Reviews'
 const Aboutus = () => {
     return (
         // <div className='w-11/12 max-w-maxContent mx-auto'>
@@ -133,12 +134,13 @@ opacity: 0px;
                 <ContactUsForm></ContactUsForm>
             </section>
             
-            <div className="p-20 flex flex-col gap-20">
+            {/* <div className="p-20 flex flex-col gap-20">
                 <div className="flex flex-row justify-center text-richblack-5 font-inter text-4xl font-semibold leading-10 tracking-tight text-left w-full  ">
                     Reviews from other learners
                 </div>
                 <ReviewSlider></ReviewSlider>
-            </div>
+            </div> */}
+            <Reviews></Reviews>
             <Footer></Footer>
         </div>
 

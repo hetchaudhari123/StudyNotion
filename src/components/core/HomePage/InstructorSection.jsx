@@ -27,9 +27,12 @@ export default function InstructorSection() {
 
                         <CTAButton active={true} linkto={"/signup"}>
                             <div className="flex items-center gap-2">
-                                <p className="font-inter text-base font-medium leading-6 text-center text-richblack-900">
+                                {/* <p className="font-inter text-base font-medium leading-6 text-center text-richblack-900"> */}
+                                <div className="font-inter font-bold text-base leading-6 text-center text-[#000814]">
+
                                     Start Learning Today
-                                </p>
+                                {/* </p> */}
+                                </div>
                                 <FaArrowRightLong />
                             </div>
                         </CTAButton>

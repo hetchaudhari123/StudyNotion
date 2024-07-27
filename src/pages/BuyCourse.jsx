@@ -22,6 +22,7 @@ import RatingStars from '../components/core/Catalog/RatingStars'
 import { FiInfo } from "react-icons/fi";
 import { formatDate } from '../services/formatDate'
 import CTAButton from "../components/core/HomePage/Button"
+import Reviews from '../components/common/Reviews'
 import { totalDuration } from '../services/totalDuration'
 // import { TfiAngleUp } from "react-icons/tfi";
 import { FaAngleUp } from "react-icons/fa";
@@ -608,12 +609,13 @@ const BuyCourse = () => {
 
 
           {/*Review Slider  */}
-          <div className="p-20 flex flex-col gap-20">
+          {/* <div className="p-20 flex flex-col gap-20">
                 <div className="flex flex-row justify-center text-richblack-5 font-inter text-4xl font-semibold leading-10 tracking-tight text-left w-full  ">
                     Reviews from other learners
                 </div>
                 <ReviewSlider></ReviewSlider>
-            </div>
+            </div> */}
+          <Reviews></Reviews>
 
         </div>
         <div>

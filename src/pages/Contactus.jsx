@@ -4,6 +4,7 @@ import { FaGlobeAfrica } from "react-icons/fa";
 import { FaPhoneAlt } from "react-icons/fa";
 import Form from '../components/common/Form';
 import ReviewSlider from '../components/common/ReviewSlider';
+import Reviews from '../components/common/Reviews';
 const data = [
     {
         heading: "Chat on us",
@@ -79,12 +80,13 @@ const Contactus = () => {
             </div>
             
         </div>
-        <div className="p-20 flex flex-col gap-20">
+        {/* <div className="p-20 flex flex-col gap-20">
                 <div className="flex flex-row justify-center text-richblack-5 font-inter text-4xl font-semibold leading-10 tracking-tight text-left w-full  ">
                     Reviews from other learners
                 </div>
                 <ReviewSlider></ReviewSlider>
-            </div>
+            </div> */}
+            <Reviews></Reviews>
         </div>
     )
 }

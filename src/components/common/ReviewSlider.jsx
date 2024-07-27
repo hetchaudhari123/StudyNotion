@@ -13,19 +13,9 @@ import { formatString } from '../../services/formatString'
 import ReactStars from 'react-stars'
 // import 'C:/college material/webD/mega/front_end/react-tailwind-css-starter-pack-main (1)/react-tailwind-css-starter-pack-main/node_modules/swiper/swiper-bundle.min.css'
 // import '../../../node_modules/swiper/swiper-bundle.min.css'
-const ReviewSlider = ({ courses }) => {
-    const [loading, setLoading] = useState(true)
+const ReviewSlider = ({ courses,loading,setLoading,reviews,setReviews }) => {
     const [grabbing, setGrabbing] = useState(false)
-    const [reviews, setReviews] = useState([])
-    useEffect(() => {
-        const fetch = async () => {
-            setLoading(true)
-            const response = await fetchAllReviews(null, false)
-            setReviews(response)
-            setLoading(false)
-        }
-        fetch()
-    }, [])
+  
 
     const swiperRef = useRef(null);
     const clickHandler = () => {
@@ -35,7 +25,8 @@ const ReviewSlider = ({ courses }) => {
     };
 
     return (
-        <>{ !loading &&
+        <>{ 
+        (
             <div className='flex flex-row items-center '>
 
                 <Swiper
@@ -160,6 +151,7 @@ const ReviewSlider = ({ courses }) => {
                     </div>
                 </div>
             </div>
+            )
 }
 
 
