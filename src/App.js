@@ -34,15 +34,33 @@ import { useState } from "react";
 import ReviewSlider from "./components/common/ReviewSlider";
 import InstructorDashboard from "./components/core/Dashboard/InstructorDashboard/InstructorDashboard";
 import PieChart from "./components/core/Dashboard/InstructorDashboard/PieChart";
+import ModalNavBar from "./components/common/ModalNavBar";
+import { useSelector } from "react-redux";
 function App() {
-
+  const [navVis,setNavVis] = useState(false)
+  const [subLinks, setSubLinks] = useState([]);
+  const {token} = useSelector(state=>state.auth);
   return (
 
     <div className="overflow-y-auto w-screen 
     min-h-screen h-[100%] 
     bg-richblack-900 flex flex-col font-inter ">
-
-      <Navbar />
+  {
+                        navVis && <ModalNavBar 
+                        navVis={navVis}
+                        setNavVis={setNavVis}
+                    
+                        setSubLinks={setSubLinks}
+                        onLinkClick={() => setNavVis(false)} 
+                        subLinks={subLinks}
+                        title1={!token ? "Login" : "Shopping Cart"}
+                        path1={!token ? "/login" : "/dashboard/wishlist"}
+                        title2={!token ? "Signup" : "Profile"}
+                        path2={!token ? "/signup" : "/dashboard/profile"}
+                        ></ModalNavBar>
+                    }
+      <Navbar navVis={navVis} setNavVis={setNavVis}
+      subLinks={subLinks} setSubLinks={setSubLinks}/>
       <Routes>
         <Route path="/" element={<Home />}></Route>
         <Route path="/login" element={
@@ -102,14 +120,13 @@ function App() {
         {/* <Route path="review-modal" element={<ReviewModal />} /> */}
         {/* http://localhost:3000/catalog/ai-ml */}
         <Route path="catalog/:catalogName" element={<Catalog />}></Route>
-        <Route path="/slider" element={<ReviewSlider />}></Route>
-        <Route path="/pie" element={<PieChart />}></Route>
         
         {/* <Route path="swiper" element={<CourseSliderPrac/>}></Route> */}
         {/* <Route path="side-bar-ref" element={<SidebarRef/>}></Route> */}
         {/* <Route path="side-bar" element={<Sidebar/>}></Route> */}
         <Route path="/*" element={<Error />}></Route>
       </Routes>
+
     </div>
   )
 }

@@ -202,7 +202,7 @@ exports.categoryPageDetails = async (req, res) => {
         })
         .exec()
   
-      console.log("SELECTED COURSE.....", selectedCategory)
+      // console.log("SELECTED COURSE.....", selectedCategory)
       // Handle the case when the category is not found
       if (!selectedCategory) {
         return res
@@ -211,17 +211,17 @@ exports.categoryPageDetails = async (req, res) => {
       }
       // Handle the case when there are no courses
       if (selectedCategory.courses.length === 0) {
-        console.log("No courses found for the selected category.")
-        return res.status(404).json({
-          success: false,
+        // console.log("No courses found for the selected category.")
+        return res.status(200).json({
+          success: true,
           message: "No courses found for the selected category.",
         })
       }
   
       // Get courses for other categories
-      const categoriesExceptSelected = await Category.find({
-        _id: { $ne: categoryId },
-      })
+      // const categoriesExceptSelected = await Category.find({
+      //   _id: { $ne: categoryId },
+      // })
     //   let differentCategory = await Category.findOne(
         // categoriesExceptSelected[getRandomInt(categoriesExceptSelected.length)]
         //   ._id
@@ -245,6 +245,7 @@ exports.categoryPageDetails = async (req, res) => {
       const allCourses = allCategories.flatMap((category) => category.courses)
       // console.log("ALL COURSES.....",allCourses)
       const selectedCourses = selectedCategory.courses
+  
       console.log("ALL COURSES.....",allCourses)
       let mostSellingCourses = null
       let highestRated = null

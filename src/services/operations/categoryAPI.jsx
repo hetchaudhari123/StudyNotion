@@ -1,7 +1,7 @@
 import apiConnector from "../apiconnector"
 import { categories } from "../apis";
 import toast from "react-hot-toast";
-export const fetchCategory = (setCategory,setLoading,printSuccess = true) => {
+export const fetchCategory = (setLoading,printSuccess = true) => {
     return async (dispatch) => {
         let toastId = ""
         if(printSuccess) toastId = toast.loading("Loading...")
@@ -19,7 +19,7 @@ export const fetchCategory = (setCategory,setLoading,printSuccess = true) => {
                 setLoading(false);
                 toast.dismiss(toastId);
               }
-            setCategory(response.data.data);
+           
             return response.data.data
         }catch(err){
             console.log("ERROR FROM FETCH CATEGORY........",err);

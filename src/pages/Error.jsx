@@ -24,7 +24,7 @@ const Error = () => {
                     </div>
                     <div className='w-[200px]'>
                         <CTAButton active={true} onClick={() => navigate(-1)}>
-                            <div className='flex justify-center items-center gap-2 font-semibold text-richblack-900 ' onClick={() => { navigate(-1) }}>
+                            <div className='flex justify-center items-center gap-2 font-semibold text-richblack-900 ' >
                                 <div><FaArrowLeft /></div>
                                 <div>Go Back</div>
                             </div>

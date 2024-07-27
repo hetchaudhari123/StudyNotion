@@ -5,6 +5,7 @@
   "dependencies": {
     "@ramonak/react-progress-bar": "^5.2.0",
     "@reduxjs/toolkit": "^2.2.5",
+    "@uidotdev/usehooks": "^2.4.1",
     "axios": "^1.7.2",
     "concurrently": "^8.2.2",
     "js-cookie": "^3.0.5",

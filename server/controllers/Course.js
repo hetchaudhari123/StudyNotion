@@ -232,10 +232,10 @@ exports.editCourse = async (req, res) => {
         //2.2 validate the tag
 
         if (category && category !== "undefined") {
-            console.log("INSIDE HERE...............................................................")
-            console.log(category)
+            // console.log("INSIDE HERE...............................................................")
+            // console.log(category)
             // console.log((category === "undefined"))
-            console.log(typeof category === 'string')
+            // console.log(typeof category === 'string')
             const categoryDetails = await Category.findById(category);
             if (!categoryDetails) {
                 return res.status(404).json({
@@ -270,7 +270,7 @@ exports.editCourse = async (req, res) => {
             course.instructions = instructions
         }
         if (status && status !== "undefined") {
-            console.log("STATUS......", status)
+            // console.log("STATUS......", status)
             course.status = status
         }
         if (tag && tag !== "undefined") {

@@ -70,7 +70,7 @@ coursesSchema.pre('remove',async (next) => {
         await Section.deleteMany({ _id: { $in: this.courseContent } })
         await RatingAndReview.deleteMany({ _id: { $in: this.ratingAndReviews } })
         await Category.findByIdAndUpdate(this.category, { $pull: { courses: this._id } });
-
+        await CourseProgress.deleteMany({ courseID: courseId });
         next()
     }catch(err){
         next(err)

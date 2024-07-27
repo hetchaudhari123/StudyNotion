@@ -9,9 +9,12 @@ import apiConnector from '../../services/apiconnector'
 import { useSelector } from 'react-redux'
 import { FiShoppingCart } from "react-icons/fi";
 import { FiSearch } from "react-icons/fi";
-export default function Navbar() {
-    const [subLinks, setSubLinks] = useState([]);
+import { useMediaQuery } from "@uidotdev/usehooks";
+import { GiHamburgerMenu } from "react-icons/gi";
+import ModalNavBar from './ModalNavBar'
+export default function Navbar({navVis,setNavVis,subLinks,setSubLinks}) {
     const { token } = useSelector(state => state.auth);
+    const isSmallDevice = useMediaQuery("only screen and (max-width : 768px)");
     // console.log(categories.CATEGORIES_API);
     const getSubLinks = async () => {
         const response = await apiConnector('GET', categories.CATEGORIES_API);
@@ -27,28 +30,53 @@ export default function Navbar() {
     useEffect(() => {
         getSubLinks();
     }, []);
+
+
+
     return (
 
-        <div className=' w-full border-b border-richblack-700'>
-
-            {/* <div className=' mx-auto w-11/12 max-w-maxContent xl:mx-auto xl:py-3 xl:px-32 gap-8  flex flex-row justify-between items-center'> */}
-            <div className='w-11/12  max-w-maxContent mx-auto lg:py-3 lg:px-16  lg:max-w-full lg:w-full  xl:px-32 gap-8  flex flex-row justify-between items-center'>
+        <div className='  border-b border-richblack-700
+        
+         '>
+            {true ? (
+                <div className='text-richblack-5 flex justify-end w-full px-6'>
+                    <div className='cursor-pointer'
+                    
+                    onClick={() => setNavVis(true)}>
+                        <div className='p-4 hover:bg-richblack-700
+                        transition-all duration-200 rounded-[200px]'>   
+                            <GiHamburgerMenu size={24}/>
+                        </div>
+                  
+                    </div>
+                </div>
+            ) : (
+                <div className='w-11/12 max-w-maxContent mx-auto lg:py-3 lg:px-16  lg:max-w-full lg:w-full xl:px-32 gap-8  flex flex-row justify-between items-center'>
                 <div className=''>
                     <Link to={"/"}>
                         <img src={image} alt="Logo Image" />
                     </Link>
                 </div>
-                <div>
-                    <nav className='flex  items-center'>
+                <div className=''>
+
+                    <nav 
+                    className={`${ "flex items-center "
+                    }`}>
 
                         {
 
                             NavbarLinks.map((ele, index) => {
                                 return (
-                                    <div className=' font-inter text-base font-normal leading-6 text-center py-1 px-3 gap-1 group' key={index}>
+                                    <div className={` font-inter 
+                                    
+                                    text-base font-normal 
+
+                                       
+                                    
+                                    leading-6 text-center py-1 px-3 gap-1 group`} key={index}>
                                         {
                                             (ele.title === "Catalog") ? (
-                                                <div className='  flex flex-row items-center gap-2 cursor-pointer  relative  '>
+                                                <div className='flex flex-row items-center gap-2 cursor-pointer  relative  '>
                                                     {/* <div className='group border-2 border-blac'> */}
                                                     <div className='  text-yellow-50'>
                                                         {ele.title}
@@ -59,7 +87,11 @@ export default function Navbar() {
 
                                                     {/* </div> */}
                                                     {/* <div className='invisible group-hover:visible text-white absolute'> */}
-                                                    <div className='z-10 absolute invisible rounded-md bg-richblack-5 p-4 text-richblack-900  lg:w-[300px] top-0 translate-y-[100%] right-0 translate-x-[6.32rem]  opacity-0  group-hover:visible group-hover:opacity-100 transition-all duration-200 group-hover:translate-y-[2rem]'>
+                                                    <div className='z-10 absolute 
+                                                    rounded-md
+                                                    invisible 
+                                                    opacity-0
+                                                    bg-richblack-5 p-4 text-richblack-900  lg:w-[300px] top-0 translate-y-[20%] right-0 translate-x-[6.32rem]    group-hover:visible group-hover:opacity-100 transition-all duration-200 group-hover:translate-y-[2rem]'>
                                                         <div className='select-none bg-richblack-5 rounded absolute h-6 w-6 -z-10  origin-center rotate-45 top-0 right-[6rem] translate-y-[-0.5rem]'>
                                                         </div>
 
@@ -146,6 +178,10 @@ export default function Navbar() {
                         )
                 }
             </div>
+            )}
+
+            {/* <div className=' mx-auto w-11/12 max-w-maxContent xl:mx-auto xl:py-3 xl:px-32 gap-8  flex flex-row justify-between items-center'> */}
+            
         </div>
     )
 }

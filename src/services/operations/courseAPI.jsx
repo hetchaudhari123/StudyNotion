@@ -298,7 +298,7 @@ export const fetchCategoryPageDetails = async ({categoryId},setLoading = null,pr
     if (printSuccess) toastId = toast.loading("Loading...")
     if (printSuccess) setLoading(true)
     try{
-        // console.log("CATEGORYID.....",categoryId)
+        console.log("CATEGORYID.....",categoryId)
         const response = await apiConnector('POST',catalogData.CATALOGPAGEDATA_API,{categoryId})
         if(!response.data.success){
             throw new Error(response.data.message)
@@ -309,6 +309,7 @@ export const fetchCategoryPageDetails = async ({categoryId},setLoading = null,pr
         }
         if (printSuccess)
             toast.success("Successfully fetched the courses")
+        
         return response
     }catch(err){
         console.log("ERROR FROM FETCH CATEGORY PAGE DETAILS.....",err)

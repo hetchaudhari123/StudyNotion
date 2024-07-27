@@ -15,15 +15,17 @@ const Home = () => {
         <div>
             {/* Section1 */}
             <div className="flex flex-col mx-auto justify-center items-center w-11/12 text-white gap-y-9  ">
-                <Link to={"/signup"}>
                     <div className="mt-16 bg-richblack-800 rounded-full  transition-all duration-200 hover:scale-95 w-fit shadow-login-btn-become-an-instructor group py-[1px] px-[0.5px] ">
+                <Link to={"/signup"}>
 
                         <div className=" flex gap-x-[10px] items-center group-hover:bg-richblack-900  rounded-full py-1.5 px-4  ">
+
                             <p className="flex justify-center font-medium leading-6 text-base items-[center]">Become an instructor</p>
                             <FaArrowRightLong></FaArrowRightLong>
+
                         </div>
-                    </div>
                 </Link>
+                    </div>
                 <div className="text-3xl text-center leading-10 font-semibold">
                     Empower Your Future with
                     <HighlightText text={"Coding Skills"} />

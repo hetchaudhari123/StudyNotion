@@ -14,7 +14,7 @@ import { FaAngleRight } from "react-icons/fa6";
 // import required modules
 import { Autoplay,EffectCoverflow, Pagination } from 'swiper/modules';
 import { useNavigate } from 'react-router-dom';
-
+import Spinner from '../../common/Spinner';
 export default function CourseSliderAdv({ courses,delay=null }) {
     const navigate = useNavigate()
     const [avgRatingCourse, setAvgRatingCourse] = useState(null)
@@ -53,7 +53,7 @@ export default function CourseSliderAdv({ courses,delay=null }) {
                 slidesPerView={'1'}
                 loop={true}
                 breakpoints={{
-                    1024: { slidesPerView: 3, }
+                    1024: { slidesPerView: (courses ? (courses.length >= 3 ? 3 : courses.length) : (0)) }
                 }}
                 autoplay={{
                       delay: delay || 5000 ,
@@ -74,7 +74,11 @@ export default function CourseSliderAdv({ courses,delay=null }) {
                 <>
 
                     {
-                        courses.map((course, index) => {
+                        !courses ? (
+                            <div>
+                                <Spinner></Spinner>
+                            </div>
+                        ) :  courses.map((course, index) => {
 
                             return (
                                 <SwiperSlide

@@ -9,12 +9,22 @@ import CourseSlider from '../components/core/Catalog/CourseSlider'
 import Footer from "../components/common/Footer"
 import { FaAngleRight } from "react-icons/fa6";
 import CourseSliderAdv from '../components/core/Catalog/CourseSliderAdv'
+import CTAButton from "../components/core/HomePage/Button"
+import HighlightText from '../components/core/HomePage/HighlightText'
+
+
+
+
+
+import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import { FaArrowLeft } from "react-icons/fa";
 const Catalog = () => {
     const TAGS = {
         MOST_POPULAR: "Most popular",
         NEW: "New", TRENDING: "Trending"
     }
-    const catalogName = useParams().catalogName
+    const {catalogName} = useParams()
     const [categories, setCategories] = useState(null)
     // const [categoryId,setCategoryId] = useState(null)
     const [category, setCategory] = useState(null)
@@ -22,6 +32,7 @@ const Catalog = () => {
     const [loading, setLoading] = useState(true)
     const [tag, setTag] = useState(TAGS.MOST_POPULAR)
     const [coursesData, setCoursesData] = useState(null)
+    const navigate = useNavigate()
     useEffect(() => {
         // const fetchCategoryData = async () => {
         //     const result = await fetchCategoryPageDetails({categoryId:category._id},setLoading,true)
@@ -30,24 +41,27 @@ const Catalog = () => {
         // }
         const fetchCat = async () => {
             setLoading(true)
-            const resCat = await dispatch(fetchCategory(setCategories, null, false))
-            console.log("RESCAT....", resCat)
+            const resCat = await dispatch(fetchCategory( null, false))
+            setCategories(resCat)
             const reqCat = resCat?.filter((ele) => ele?.name.replace(/[\s/]+/g, '-').toLowerCase() === catalogName)[0]
             setCategory(reqCat)
             // console.log("REQCAT...",reqCat)
-            const result = await fetchCategoryPageDetails({ categoryId: reqCat._id }, setLoading, true)
-            console.log("RESULT....", result.data.data)
-            setCoursesData(result.data.data)
-            console.log("COURSES", result.data.data)
+            const result = await fetchCategoryPageDetails({ categoryId: reqCat._id }, null, false)
+            // console.log("RESULT....", result.data.data)
+            if(result.data.data) setCoursesData(result.data.data)
+            else{
+                setCoursesData([])
+            }
+            // console.log("COURSES", result.data.data)
             setLoading(false)
         }
         fetchCat()
     }, [catalogName])
-    useEffect(() => {
-        if(tag === TAGS.POPULAR){
-            setCoursesData()
-        }
-    },[tag])
+    // useEffect(() => {
+    //     if(tag === TAGS.POPULAR){
+    //         setCoursesData()
+    //     }
+    // },[tag])
     // useEffect(() => {
     //     if(categories){
     //         setCategory(categories?.filter((ele) => ele?.name.replace(/[\s/]+/g, '-').toLowerCase() === catalogName)[0])
@@ -72,6 +86,41 @@ const Catalog = () => {
                         <Spinner></Spinner>
                     </div>
                 ) : (
+                    (coursesData.length === 0) ? (
+                        <div className='
+                        
+                        
+                        flex flex-col gap-4 justify-center flex-1 items-center  
+                        '>
+                        <div className=''>
+                        <HighlightText text={"Nothing here yet!"} customClass={"text-4xl"}></HighlightText>
+                        </div>
+                        <div className=''>
+               
+                        <div className='mt-6 flex items-center justify-center gap-4 min-w-[400px] flex-col sm:flex-row'>
+                    <div className='w-[200px]'>
+
+                        <CTAButton active={true} linkto={"/"}>
+                            <div className='flex items-center justify-center font-semibold gap-2  text-richblack-900'>
+                                <div><FaArrowLeft /></div>
+                                {/* w-[50%] xs:w-full rounded-[8px] bg-yellow-50 py-[12px] px-5 font-medium text-richblack-900 */}
+                                <div>Back to Home</div>
+                            </div>
+                        </CTAButton>
+                    </div>
+                    <div className='w-[200px]'>
+                        <CTAButton active={true} onClick={() => {navigate(-1)}}>
+                            <div className='flex justify-center items-center gap-2 font-semibold text-richblack-900 ' >
+                                <div><FaArrowLeft /></div>
+                                <div>Go Back</div>
+                            </div>
+                        </CTAButton>
+
+                    </div>
+                </div>
+                        </div>
+                    </div>
+                    ) : 
                     <div className=''>
                         <div className='bg-richblack-800
                                 py-8  md:px-32 gap-6 flex
