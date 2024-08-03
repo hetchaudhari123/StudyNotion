@@ -2,9 +2,10 @@ import apiConnector from "../apiconnector"
 import { studentEndpoints } from "../apis"
 import rzpLogo from "../../assets/Logo/rzp_logo.png"
 import toast from "react-hot-toast"
+
 // import mailSender from "../../../server/utils/mailSender"
 // import { courseEnrollmentEmail } from "../../../server/mail/templates/courseEnrollmentEmail"
-export const buyCourse = async ({user,courses},setLoading = null,printSuccess = true) => {
+export const buyCourse = async ({user,courses,navigate = null,navPath=null},setLoading = null,printSuccess = true) => {
 
     let toastId = ""
     if(printSuccess) toastId = toast.loading("Loading...")
@@ -24,13 +25,16 @@ export const buyCourse = async ({user,courses},setLoading = null,printSuccess = 
             handler: function (res){
                 // verify payment
                 
-                const verified = verifyPayment({...res,courses,order_id:response.data.data.id},setLoading,true)
+                const verified = verifyPayment({...res,courses,order_id:response.data.data.id},null,true)
                 // send success mail
-                if(!verified){
-                    if(printSuccess){
-                        toast.error("Payment Verification failed")
-                    }
-                }
+                // if(verified){
+
+                //       if(navPath && navigate){
+                //         navigate(navPath)
+                //       }
+                // }
+                
+
             },
             prefill: {
                 "name": user.firstName + " " + user.lastName,
@@ -54,9 +58,9 @@ export const buyCourse = async ({user,courses},setLoading = null,printSuccess = 
             toast.error("oops, payment failed");
             console.log(response.error);
         })
-        if(printSuccess)
-            toast.success("Successfully completed the payment")
+     
         if(printSuccess){
+            // toast.success("Payment Completed.Verifying....")
             setLoading(false);
             toast.dismiss(toastId);
           }
@@ -65,20 +69,28 @@ export const buyCourse = async ({user,courses},setLoading = null,printSuccess = 
         if(printSuccess){
             setLoading(false);
             toast.dismiss(toastId);
-          }
-          if(printSuccess)
-          toast.error("Failed to complete the payment");
+            // console.log("errmessage.....",err.response.data.message)
+            // console.log("CHECK...",err.message === "User already registered to a provided course")
+            if("User already registered to a provided course" === err.response.data.message){
+                toast.error("User already registered")
+                console.log("hey")
+            }
+        }
     }
 }
 
 export const verifyPayment = async ({razorpay_order_id,
     razorpay_payment_id,razorpay_signature,
-    courses,order_id
+    courses,order_id,navigate = null,navPath=null
 },setLoading = null,printSuccess = true) => {
     
     let toastId = ""
-    if(printSuccess) toastId = toast.loading("Loading...")
-    if(printSuccess) setLoading(true)
+    if(printSuccess ) toastId = toast.loading("Verifying the payment...",{
+        position: "bottom-center"
+
+    })
+        
+    if(printSuccess && setLoading) setLoading(true)
     try{    
         const response = await apiConnector('POST',studentEndpoints.COURSE_VERIFY_API,
             {order_id,razorpay_order_id,razorpay_payment_id,razorpay_signature,courses}
@@ -88,20 +100,27 @@ export const verifyPayment = async ({razorpay_order_id,
             throw new Error(response.data.message)
         }
         if(printSuccess)
-            toast.success("Successfully verified the payment")
+            toast.success("Successfully verified the payment",{
+                position: "bottom-center"
+        })
         if(printSuccess){
-            setLoading(false);
+            if(setLoading) setLoading(false);
             toast.dismiss(toastId);
+          }
+          if(navigate && navPath){
+            navigate(navPath)
           }
           return true
     }catch(err){
         console.log("ERROR FROM VERFIY PAYMENT.....",err)
         if(printSuccess){
-            setLoading(false);
+            if(setLoading) setLoading(false);
             toast.dismiss(toastId);
           }
           if(printSuccess)
-          toast.error("Verification of the payment failed");
+          toast.error("Verification of the payment failed",{
+            position: "bottom-center"
+        });
         return false
     }
 }

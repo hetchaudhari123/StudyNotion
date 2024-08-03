@@ -1,13 +1,15 @@
 import React, { useEffect, useState,useRef } from 'react'
 import { NavbarLinks } from '../../data/navbar-links'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { IoIosArrowDropdownCircle } from "react-icons/io"
+import { useLocalStorage } from '@uidotdev/usehooks'
 
-const ModalNavBar = ({navVis,setNavVis,onLinkClick, subLinks, title1, title2, path1, path2 }) => {
+const ModalNavBar = ({navVis,setNavVis,onLinkClick, subLinks, title1, title2, path1, path2,
+ }) => {
     const navbarRef = useRef(null);
     // const {token} = useSelector(state=>state.auth);
     const [openCatalog,setOpenCatalog] = useState(false);
-
+    const location = useLocation()
     const handleClickOutside = (event) => {
         if (navbarRef.current && !navbarRef.current.contains(event.target)) {
             console.log("hey\n");
@@ -24,29 +26,52 @@ const ModalNavBar = ({navVis,setNavVis,onLinkClick, subLinks, title1, title2, pa
         };
       }, []);
 
-
+      const matchPath = (ele) => {
+        
+        if(location.pathname === ele.path){
+            return true
+        }
+        return false
+      }
 
     return (
         
+    //     <div 
+    //     ref={navbarRef}
+    //     className={`bg-white flex flex-col h-screen fixed right-0 top-0
+    // md:w-[300px]
+    // backdrop-blur-md
+    // z-50
+    // bg-opacity-20
+    // p-8
+    // `}>
         <div 
         ref={navbarRef}
-        className={`bg-white flex flex-col h-screen fixed right-0 top-0
-    md:w-[300px]
+        className={`flex flex-col 
+    h-screen fixed right-0 top-0
     backdrop-blur-md
+     md:w-[300px]
     z-50
+    bg-richblack-700
     bg-opacity-20
-    p-8
+     p-8  gap-3 border border-richblack-700
     `}>
             {
                 NavbarLinks.map((ele, index) => (
-                    <div className={` font-inter 
+
+                     <div className={`cursor-pointer flex flex-row  items-center font-inter text-sm font-medium leading-6 text-left py-2 px-6 gap-3 transition-all duration-200 rounded-lg group hover:bg-yellow-700 hover:text-yellow-300 
+                        ${(matchPath(ele)) ? ("border-l-2 border-yellow-50 text-yellow-50 bg-yellow-800") :
+      ("text-richblack-300 ")}`}
+                     // <div className={` font-inter 
                         
-                    w-full
-                    flex justify-start
-                    text-base font-normal 
-                    leading-6 text-center py-1 px-3 gap-1 group
+                    // w-full
+                    // flex justify-start
+                    // text-base font-normal 
+                    // leading-6 text-center py-1 px-3 gap-1 group
                     
-                    `} key={index}>
+                    // `} 
+                     key={index}>
+
                         {
                             (ele.title === "Catalog") ? (
                                 <div 

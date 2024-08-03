@@ -82,7 +82,12 @@ const SubSectionModal = ({
     if (getValues('sec') !== 'SS') {
       timeDuration += `${getValues('sec')}s `
     }
+
+      resetModal()
+    
+
     if (!edit) {
+
       const result = await (addSubSection({
         sectionId,
         setSectionId,
@@ -97,9 +102,6 @@ const SubSectionModal = ({
       },
         setLoading
       ));
-      if (result) {
-        resetModal()
-      }
     }
     else {
       // console.log("INSIDE THE DISPATCH");
@@ -118,9 +120,6 @@ const SubSectionModal = ({
       },
         setLoading,
         true))
-      if (result) {
-        resetModal()
-      }
 
     }
 
@@ -131,23 +130,39 @@ const SubSectionModal = ({
   return (
 
     (
-      <div style={{ backgroundColor: 'rgba(189, 189, 189, 0.9)' }}
-        className={`fixed ${true ? ("opacity-100") :
-          ("hidden opacity-0")}  transition-all duration-200
-          top-0
-          bottom-0 
-          left-0
-          right-0
-    overflow-y-auto 
-    flex justify-center 
-    items-center
-        p-4
-     `}>
+    //   <div style={{ backgroundColor: 'rgba(189, 189, 189, 0.9)' }}
+    //     className={`fixed ${true ? ("opacity-100") :
+    //       ("hidden opacity-0")}  
+    //       transition-all duration-200
+    //       top-0
+    //       bottom-0 
+    //       left-0
+    //       right-0
+    // overflow-y-auto 
+    // flex justify-center 
+    // items-center
+    //     p-4
+        
+    //  `}>
+    <div className='flex 
+    flex-col  
+    fixed 
+    left-0 
+    top-0
+    right-0
+    bottom-0
+
+    backdrop-blur-md
+    z-[51]
+    bg-richblack-600
+    bg-opacity-20
+     p-8  gap-3 border border-richblack-700 
+     overflow-auto'>
         {
-          (loading) ? (<Spinner />) : (
+          (false) ? (<Spinner />) : (
 
 
-            <form onSubmit={handleSubmit(submitHandler)}>
+            <form className='flex justify-center ' onSubmit={handleSubmit(submitHandler)}>
 
               <div className='bg-richblack-800 
                   flex flex-col gap-6 

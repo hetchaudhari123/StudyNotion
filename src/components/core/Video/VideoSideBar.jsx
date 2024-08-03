@@ -12,7 +12,8 @@ import { setCompletedVideos } from '../../../redux/slices/courseProgressSlice';
 import { fetchCourse, fetchCourseProgress } from '../../../services/operations/courseAPI';
 import CTAButton from "../HomePage/Button"
 import ReviewModal from './ReviewModal';
-const VideoSideBar = ({ reviewModal, setReviewModal }) => {
+import { fetchUserRating } from '../../../services/operations/reviewAPI';
+const VideoSideBar = ({ editReview,loading,setLoading,reviewModal, setReviewModal }) => {
     const { courseDetails } = useSelector(state => state.course)
     const dispatch = useDispatch()
     const { completedVideos } = useSelector(state => state.courseProgress)
@@ -27,11 +28,10 @@ const VideoSideBar = ({ reviewModal, setReviewModal }) => {
     const selectVideoHandler = (sectionId, subSectionId) => {
         navigate(`/view-course/${courseId}/section/${sectionId}/sub-section/${subSectionId}`)
     }
-
+   
     useEffect(() => {
         setCurrentVideo(subSectionId)
         setCurrentSection(sectionId)
-
     }, [location.pathname])
     const isActiveHandler = (sectionId) => {
         !isActive.includes(sectionId) ?
@@ -59,11 +59,13 @@ const VideoSideBar = ({ reviewModal, setReviewModal }) => {
                     <div className='  flex flex-row justify-start '>
                         <CTAButton
                             active={true}
-                            onClick={() => setReviewModal(true)}
+                            onClick={() => {
+                                if(!loading) setReviewModal(true)
+                            }}
                         >
                             <div className='text-richblack-800 font-inter text-md
                           font-medium leading-6 text-left'>
-                                Add Review
+                                {(!loading) ? ((!editReview) ? "Add Review": "Edit Review") : "Loading"}
                             </div>
                         </CTAButton>
                     </div>

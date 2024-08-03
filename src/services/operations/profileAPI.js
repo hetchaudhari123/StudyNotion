@@ -154,6 +154,8 @@ export const deleteProfile = (setLoading,navigate) => {
   }
 }
 export const getEnrolledCourses = (setLoading,setCourses,printSuccess) => {
+  
+  
   return async (dispatch) => {  
     const toastId = toast.loading("Loading...")
     setLoading(true)
@@ -165,8 +167,10 @@ export const getEnrolledCourses = (setLoading,setCourses,printSuccess) => {
       }
       if(printSuccess) toast.success("Successfully fetched all the courses!");
       setCourses(response?.data?.data?.courses);
+      
       setLoading(false);
-      toast.dismiss(toastId);
+        toast.dismiss(toastId);
+      
     }catch(err){
       console.log('ERROR FROM GET ENROLLED COURSES API.........',err);
       toast.error("Failed to fetch the enrolled courses");

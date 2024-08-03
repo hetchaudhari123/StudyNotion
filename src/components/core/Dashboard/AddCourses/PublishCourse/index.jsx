@@ -52,7 +52,6 @@ const PublishCourse = () => {
     }
   }
       else{
-        toast.success("No updation in the course status!") 
         dispatch(resetCourse())
         navigate('/dashboard/my-courses')
       }
@@ -67,8 +66,8 @@ const PublishCourse = () => {
   }, [checked])
   return (
     (loading) ? (
-      <div className=' absolute top-0 left-0
-      bottom-0 right-0'>
+      <div className=' absolute top-0 bottom-0 left-0
+      right-0'>
         <Spinner />
       </div>
     ) :

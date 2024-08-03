@@ -36,7 +36,6 @@ exports.sendOTP = async (req,res) => {
             });
             checkUniqueOTP = await OTP.findOne({otp});
         }
-        console.log("yes\n");
         //5 save the otp to the DB
         const response = await OTP.create({email,otp});
 		console.log("OTP Body", {email,otp});

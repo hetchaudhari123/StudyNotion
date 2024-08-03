@@ -10,9 +10,10 @@ const { auth, isInstructor, isStudent, isAdmin } = require('../middlewares/auth'
 // TODO:getProgressPercentage(COMMENT BY ME)
 
 const { createCourse, showAllCourses, getCourseDetails, editCourse,getInstructorCourses, deleteCourse, getCourseProgress, updateCourseProgress } = require('../controllers/Course');
-const { createRating, getAverageRating, getAllReviews, getAllCourseReviews } = require('../controllers/RatingAndReview');
+const { createRating, getAverageRating, getAllReviews, getAllCourseReviews,editRating,fetchUserRating } = require('../controllers/RatingAndReview');
 const { createSection, updateSection, deleteSection } = require('../controllers/Section');
 const { createSubSection, updateSubSection, deleteSubSection } = require('../controllers/SubSection');
+
 const router = express.Router();
 // createCategory
 router.post('/create-category',auth,isAdmin,createCategory);
@@ -32,6 +33,10 @@ router.get('/get-courses',showAllCourses);
 router.post('/get-course-details',getCourseDetails);
 // createRating
 router.post('/create-rating',auth,isStudent,createRating);
+// fetch user rating
+router.post('/get-user-rating',auth,isStudent,fetchUserRating);
+// edit user rating
+router.post('/edit-user-rating',auth,isStudent,editRating);
 //getAverageRating
 router.get('/get-average-rating',getAverageRating);
 // getAllReviews

@@ -5,12 +5,13 @@ import { fetchInstructorCourses } from '../../../../services/operations/courseAP
 import CourseCard from './CourseCard';
 import { Pie } from 'react-chartjs-2'
 import { Chart, ArcElement, Tooltip, Legend } from 'chart.js';
-
+import HighlightText from '../../HomePage/HighlightText';
+import CTAButton from "../../HomePage/Button"
 Chart.register(ArcElement, Tooltip, Legend);
 const InstructorDashboard = () => {
     const { user } = useSelector(state => state.profile)
     const [options, setOptions] = useState(0)
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true)
     const [courses, setCourses] = useState([])
     // 'rgb(255, 99, 132)'
     const randomColor = () => {
@@ -50,9 +51,9 @@ const InstructorDashboard = () => {
     }
 
     const getTotalIncome = () => {
-        return courses.reduce((prev, course) => {
-            return prev + Number(course.price)
-        }, 0)
+        return courses.reduce((prev,course) => {
+            return prev + Number(course.price) * (course.studentsEnrolled.length)
+        },0)
     }
 
     const getLabels = () => {
@@ -116,8 +117,10 @@ const InstructorDashboard = () => {
                         flex flex-row justify-center'>
                             {/* <canvas id="myChart"></canvas> */}
                             {/* <Doughnut data={}/> */}
+                            {
+                            courses.length > 0 ?
                             <div className='
-                            aspect-square w-[500px]'>
+                                aspect-square md:w-[500px]'>
                                 <Pie data={{
                                     // labels: [
                                     //     'Red',
@@ -138,7 +141,23 @@ const InstructorDashboard = () => {
                                         hoverOffset: 4
                                     }]
                                 }}></Pie>
+                            </div> : 
+                            <div className='  flex flex-col gap-4 justify-center 
+                            items-center text-center h-full  aspect-square md:w-[500px] '>
+                            <div className=''>
+                            <HighlightText text={"Nothing here yet!"} customClass={"text-4xl"}></HighlightText>
                             </div>
+                            {/* <div className='fixed left-1/2 top-1/2 translate-x-[-50%] translate-y-[-50%]'> */}
+                            {/* <div className='w-fit h-fit'>
+                            
+                                <CTAButton active={true} linkto={'/dashboard/add-course'}>
+                                    <div className='text-richblack-900 font-inter text-base font-medium leading-6 text-center '>
+                                        Explore Courses
+                                    </div>
+                                </CTAButton>
+                            </div> */}
+                        </div>
+                            }
                         </div>
                     </div>
                 </div>

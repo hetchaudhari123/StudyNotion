@@ -35,7 +35,9 @@ import ReviewSlider from "./components/common/ReviewSlider";
 import InstructorDashboard from "./components/core/Dashboard/InstructorDashboard/InstructorDashboard";
 import PieChart from "./components/core/Dashboard/InstructorDashboard/PieChart";
 import ModalNavBar from "./components/common/ModalNavBar";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
+import toast from "react-hot-toast";
 function App() {
   const [navVis,setNavVis] = useState(false)
   const [subLinks, setSubLinks] = useState([]);

@@ -1,5 +1,6 @@
 const Section = require('../models/Section');
 const Course = require('../models/Course');
+const SubSection = require('../models/SubSection');
 exports.createSection = async (req,res) => {
     try{
         //1 fetch the details
@@ -89,8 +90,13 @@ exports.deleteSection = async (req,res) => {
         }
         );
         //4 delete from the Section collection
-        const section = await Section.findByIdAndDelete(sectionId);
-        console.log(courseResponse);
+        const section = await Section.findById(sectionId);
+        await SubSection.deleteMany({_id:{$in:section.subSection}})
+        const response = await section.deleteOne()
+        
+
+
+        // console.log(courseResponse);
         //5 return the response
         return res.status(200).json({
             success:true,

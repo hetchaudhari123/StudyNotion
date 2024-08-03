@@ -35,9 +35,9 @@ export default function CourseCard({ courses }) {
         setLoading(false)
 
     }, [courses])
-    useEffect(() => {
-        console.log("COURSES.....", courses)
-    }, [courses])
+    // useEffect(() => {
+    //     console.log("COURSES.....", courses)
+    // }, [courses])
     return (
         <div className='flex flex-row items-center mb-4'>
             <div

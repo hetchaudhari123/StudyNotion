@@ -76,6 +76,7 @@ const SectionForm = () => {
 
         setModal(1);
         setSectionId(sectionId);
+        setExpandSection([...expandSection,sectionId])
 
     }
 
@@ -125,10 +126,6 @@ const SectionForm = () => {
             })
         }
     }, [isSubmitSuccessful])
-    // useEffect(() => {
-
-    // },[])
-
 
     const submitHandler = async  () => {
         // console.log("EDITED SECTION");
@@ -146,6 +143,7 @@ const SectionForm = () => {
             
         }
         else {
+            
             const result = await (editSection(
                 {
                     sectionId, 
@@ -161,7 +159,7 @@ const SectionForm = () => {
 
 
     return (
-        (loading || !courseDetails) ?
+        (!courseDetails) ?
             (<Spinner />) :
             (<>
                 <form onSubmit={handleSubmit(submitHandler)}
@@ -428,6 +426,7 @@ const SectionForm = () => {
                     reset={reset}
                     setValue={setValue}
                     getValues={getValues}
+                    
                 />}
                 {(modal === 2 ) && <SubSectionModal
                     edit={true}
@@ -450,9 +449,9 @@ const SectionForm = () => {
                     
                     (modal === 4) &&
                     (<ConfirmationModal
-                        text1={`Delete Section ${courseDetails.courseContent.find(ele => ele._id === sectionId).sectionName}`}
+                        text1={`Delete Section ${courseDetails?.courseContent?.find(ele => ele._id === sectionId)?.sectionName}`}
                         text2={`Are you sure you want to delete the
-    section ${courseDetails.courseContent.find(ele => ele._id === sectionId).sectionName}.
+    section ${courseDetails?.courseContent.find(ele => ele._id === sectionId)?.sectionName}.
     All Data regarding it will be 
     lost permanently.`}
                         btn1={"Delete"}

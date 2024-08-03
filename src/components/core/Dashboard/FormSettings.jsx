@@ -84,7 +84,9 @@ const FormSettings = () => {
         dispatch(deleteProfile(setLoading,navigate));
     }
     return (
-        <form onSubmit={handleSubmit(submitSettings)} className='my-4 mx-auto w-[400px]  lg:ml-24 lg:mt-8 lg:w-[792px] '>
+        <form onSubmit={handleSubmit(submitSettings)} className='
+        my-4 mr-4 mx-auto w-[400px]  md:ml-24 md:mt-8 md:w-[792px] 
+        md:mr-24'>
             <div className='flex flex-col gap-11'>
                 <div className='p-6 flex flex-row gap-5 rounded-lg border border-richblack-700 bg-richblack-800'>
                     <div className=''>
@@ -165,7 +167,9 @@ const FormSettings = () => {
 
                                     {...register("display")}
                                     style={{ boxShadow: '0px -1px 0px 0px rgba(255, 255, 255, 0.18) inset' }}
-                                     className='font-inter text-base font-medium leading-6 text-left bg-richblack-700  p-3 flex flex-col gap-3 rounded-lg text-richblack-200'>
+                                     className='inputOutline font-inter text-base font-medium leading-6 text-left 
+                                     bg-richblack-700  p-3 flex flex-col gap-3 rounded-lg text-richblack-200
+                                      '>
                                 </input>
 
                                 <div className='flex gap-1.5 font-inter
@@ -189,14 +193,15 @@ const FormSettings = () => {
                                     {...register("profession")}
                                     name='profession'
                                     id='profession'
-                                    className='p-3 gap-3 rounded-lg text-richblack-200 bg-richblack-700 w-full'
+                                    className='p-3 cursor-pointer inputOutline gap-3 rounded-lg text-richblack-200 bg-richblack-700 w-full'
                                     style={{ boxShadow: '0px -1px 0px 0px rgba(255, 255, 255, 0.18) inset' }}
                                 >
                                     {
                                         profession.map((ele, index) => {
                                             return (
 
-                                                <option key={index} value={ele.name} className='font-inter text-base font-medium leading-6 text-left text-richblack-200'>
+                                                <option key={index} value={ele.name} className='font-inter 
+                                                text-base cursor-pointer  font-medium leading-6 text-left text-richblack-200'>
                                                     {ele.name}
                                                 </option>
                                             )
@@ -215,14 +220,18 @@ const FormSettings = () => {
                             </div>
                             {/* box-shadow: 0px -1px 0px 0px #FFFFFF2E inset;
                                 */}
-                            <div style={{ boxShadow: '0px -1px 0px 0px #FFFFFF2E inset' }} className='p-3 flex gap-3 rounded-lg bg-richblack-700'>
+                            <div  style={{ boxShadow: '0px -1px 0px 0px #FFFFFF2E inset' }} 
+                            className='p-3 flex gap-3 rounded-lg bg-richblack-700
+                             focus:border-2 focus:border-yellow-50'>
                                 <input
                                     name='dob'
                                     id='dob'
                                     type="date"
                                     {...register("dob")}
-
-                                    className='w-full font-inter text-base font-medium leading-6 text-left text-richblack-200 bg-richblack-700'
+                                    className='w-full  font-inter text-base font-medium 
+                                    leading-6 text-left
+                                     text-richblack-200 bg-richblack-700
+                                    focus:outline-none'
                                     placeholder='dd/mm/yyyy'
 
                                 />
@@ -299,15 +308,21 @@ const FormSettings = () => {
                         </div>
                     </div>
 
-                    <div className='flex flex-col lg:flex-row gap-6 justify-between '>
-                        <div className='flex flex-col w-full lg:w-1/2 '>
+                    <div className='flex flex-col md:flex-row gap-6 justify-between '>
+                        <div className='flex flex-col w-full md:w-1/2 '>
                             <label htmlFor="countrycode" className='flex gap-1 
                                 font-inter text-sm font-normal leading-6 text-left text-richblack-5 '>Phone number</label>
                             <div className='flex flex-row gap-5 w-full    items-end'>
                                 <div className='flex flex-col  gap-2 w-[75px]'>
 
 
-                                    <select  {...register("countrycode")} style={{ boxShadow: '0px -1px 0px 0px #FFFFFF2E inset' }} className='bg-richblack-800 p-3 gap-3 rounded-lg font-inter text-base font-medium leading-6 text-left text-richblack-200 ' name="countrycode" id="countrycode"
+                                    <select  {...register("countrycode")} 
+                                    style={{ boxShadow: '0px -1px 0px 0px #FFFFFF2E inset' }} 
+                                    className='bg-richblack-800 
+                                    cursor-pointer 
+                                    p-3 gap-3 rounded-lg font-inter 
+                                    text-base font-medium leading-6 text-left 
+                                    text-richblack-200 ' name="countrycode" id="countrycode"
                                     >
                                         {
                                             CountryCode.map((ele, index) => {
@@ -323,7 +338,8 @@ const FormSettings = () => {
                                 <div className='relative flex flex-col  justify-end  flex-1'>
                                     {/* background: #999DAA;
                                 */}
-                                    <input   {...register("phoneNo")} style={{ boxShadow: '0px -1px 0px 0px #FFFFFF2E inset' }} name='phoneNo' id='phoneNo' type="tel" className='w-full p-3 gap-3 rounded-lg bg-richblack-800 font-inter text-base font-medium leading-6 text-left text-richblack-200 ' />
+                                    <input   {...register("phoneNo")} 
+                                    style={{ boxShadow: '0px -1px 0px 0px #FFFFFF2E inset' }} name='phoneNo' id='phoneNo' type="tel" className='w-full p-3 gap-3 inputOutline rounded-lg bg-richblack-800 font-inter text-base font-medium leading-6 text-left text-richblack-200 ' />
                                     {
                                         errors.phoneNo &&
                                         <span className='border-2 border-yellow-25  absolute right-0
@@ -334,16 +350,16 @@ const FormSettings = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className='flex flex-col gap-1.5 lg:w-1/2'>
+                        <div className='flex flex-col gap-1.5 md:w-1/2'>
                             <label htmlFor='about' className='font-inter text-sm font-normal leading-6 text-left text-richblack-5'>
                                 About
                             </label>
-                            <div className='flex p-3 rounded-lg bg-richblack-700'>
+                            <div className='flex p-3 focus-within:ring-1 focus-within:ring-yellow-50  rounded-lg bg-richblack-700'>
                                 <input style={{ boxShadow: '0px -1px 0px 0px #FFFFFF2E inset' }}
                                     {...register("about")}
                                     name='about'
                                     id='about'
-                                    type="text" className='font-inter text-richblack-200 bg-richblack-700 appearance-none outline-none text-base font-medium leading-6 text-left w-full' placeholder='Enter Bio Details' />
+                                    type="text" className='font-inter text-richblack-200 bg-richblack-700  appearance-none outline-none text-base font-medium leading-6 text-left w-full' placeholder='Enter Bio Details' />
                             </div>
                         </div>
                     </div>
@@ -351,11 +367,11 @@ const FormSettings = () => {
                 <div className='p-6 gap-5 flex flex-col rounded-lg   border bg-richblack-800 border-richblack-700'>
 
                     <div className='text-richblack-5 
-                        flex gap-5 font-inter text-lg font-semibold leading-7 text-left  justify-center lg:justify-start'>
+                        flex gap-5 font-inter text-lg font-semibold leading-7 text-left  justify-center md:justify-start'>
                         Password
                     </div>
-                    <div className='flex flex-col lg:flex-row gap-6'>
-                        <div className='flex flex-col gap-1.5 w-full lg:w-1/2'>
+                    <div className='flex flex-col md:flex-row gap-6'>
+                        <div className='flex flex-col gap-1.5 w-full md:w-1/2'>
 
                             <div className='flex gap-0.5 font-inter text-sm font-normal leading-6 text-left text-richblack-5'>
                                 <label htmlFor="currentPassword">
@@ -367,14 +383,15 @@ const FormSettings = () => {
                             {/* box-shadow: 0px -1px 0px 0px #FFFFFF2E inset;
                             */}
                             <div
-                                className='p-3 flex gap-3 rounded-lg bg-richblack-700 flex-row items-center'
+                                className='p-3 flex focus-within:ring-1 focus-within:ring-yellow-50 
+                                gap-3 rounded-lg bg-richblack-700 flex-row items-center'
                                 style={{ boxShadow: '0px -1px 0px 0px rgba(255, 255, 255, 0.18) inset' }}>
 
                                 <input
                                     type={`${!showCurrentPassword ? "password" : "text"}`}
                                     id='currentPassword'
                                     name='currentPassword'
-                                    className={` font-inter text-base font-medium leading-6 text-left bg-richblack-700 text-richblack-200 focus:outline-none w-full`}
+                                    className={` font-inter  text-base font-medium leading-6 text-left bg-richblack-700 text-richblack-200 focus:outline-none w-full`}
 
                                     {...register("currentPassword", {
 
@@ -390,18 +407,21 @@ const FormSettings = () => {
 
                             </div>
                         </div>
-                        <div className='flex flex-col gap-1.5 w-full lg:w-1/2'>
+                        <div className='flex flex-col gap-1.5 w-full md:w-1/2'>
 
                             <div className='font-inter text-sm font-normal leading-6 text-left flex flex-row gap-0.5 text-richblack-5'>Change Password <span className='text-pink-200'>*</span></div>
 
-                            <div className='p-3 flex gap-3 rounded-lg bg-richblack-700 flex-row items-center'
+                            <div className='p-3 flex gap-3 
+                            focus-within:ring-1 focus-within:ring-yellow-50 
+                            rounded-lg bg-richblack-700 flex-row items-center'
                                 style={{ boxShadow: '0px -1px 0px 0px rgba(255, 255, 255, 0.18) inset' }}>
 
                                 <input
                                     type={`${!showChangePassword ? "password" : "text"}`}
                                     id='changePassword'
                                     name='changePassword'
-                                    className=' font-inter text-base font-medium leading-6 text-left bg-richblack-700 text-richblack-200 focus:outline-none w-full'
+                                    className=' font-inter  text-base font-medium leading-6 text-left
+                                     bg-richblack-700 text-richblack-200 focus:outline-none w-full'
                                     {...register("changePassword", {
 
                                     })}

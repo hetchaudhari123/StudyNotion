@@ -5,6 +5,11 @@ const { fileUploader } = require("../utils/uploadFile");
 const Category = require("../models/Category");
 const { SiConcourse } = require("react-icons/si");
 const CourseProgress = require("../models/CourseProgress");
+const mongoose = require('mongoose');
+const Section = require("../models/Section");
+const RatingAndReview = require("../models/RatingAndReview");
+const SubSection = require("../models/SubSection");
+
 // MINE
 exports.createCourse = async (req, res) => {
     try {
@@ -191,7 +196,7 @@ exports.getCourseDetails = async (req, res) => {
 
 exports.editCourse = async (req, res) => {
     try {
-
+        console.log("INSIDE EDIT COURSE!!....",req.body)
         //1 fetch the details
         let { courseid, courseName,
             courseDescription,
@@ -232,10 +237,7 @@ exports.editCourse = async (req, res) => {
         //2.2 validate the tag
 
         if (category && category !== "undefined") {
-            // console.log("INSIDE HERE...............................................................")
-            // console.log(category)
-            // console.log((category === "undefined"))
-            // console.log(typeof category === 'string')
+            console.log("INSIDE THE CATEGORY UPDATION...")
             const categoryDetails = await Category.findById(category);
             if (!categoryDetails) {
                 return res.status(404).json({
@@ -246,7 +248,7 @@ exports.editCourse = async (req, res) => {
             }
 
             if (category !== course.category) {
-
+                console.log("UPDATING THE CATEGORY...")
                 await Category.findByIdAndUpdate(course.category, {
                     $pull: { courses: courseid }
                 }, { new: true });
@@ -362,11 +364,28 @@ exports.deleteCourse = async (req, res) => {
                 message: `The course id ${courseId} doesn't exist.`,
             })
         }
+       
 
-        const response = await Course.findByIdAndDelete(courseId)
+        // const response = await Course.findByIdAndDelete(courseId)
+        // Step 1: Find all sections related to the course
+        const sections = await Section.find({ _id: { $in: course.courseContent } })
 
-
-
+           // Step 2: Extract all sub-section IDs from these sections
+           const subSectionIds = sections.reduce((acc, section) => {
+               return acc.concat(section.subSection);
+           }, []);
+   
+           // Step 3: Delete all sub-sections whose IDs are in the list of extracted sub-section IDs
+        await SubSection.deleteMany({ _id: { $in: subSectionIds } });
+        await Section.deleteMany({ _id: { $in: course.courseContent } })
+        await RatingAndReview.deleteMany({ _id: { $in: course.ratingAndReviews } })
+        await Category.findByIdAndUpdate(course.category, { $pull: { courses: course._id } });
+        await CourseProgress.deleteMany({ courseID: courseId });
+        await User.updateMany(
+            { courses: courseId },
+            { $pull: { courses: courseId } }
+        );
+        const response = await course.deleteOne()
         return res.status(200).json({
             success: true,
             message: "Successfully deleted the course",

@@ -46,7 +46,15 @@ const EnrolledCourses = () => {
         navigate(`/view-course/${course._id}/section/${course?.courseContent[0]._id}/sub-section/${course?.courseContent[0]?.subSection[0]._id}`)
     }
    
-    if (loading) return <Spinner />
+    if (loading) {
+        return (
+        <div className='
+        fixed left-1/2 top-1/2'>
+            <Spinner />
+        </div>
+    )
+    }
+
     const totalTimeDuration = (course) => {
         return Math.round(course.courseContent.reduce((prev,section) => {
             return prev + section.subSection.reduce((previ,ss) => {
@@ -194,7 +202,7 @@ const EnrolledCourses = () => {
                                     )
                                 })) :
                                     (
-                                        <div className='text-richblack-5'>
+                                        <div className=' text-richblack-5'>
                                             No Courses yet
                                         </div>
                                     )
@@ -211,19 +219,20 @@ const EnrolledCourses = () => {
             </div>
             ) :
             (
-                <div className='flex flex-col gap-4 justify-center items-center h-full '>
+                <div className='  flex flex-col gap-4 justify-center 
+                items-center h-full  '>
                 <div className=''>
                 <HighlightText text={"Nothing here yet!"} customClass={"text-4xl"}></HighlightText>
                 </div>
-                {/* <div className='fixed left-1/2 top-1/2 translate-x-[-50%] translate-y-[-50%]'> */}
-                <div className='w-fit h-fit'>
+                {/* TO IMPLEMENT THE FOLLOWING FUNCTIONALITY-> */}
+                {/* <div className='w-fit h-fit'>
                 
-                    <CTAButton active={true} linkto={'/dashboard/add-course'}>
+                    <CTAButton active={true} linkto={'/dashboard'}>
                         <div className='text-richblack-900 font-inter text-base font-medium leading-6 text-center '>
                             Explore Courses
                         </div>
                     </CTAButton>
-                </div>
+                </div> */}
             </div>
             )
         }

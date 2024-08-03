@@ -6,8 +6,10 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getPasswordResetToken } from '../services/operations/authAPI';
 import { useDispatch } from 'react-redux';
+import Spinner from "../components/common/Spinner"
 const ForgotPassword = () => {
   const dispatch = useDispatch();
+  
   const [emailSent, setEmailSent] = useState(false);
   const [email, setEmail] = useState("");
   const { loading } = useSelector(state => state.auth);
@@ -19,12 +21,17 @@ const ForgotPassword = () => {
     dispatch(getPasswordResetToken(email,setEmailSent));
   }
   return (
+   (loading) ? (
+    <div className=' h-screen fixed w-screen'>
+    <Spinner/>
+    </div>
+   ):
     <div className='flex flex-col justify-center items-center flex-1'>
       <div className='lg:w-[508px] lg:h-[448px] p-8 flex flex-col justify-center gap-9 text-richblack-900 '>
         {
           !emailSent ? (<div className='flex flex-col justify-between gap-3  '>
             <div className='font-inter text-3xl font-light leading-10 text-left text-richblack-5'>Reset Password</div>
-            <p className='font-inter text-lg font-normal leading-7 text-left text-richblack-100'>Have no fear. We'll email you instructions to reset your password. If you dont have access to your email we can try account recovery</p>
+            <p className='font-inter text-lg font-normal leading-7 text-left text-richblack-100'>Have no fear. We'll email you instructions to reset your password</p>
           </div>) : (<div className='flex flex-col justify-between gap-3'>
             <div className='font-inter text-3xl font-light leading-10 text-left text-richblack-5'>
               Check email

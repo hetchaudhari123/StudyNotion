@@ -11,7 +11,9 @@ import Spinner from '../../../../common/Spinner';
 import Section from '../CourseBuilder/Section';
 import { fetchCourse } from '../../../../../services/operations/courseAPI';
 import PublishCourse from '../PublishCourse';
+import { useNavigate } from 'react-router-dom';
 const AddCourses = () => {
+    const navigate = useNavigate()
     const { courseStep } = useSelector(state => state.course); //FOR TESTING
     const dispatch = useDispatch(); // FOR TESTING 
     // FOR TESTING STEP2 -------> REMOVE DURING PRODUCTION
@@ -27,7 +29,10 @@ const AddCourses = () => {
                 text-richblack-300 font-inter text-sm font-normal leading-6
                 text-left'>
                 {/* Header */}
-                <div className='flex flex-row gap-2 items-center'>
+                <div className='flex flex-row gap-2 items-center
+                 cursor-pointer hover:text-yellow-50
+                transition-all duration-200 '
+                onClick={() => navigate('/dashboard/instructor')}>
                     <div>
                         <FaAngleLeft />
                     </div>

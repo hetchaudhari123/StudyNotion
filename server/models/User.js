@@ -68,15 +68,15 @@ const userSchema = new mongoose.Schema({
 ,
 { timestamps: true });
 
-userSchema.pre('remove',async (next) => {
-    try{
-        await Profile.deleteMany({id:{$in:this.additionalDetails}})
-        await RatingAndReview.deleteMany({user:this._id})
-        await Course.deleteMany({_id:{$in:this.courses}})
-        await CourseProgress.deleteMany({_id:{$in:this.courseProgress}})
-        next()
-    }catch(err){
-        next(err)
-    }
-})
+// userSchema.pre('remove',async (next) => {
+//     try{
+//         await Profile.deleteMany({id:{$in:this.additionalDetails}})
+//         await RatingAndReview.deleteMany({user:this._id})
+//         await Course.deleteMany({_id:{$in:this.courses}})
+//         await CourseProgress.deleteMany({_id:{$in:this.courseProgress}})
+//         next()
+//     }catch(err){
+//         next(err)
+//     }
+// })
 module.exports =  mongoose.model("User",userSchema)

@@ -138,12 +138,12 @@ exports.capturePayments = async (req,res) => {
                         })
                     }
                     // UNCOMMENT THESE AFTER TESTING!!
-                    // if(course.studentsEnrolled.includes(uid)){
-                    //     return res.status(400).json({
-                    //         success:false,
-                    //         message:'User already registered to a provided course'
-                    //     })
-                    // }
+                    if(course.studentsEnrolled.includes(uid)){
+                        return res.status(400).json({
+                            success:false,
+                            message:'User already registered to a provided course'
+                        })
+                    }
                     totalAmount += course.price
                 }catch(err){
                     console.log("ERROR OCCURRED INSIDE CAPTURE PAYMENTS.....",err)

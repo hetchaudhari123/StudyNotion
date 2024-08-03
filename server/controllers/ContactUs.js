@@ -2,9 +2,17 @@ const mailSender = require('../utils/mailSender');
 exports.contactUs = async (req,res) => {
     try{
         //1 fetch all the details
-        const {firstName,lastName,email,phone,message} = req.body;
+        const {firstName,lastName,email,phoneNo,message,countrycode} = req.body;
+        console.log("CONTACT US firstName...",firstName)
+        console.log("CONTACT US lastName...",lastName)
+        console.log("CONTACT US email...",email)
+        console.log("CONTACT US phoneNo...",phoneNo)
+        console.log("CONTACT US message...",message)
+        console.log("CONTACT US countrycode...",countrycode)
         //2 validation
-        if(!firstName || !lastName || !email || !phone || !message){
+        if(!firstName || !lastName || !email || !phoneNo || !message
+    || !countrycode
+        ){
             return res.status(400).json({
                 success:false,
                 message:"One or more fields are empty"
@@ -12,7 +20,7 @@ exports.contactUs = async (req,res) => {
         }
         //3 send the mails to the author and to the support
         await mailSender(email,'Confirmation','sent your msg');
-        await mailSender(process.env.MAIL,'Suggestion',`The msg is ${message}`);
+        await mailSender(process.env.MAIL_USER,'Suggestion',`${message}`);
         //4 return the response
         return res.status(200).json({
             success:true,

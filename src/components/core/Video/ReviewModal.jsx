@@ -7,8 +7,11 @@ import { buildRating } from '../../../services/operations/courseAPI';
 import { useParams } from 'react-router-dom';
 import Spinner from '../../common/Spinner';
 import { useSelector } from 'react-redux';
+import { updateUserRating } from '../../../services/operations/reviewAPI';
 const ReviewModal = ({
-    setReviewModal}) => {
+    editReview = null,rating = 0,review = "",setReviewModal}) => {
+    const [loading,setLoading] = useState(false)
+    console.log("RATING -> ",rating)
     const {
         register,
         handleSubmit,
@@ -18,7 +21,8 @@ const ReviewModal = ({
         setValue
     } = useForm({
         defaultValues:{
-            'rating':0
+            'rating': rating,
+            'review': review
         }
     });
 
@@ -28,10 +32,18 @@ const ReviewModal = ({
     const {courseDetails} = useSelector(state => state.course)
 
     const submitHandler = async () => {
-        // console.log("RATING.....",getValues('rating'))
-        await buildRating({rating:getValues('rating'),review:getValues('review'),
-            courseId:courseDetails._id},setLoading,true)
-        setReviewModal(false)
+        console.log("EDIT REVIEW INSIDE REVIEW MODAL.....",editReview)
+        if(!editReview){
+
+            await buildRating({rating:getValues('rating'),review:getValues('review'),
+                courseId:courseDetails._id},setLoading,true)
+            }
+        else{
+
+            await updateUserRating({rating:getValues('rating'),review:getValues('review'),
+                courseId:courseDetails._id},setLoading,true)
+            }
+            setReviewModal(false)
     }
 
 
@@ -73,7 +85,7 @@ const ReviewModal = ({
                 <img 
                 src={user.image} 
                 alt={user?.firstName + " " + user?.lastName + " image"} 
-                className='rounded-[200px] w-[50px]'/>
+                className='rounded-[200px] w-[50px] aspect-square'/>
             </div>
             <div className='text-xl'>
                 {user?.firstName + " " + user?.lastName}

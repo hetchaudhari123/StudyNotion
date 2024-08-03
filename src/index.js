@@ -11,7 +11,9 @@ root.render(
     <Provider store={store}>
     <BrowserRouter>
     <App />
-    <Toaster />
+    <Toaster
+        position= "bottom-left"
+      />
 
     </BrowserRouter>
     </Provider>

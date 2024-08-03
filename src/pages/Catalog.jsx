@@ -34,14 +34,10 @@ const Catalog = () => {
     const [coursesData, setCoursesData] = useState(null)
     const navigate = useNavigate()
     useEffect(() => {
-        // const fetchCategoryData = async () => {
-        //     const result = await fetchCategoryPageDetails({categoryId:category._id},setLoading,true)
-        //     setCoursesData(result)
-        //     console.log("RESULT...",result)
-        // }
+     
         const fetchCat = async () => {
             setLoading(true)
-            const resCat = await dispatch(fetchCategory( null, false))
+            const resCat = await dispatch(fetchCategory(null, false))
             setCategories(resCat)
             const reqCat = resCat?.filter((ele) => ele?.name.replace(/[\s/]+/g, '-').toLowerCase() === catalogName)[0]
             setCategory(reqCat)

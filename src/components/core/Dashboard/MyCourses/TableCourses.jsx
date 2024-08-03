@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
 import { deleteCourse, fetchCourse, fetchInstructorCourses } from '../../../../services/operations/courseAPI';
@@ -17,13 +17,18 @@ import { setEditCourse, setStep } from '../../../../redux/slices/courseSlice';
 import ConfirmationModal from "../../../common/ConfirmationModal"
 import { formatDate } from '../../../../services/formatDate';
 import { totalDuration } from '../../../../services/totalDuration';
+import { formatString } from '../../../../services/formatString';
+import { useMediaQuery } from '@uidotdev/usehooks';
 const TableCourses = () => {
     const [courses, setCourses] = useState([])
     const [loading, setLoading] = useState(false)
     const [modal, setModal] = useState(false)
+    const [courseDelete,setCourseDelete] = useState(null)
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const TRUNCATE_LENGTH = 120
+    const isSmallDevice = useMediaQuery("only screen and (max-width : 768px)");
+    const courseIdRef = useRef(null)
     const fetchCourses = async () => {
         const result = await fetchInstructorCourses(setLoading, true)
         if (result) {
@@ -48,12 +53,21 @@ const TableCourses = () => {
             navigate("/dashboard/add-course")
         }
     }
-    const descriptionHandler = (desc) => {
-        if (desc.length > TRUNCATE_LENGTH)
-             return desc.substring(0, TRUNCATE_LENGTH) + "...";
-        return desc
-        
+    const onClickDeleteHandler = (course) => {
+        setModal(true)
+        // courseIdRef(course._id)
+        setCourseDelete(course)
+        // deleteHandler(course._id)
     }
+
+
+
+
+    const courseClickHandler = (course) => {  
+        // http://localhost:3000/view-course/669750c8107ff5f3542be1f5/section/669750ce107ff5f3542be1f9/sub-section/669750e4107ff5f3542be20b
+        navigate(`/view-course/${course._id}/section/${course.courseContent[0]._id}/sub-section/${course.courseContent[0].subSection[0]._id}`)
+    }
+
     return (
 
 
@@ -65,7 +79,7 @@ const TableCourses = () => {
                 font-inter text-sm font-medium leading-6 text-left
                 flex flex-row'>
 
-                <div className='w-3/4 2/3'>
+                <div className='w-1/2 2/3'>
 
                     <div className='p-4 
                 flex justify-center items-center
@@ -76,19 +90,19 @@ const TableCourses = () => {
                     </div>
                 </div>
 
-                <div className='p-4  w-1/12 flex justify-center items-center
+                <div className='p-4  w-1/6 flex justify-center items-center
                 '>
                     {/* second */}
                     DURATION
                 </div>
                 <div className='p-4 
-                gap-2.5 w-1/12 flex justify-center items-center
+                gap-2.5 w-1/6 flex justify-center items-center
                 '>
                     {/* third */}
                     PRICE
                 </div>
 
-                <div className='p-4 gap-2.5 w-1/12 flex justify-center items-center
+                <div className='p-4 gap-2.5 w-1/6 flex justify-center items-center
                 '>
                     {/* fourth */}
                     ACTIONS
@@ -104,26 +118,14 @@ const TableCourses = () => {
                     ) : (
                         courses.map((course) => (
 
-                            modal ? <ConfirmationModal
-                                key={course._id}
-                                text1={`Delete Course ${course.courseName}?`}
-                                text2={`Are you sure you want to delete
-                                ${course.courseName}?All the data regarding it will 
-                                be permanently deleted`}
-                                setModal={setModal}
-                                onClickBtn1={() => { deleteHandler(course._id) }}
-                                onClickBtn2={() => { setModal(false) }}
-                                btn1={"Delete"}
-                                btn2={"Cancel"}
-                            />
-                                :
-                                <div className='
-                             flex flex-row w-full
+                            
+                                <div  className='
+                             flex flex-row w-full 
                                 ' key={course._id}>
-                                    <div className='w-3/4 2/3'>
+                                    <div onClick={() => courseClickHandler(course)} className='cursor-pointer w-1/2  2/3'>
                                         <div className='w-full flex flex-row 
-                                    text-richblack-100 p-4 gap-6
-                                     '>
+                                            text-richblack-100 p-4 gap-6
+                                            '>
                                             <div className='flex items-center'>
                                                 <img src={course?.thumbnail} alt={course?.courseName}
                                                     className='rounded-lg 
@@ -139,7 +141,7 @@ const TableCourses = () => {
                                                     <div className="text-richblack-5
                                                     font-inter text-xl font-semibold leading-7
                                                     text-left">
-                                                        {course.courseName}
+                                                        {!isSmallDevice ? course.courseName : formatString(course.courseName, 10)}
                                                     </div>
 
                                                     <div className='text-richblack-100
@@ -147,15 +149,17 @@ const TableCourses = () => {
                                                     leading-6 text-left'>
                                                         {/* This course provides an overview of the design process, design thinking, and basic design principles. */}
                                                         {
-                                                            descriptionHandler(course.courseDescription)
+                                                            // descriptionHandler(course.courseDescription)
+                                                            !isSmallDevice ? course.courseDescription : formatString(course.courseDescription, 10)
+
                                                         }
                                                     </div>
                                                 </div>
 
                                                 <div className='text-richblack-25
                                                 font-inter text-xs font-medium leading-5 text-left'>
-                                                    {/* Created: April 27, 2023 | 05:15 PM */}
-                                                    Created:{formatDate(course.createdAt)}
+                                                    Created:{formatDate(course.createdAt)
+                                                    }
                                                 </div>
 
                                                 {
@@ -182,8 +186,8 @@ const TableCourses = () => {
 
                                                             </div>
                                                             <div className='text-pink-100
-                                        font-inter text-xs font-medium leading-5 text-left
-                                        '>
+                                            font-inter text-xs font-medium leading-5 text-left
+                                            '>
                                                                 Drafted
                                                             </div>
                                                         </div>
@@ -197,7 +201,7 @@ const TableCourses = () => {
                                     flex items-center
                                     
                                     justify-center
-                                    w-1/12'>
+                                    w-1/6'>
                                         {/* second */}
                                         {/* ADD THE TOTAL TIME DURATION OF THE COURSE */}
                                         {/* 20h 10m */}
@@ -208,7 +212,7 @@ const TableCourses = () => {
                                     flex items-center
                                     
                                     justify-center
-                                    w-1/12
+                                    w-1/6
                                 '>
                                         {/* third */}
                                         ₹{course?.price}
@@ -219,15 +223,16 @@ const TableCourses = () => {
                                     flex items-center
                                     
                                     justify-center
-                                    w-1/12 gap-2.5
+                                    w-1/6 gap-2.5
                                     p-4
                                     cursor-pointer'>
                                         {/* fourth */}
-                                        <div onClick={() => { handleEdit(course._id) }} className='hover:text-richblue-100
+                                        <div onClick={() => { handleEdit(course._id) }} 
+                                        className='hover:text-richblue-100
                                     text-2xl duration-200 transition-all'>
                                             <HiMiniPencil />
                                         </div>
-                                        <div onClick={() => setModal(true)} className='hover:text-richblue-100
+                                        <div onClick={() => onClickDeleteHandler(course)} className='hover:text-richblue-100
                                     text-2xl duration-200 transition-all'>
                                             <FiTrash2 />
                                         </div>
@@ -239,7 +244,21 @@ const TableCourses = () => {
 
                     )
                 }
-
+                {
+                    modal && <ConfirmationModal
+                                key={courseDelete._id}
+                                text1={`Delete Course ${courseDelete.courseName}?`}
+                                text2={`Are you sure you want to delete
+                                ${courseDelete.courseName}?All the data regarding it will 
+                                be permanently deleted`}
+                                setModal={setModal}
+                                onClickBtn1={() => { deleteHandler(courseDelete._id) }}
+                                onClickBtn2={() => { setModal(false) }}
+                                btn1={"Delete"}
+                                btn2={"Cancel"}
+                            />
+                    }
+                                
             </div>
         </div>
     )

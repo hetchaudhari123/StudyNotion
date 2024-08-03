@@ -13,20 +13,20 @@ const sectionSchema = new mongoose.Schema({
         }
     ]
 })
-sectionSchema.pre('remove',async (next) => {
-    try{
-        await SubSection.deleteMany({_id:{$in:this.subSection}})
-        // await Course.findOneAndUpdate({},{})
-        // await Course.findByIdAndUpdate(courseId,
-        //     {
-        //         $pull:{
-        //             courseContent:sectionId
-        //        }
-        // }
-        // );
-        next()
-    }catch(err){
-        next(err)
-    }
-})
+// sectionSchema.pre('remove',async (next) => {
+//     try{
+//         await SubSection.deleteMany({_id:{$in:this.subSection}})
+//         // await Course.findOneAndUpdate({},{})
+//         // await Course.findByIdAndUpdate(courseId,
+//         //     {
+//         //         $pull:{
+//         //             courseContent:sectionId
+//         //        }
+//         // }
+//         // );
+//         next()
+//     }catch(err){
+//         next(err)
+//     }
+// })
 module.exports =  mongoose.model("Section",sectionSchema);

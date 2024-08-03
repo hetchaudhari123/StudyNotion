@@ -12,7 +12,7 @@ import avgRating from '../../../services/avgRating'
 import RatingStars from './RatingStars'
 import { FaAngleRight } from "react-icons/fa6";
 // import required modules
-import { Autoplay,EffectCoverflow, Pagination } from 'swiper/modules';
+import { Autoplay,EffectCoverflow,Navigation, Pagination } from 'swiper/modules';
 import { useNavigate } from 'react-router-dom';
 import Spinner from '../../common/Spinner';
 export default function CourseSliderAdv({ courses,delay=null }) {
@@ -28,7 +28,7 @@ export default function CourseSliderAdv({ courses,delay=null }) {
         // avgRating(course)
         setAvgRatingCourse(courses.map((course) => {
             const obj = avgRating(course)
-            // console.log("OBJ....",obj)
+            console.log("OBJ....",obj)
             return obj
         }))
         setLoading(false)
@@ -37,39 +37,65 @@ export default function CourseSliderAdv({ courses,delay=null }) {
     useEffect(() => {
         console.log("AVERAGE RATING COURSE.....", avgRatingCourse)
     }, [avgRatingCourse])
+
+  
+
     const swiperRef = useRef(null);
     const clickHandler = () => {
         if (swiperRef.current && swiperRef.current.swiper) {
-          swiperRef.current.swiper.slideNext();
+            swiperRef.current.swiper.slideNext();
         }
-      };
+    };
     return (
         <div className='flex flex-row items-center  '>
             <Swiper
-                ref={swiperRef}
-                effect={'coverflow'}
-                grabCursor={true}
-                centeredSlides={true}
-                slidesPerView={'1'}
-                loop={true}
-                breakpoints={{
-                    1024: { slidesPerView: (courses ? (courses.length >= 3 ? 3 : courses.length) : (0)) }
-                }}
-                autoplay={{
-                      delay: delay || 5000 ,
-                      disableOnInteraction: true,
-                    }}
+             ref={swiperRef}
+             slidesPerView={1}
+             loop={true}
+             spaceBetween={24}
+      
+             modules={[Autoplay, Pagination, Navigation]}
 
-                coverflowEffect={{
-                    rotate: 50,
-                    stretch: 0,
-                    depth: 100,
-                    modifier: 1,
-                    slideShadows: true,
-                }}
-                // pagination={true}
-                modules={[Autoplay,EffectCoverflow, Pagination]}
-                className="mySwiper "
+             className={`mySwiper ${(!grabbing) ? ("cursor-grab") : ("cursor-grabbing")}`}
+               autoplay={{
+               delay: 1000,
+               disableOnInteraction: true,
+               }}
+             // navigation={true}
+             breakpoints={{
+                 1024: { slidesPerView: courses.length >= 3 ? 3 : courses.length, }
+             }}
+
+             onTouchStart={() => { setGrabbing(true) }}
+             onTouchEnd={() => {
+                 setGrabbing(false)
+             }}
+                // ref={swiperRef}
+                // effect={'coverflow'}
+                // grabCursor={true}
+                
+                // centeredSlides={true}
+                // slidesPerView={'1'}
+                // loop={courses.length >=3 && true}
+                // breakpoints={{
+                //     1024: { slidesPerView: (courses ? (courses.length >= 3 ? 3 : courses.length) : (0)) }
+                // }}
+                // autoplay={{
+                //       delay: delay || 5000 ,
+                //       disableOnInteraction: true,
+                //     }}
+
+                // coverflowEffect={{
+                //     rotate: 50,
+                //     stretch: 0,
+                //     depth: 100,
+                //     modifier: 1,
+                //     slideShadows: true,
+                // }}
+                // // pagination={true}
+                // modules={[Autoplay,EffectCoverflow, Pagination]}
+                // className={`mySwiper ${(!grabbing) ? ("cursor-grab") : ("cursor-grabbing")}`}
+
             >
                 <>
 
@@ -87,7 +113,7 @@ export default function CourseSliderAdv({ courses,delay=null }) {
                                     className='flex 
                 
                 justify-center
-                items-center'
+                items-center '
                                 >
                                     <div className='
                                         flex flex-col gap-5'>

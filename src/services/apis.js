@@ -53,8 +53,9 @@ export const courseEndpoints = {
 // RATINGS AND REVIEWS
 export const ratingsEndpoints = {
   REVIEWS_DETAILS_API: BASE_URL + "/course/get-reviews",
-  GET_AVERAGE_RATING_COURSES_API: BASE_URL + "/course/get-average-rating"
-
+  GET_AVERAGE_RATING_COURSES_API: BASE_URL + "/course/get-average-rating",
+  GET_USER_RATING:BASE_URL + "/course/get-user-rating",
+  UPDATE_USER_RATING:BASE_URL + "/course/edit-user-rating"
 }
 
 // CATAGORIES API
@@ -68,7 +69,7 @@ export const catalogData = {
 }
 // CONTACT-US API
 export const contactusEndpoint = {
-  CONTACT_US_API: BASE_URL + "/reach/contact",
+  CONTACT_US_API: BASE_URL + "/reach/contact-us",
 }
 
 // SETTINGS PAGE API

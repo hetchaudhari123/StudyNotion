@@ -34,11 +34,7 @@ const ReviewSlider = ({ courses,loading,setLoading,reviews,setReviews }) => {
                     slidesPerView={1}
                     loop={true}
                     spaceBetween={24}
-                    // pagination={{
-                    //     clickable: true,
-                    //     bulletClass: 'custom-bullet',
-                    //     bulletActiveClass: 'custom-bullet-active',
-                    //   }}
+             
                     modules={[Autoplay, Pagination, Navigation]}
 
                     className={`mySwiper ${(!grabbing) ? ("cursor-grab") : ("cursor-grabbing")}`}
@@ -48,7 +44,7 @@ const ReviewSlider = ({ courses,loading,setLoading,reviews,setReviews }) => {
                       }}
                     // navigation={true}
                     breakpoints={{
-                        1024: { slidesPerView: 3, }
+                        1024: { slidesPerView: reviews.length >= 3 ? 3 : reviews.length, }
                     }}
 
                     onTouchStart={() => { setGrabbing(true) }}

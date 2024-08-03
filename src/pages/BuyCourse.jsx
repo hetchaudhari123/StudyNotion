@@ -53,8 +53,8 @@ const BuyCourse = () => {
       setLoading(false)
     }
   }, [courseDetails])
-  const clickHandler = () => {
-    buyCourse({ user, courses: [courseId] }, setLoading, true)
+  const clickHandler = async () => {
+    await (buyCourse({ user, courses: [courseId] ,navigate,navPath:'/dashboard/enrolled-courses'}, setLoading, true))
   }
   const collapseHandler = () => {
     setIsActive([])

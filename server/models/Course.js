@@ -64,16 +64,16 @@ const coursesSchema = new mongoose.Schema({
         default:Date.now(),
     }
 })
-coursesSchema.pre('remove',async (next) => {
-    try{
-        console.log("GETTING REMOVED,THE COURSE.....")
-        await Section.deleteMany({ _id: { $in: this.courseContent } })
-        await RatingAndReview.deleteMany({ _id: { $in: this.ratingAndReviews } })
-        await Category.findByIdAndUpdate(this.category, { $pull: { courses: this._id } });
-        await CourseProgress.deleteMany({ courseID: courseId });
-        next()
-    }catch(err){
-        next(err)
-    }
-})
+// coursesSchema.pre('remove',async (next) => {
+//     try{
+//         console.log("GETTING REMOVED,THE COURSE.....")
+//         await Section.deleteMany({ _id: { $in: this.courseContent } })
+//         await RatingAndReview.deleteMany({ _id: { $in: this.ratingAndReviews } })
+//         await Category.findByIdAndUpdate(this.category, { $pull: { courses: this._id } });
+//         await CourseProgress.deleteMany({ courseID: courseId });
+//         next()
+//     }catch(err){
+//         next(err)
+//     }
+// })
 module.exports =  mongoose.model("Course",coursesSchema);

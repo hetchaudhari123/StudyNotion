@@ -139,3 +139,12 @@ input[type="password"]::-webkit-textfield-decoration-container {
        transform: rotate(1turn);
     }
  }
+
+
+ .inputOutline {
+    outline: none; /* Remove the default focus outline */
+}
+
+.inputOutline:focus {
+    border: 1px solid yellow; /* Apply a yellow border when focused */
+}

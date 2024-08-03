@@ -4,12 +4,24 @@ import CTAButton from "../../../HomePage/Button"
 import { useDispatch } from 'react-redux';
 import { MdOutlineKeyboardArrowLeft,MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { setEditCourse, setStep } from '../../../../../redux/slices/courseSlice';
-
+import { useSelector } from 'react-redux';
+import toast from 'react-hot-toast';
 const Section = () => {
   const dispatch = useDispatch();
-
+  const { courseDetails } = useSelector(state => state.course);
   const goNext = () => {
-    dispatch(setStep(3))
+    const check = courseDetails.courseContent && 
+    courseDetails.courseContent.length > 0 && 
+    courseDetails.courseContent.map((section,index) => {
+      if(section.subSection.length === 0) return false
+      return true
+    })
+    if(check && !check.includes(false)){
+      dispatch(setStep(3))
+    }
+    else{
+      toast.error('Atleast 1 section and 1 subsection required!')
+    }
   }
   const goBack = () => {
     // DOUBT IN TERMS OF EDITING
@@ -31,7 +43,7 @@ const Section = () => {
 
         <div className='flex flex-row gap-4 justify-end'>
             <CTAButton active={false} onClick={goBack}
-            customClass={'bg-richblack-700'}>
+            bgColor={'bg-richblack-700'}>
             
               <div className=' flex flex-row justify-between 
               items-center gap-2'>

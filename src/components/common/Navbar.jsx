@@ -33,13 +33,13 @@ export default function Navbar({navVis,setNavVis,subLinks,setSubLinks}) {
         
     }
     useEffect(() => {
-        console.log("USER..",user?.image)
+        // console.log("USER..",user?.image)
         getSubLinks();
     }, []);
 
-    useEffect(() => {
-        console.log("sublinks->",subLinks);
-    },[subLinks])
+    // useEffect(() => {
+    //     console.log("sublinks->",subLinks);
+    // },[subLinks])
 
     return (
 

@@ -51,7 +51,7 @@ exports.updateProfile = async (req, res) => {
 exports.deleteAccount = async (req, res) => {
     try {
         //1 fetch the details
-        console.log("Printing ID: ", req.user.id);
+        // console.log("Printing ID: ", req.user.id);
         const userId = req.user.id;
         //2 validation
         let userDetails = await User.findById(userId);
@@ -76,6 +76,10 @@ exports.deleteAccount = async (req, res) => {
 
         //BY ME ends
         //4 delete the user
+        await Profile.deleteMany({id:{$in:userDetails.additionalDetails}})
+        await RatingAndReview.deleteMany({user:userDetails._id})
+        await Course.deleteMany({_id:{$in:userDetails.courses}})
+        await CourseProgress.deleteMany({_id:{$in:userDetails.courseProgress}})
         userDetails = await User.findByIdAndDelete(userId);
         //5 return the response
         return res.status(200).json({

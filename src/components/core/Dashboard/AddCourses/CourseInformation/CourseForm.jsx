@@ -29,7 +29,7 @@ const CourseForm = () => {
     } = useForm({
 
     });
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [reqList, setReqList] = useState([]);
     const  [tagList,setTagList] = useState([])
     const dispatch = useDispatch();
@@ -42,7 +42,12 @@ const CourseForm = () => {
         dispatch(setStep(2));
     }
     useEffect(() => {
-        dispatch(fetchCategory(setCategory, setLoading, false));
+       const fetch  = async () => {
+        const response = await dispatch(fetchCategory(null, false));
+        setLoading(false)
+        setCategory(response)
+       }
+        fetch()
         if (editCourse) {
             // dispatch(setEditCourse(true));
             // const formData = new FormData();
@@ -76,16 +81,21 @@ const CourseForm = () => {
             // setValue('tag', JSON.stringify(courseDetails.tag));//--
             setValue('tag', courseDetails.tag);//--
             setValue('requirement', courseDetails.instructions);//--
-            setValue('category', courseDetails.category);//--
+            setValue('category', courseDetails?.category?._id);//--
             // setValue('courseDesc', courseDetails.description);//--
             // setValue('file',courseDetails.thumbnail);
         }
         // console.log("CATEGORIES....",getValues('category') === "")
     }, [])
+// useEffect(() => {
+//     console.log("category....",getValues('category'))
+//     console.log("category....",courseDetails?.category?._id)
+// },[getValues('category')])
 
     const submitHandler = async () => {
         const { benefit, category, courseDesc, courseTitle, price, file } = getValues();
-
+        console.log("SUBMIT HANDLER ALL THE VALUES....",getValues())
+        console.log("SUBMIT HANDLER CATEGORY....",category)
         if (!editCourse) {
             const result = await (buildCourse({
                 dispatch,
@@ -95,7 +105,7 @@ const CourseForm = () => {
                 courseName: courseTitle,
                 price,
                 tag: tagList.toString(),
-                category,
+                category:category,
                 instructions: reqList.toString(),
                 file
             },
@@ -131,7 +141,11 @@ const CourseForm = () => {
 
     }
     return (
-        (loading) ? (<Spinner />) :
+        (loading) ? (
+            <div className=' h-[calc(100vh-20rem)]'>
+        <Spinner />
+            </div>
+    ) :
             <form className='w-[400px]   md:mt-4 md:ml-8 flex flex-col gap-4 md:w-[665px]'
                 onSubmit={handleSubmit(submitHandler)}>
                 <div className='p-2 md:p-6 gap-7 flex flex-col rounded-lg border 
@@ -279,28 +293,21 @@ const CourseForm = () => {
 
                             <select
                                 defaultValue={(!editCourse) ? (""):(getValues('category'))}
+                                // defaultValue={(!editCourse) ? (""):("AI/ML")}
                                 // defaultValue={getValues('category')}
                                 {...register("category", 
 
                                     { required: { value: true, message: "Please select a category" } })}
-                                className='w-full bg-richblack-700 focus:outline-none' >
+                                className='w-full bg-richblack-700 focus:outline-none ' >
                                 <option value="" disabled>
                                     Choose a Category
                                 </option>
-                                {/* {
-                                
-                                category.map((ele, index) => (
-                                    <option
-                                        value={ele._id}
-                                        key={index}
-                                    >
-                                        {ele.name}
-                                    </option>
-                                ))
-                            } */}
+                              
                                 {!loading &&
                                     category?.map((cat, indx) => (
-                                        <option key={indx} value={cat?._id}>
+                                        <option 
+                                        className=''
+                                        key={indx} value={cat?._id}>
                                             {cat?.name}
                                         </option>
                                     ))}
