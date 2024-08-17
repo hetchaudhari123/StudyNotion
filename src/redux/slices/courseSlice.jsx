@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import toast, { Toaster } from 'react-hot-toast';
 const initialState = {
-    courseStep:1,
-    courseDetails:null,
+    courseStep:localStorage.getItem('step')?Number(localStorage.getItem("step")):(1),
+    courseDetails:(localStorage.getItem('courseDetails'))?(JSON.parse(localStorage.getItem('courseDetails'))):null,
     editCourse:null
 }
 const notify = () => toast('Here is your toast.');

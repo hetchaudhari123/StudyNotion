@@ -16,6 +16,7 @@ import { removeSubSection } from '../../../../../services/operations/subSectionA
 import ConfirmationModal from '../../../../common/ConfirmationModal';
 import { removeSection } from '../../../../../services/operations/sectionAPI';
 import { editSection } from '../../../../../services/operations/sectionAPI';
+import { fetchCourse } from '../../../../../services/operations/courseAPI';
 // import { editCourse } from '../../../../../server/controllers/Course';
 const SectionForm = () => {
     const {
@@ -118,7 +119,6 @@ const SectionForm = () => {
     const hideDropDown = (id) => {
         setExpandSection(expandSection.filter((ele) => ele !== id));
     }
-
     useEffect(() => {
         if (isSubmitSuccessful) {
             reset(initialValues, {
@@ -131,7 +131,6 @@ const SectionForm = () => {
         // console.log("EDITED SECTION");
 
         if (modal !== 5) {
-
             const result = await (buildSection({
                 sectionName:getValues('sectionName'),
                 courseDetails,
@@ -155,9 +154,14 @@ const SectionForm = () => {
                 setLoading,
                 true));
         }
+        // localStorage.setItem("courseDetails",JSON.stringify(courseDetails))
     }
 
-
+// useEffect(() => {
+//     // console.log("Changed courseDetails....",courseDetails)
+//     localStorage.setItem("courseDetails",JSON.stringify(courseDetails))
+    
+// },[courseDetails])
     return (
         (!courseDetails) ?
             (<Spinner />) :

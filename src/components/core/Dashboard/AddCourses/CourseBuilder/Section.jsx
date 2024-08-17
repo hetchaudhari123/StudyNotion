@@ -9,6 +9,7 @@ import toast from 'react-hot-toast';
 const Section = () => {
   const dispatch = useDispatch();
   const { courseDetails } = useSelector(state => state.course);
+  const {courseStep} = useSelector(state => state.course)
   const goNext = () => {
     const check = courseDetails.courseContent && 
     courseDetails.courseContent.length > 0 && 
@@ -28,6 +29,7 @@ const Section = () => {
     dispatch(setEditCourse(true))
     dispatch(setStep(1))
   }
+
   return (
     <div style={{ boxShadow: '0px -1px 0px 0px rgba(255, 255, 255, 0.18) inset' }}
     className='flex flex-col bg-richblack-800 p-6 gap-7 rounded-lg '>

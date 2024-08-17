@@ -122,6 +122,7 @@ const SubSectionModal = ({
         true))
 
     }
+    // localStorage.setItem("courseDetails",JSON.stringify(courseDetails))
 
 
   }

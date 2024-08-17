@@ -30,6 +30,7 @@ import { FaAngleDown } from "react-icons/fa";
 import { FiClock } from "react-icons/fi";
 import { addToCart } from '../redux/slices/cartSlice'
 import ReviewSlider from '../components/common/ReviewSlider'
+import { ACCOUNT_TYPE } from '../utils/constants'
 const BuyCourse = () => {
   const { user } = useSelector(state => state.profile)
   const [loading, setLoading] = useState(true)
@@ -54,12 +55,20 @@ const BuyCourse = () => {
     }
   }, [courseDetails])
   const clickHandler = async () => {
+    if (user && user?.accountType === ACCOUNT_TYPE.INSTRUCTOR) {
+      toast.error("You are an Instructor. You can't buy a course.")
+      return
+    }
     await (buyCourse({ user, courses: [courseId] ,navigate,navPath:'/dashboard/enrolled-courses'}, setLoading, true))
   }
   const collapseHandler = () => {
     setIsActive([])
   }
   const addToCartHandler = () => {
+    if (user && user?.accountType === ACCOUNT_TYPE.INSTRUCTOR) {
+      toast.error("You are an Instructor. You can't buy a course.")
+      return
+    }
     if(!token){
       setConfirmationModal(true)
     }

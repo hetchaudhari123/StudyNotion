@@ -78,7 +78,10 @@ const Catalog = () => {
         <>
             {
                 (loading) ? (
-                    <div style={{ backgroundColor: 'rgba(189, 189, 189, 0.9)' }} className={`fixed ("opacity-100")  top-0 left-0 bottom-0 right-0 transition-all duration-200`}>
+                    // <div style={{ backgroundColor: 'rgba(189, 189, 189, 0.9)' }} className={`fixed ("opacity-100")  top-0 left-0 bottom-0 right-0 transition-all duration-200`}>
+                    //     <Spinner></Spinner>
+                    // </div>
+                    <div  className={`fixed ("opacity-100")  top-0 left-0 bottom-0 right-0 transition-all duration-200`}>
                         <Spinner></Spinner>
                     </div>
                 ) : (

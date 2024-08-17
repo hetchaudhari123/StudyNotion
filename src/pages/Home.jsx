@@ -16,8 +16,8 @@ const Home = () => {
         <div>
             {/* Section1 */}
             <div className="flex flex-col mx-auto justify-center items-center w-11/12 text-white gap-y-9  ">
-                    <div className="mt-16 bg-richblack-800 rounded-full  transition-all duration-200 hover:scale-95 w-fit shadow-login-btn-become-an-instructor group py-[1px] px-[0.5px] ">
-                <Link to={"/signup"}>
+                <div className="mt-16 bg-richblack-800 rounded-full  transition-all duration-200 hover:scale-95 w-fit shadow-login-btn-become-an-instructor group py-[1px] px-[0.5px] ">
+                    <Link to={"/signup"}>
 
                         <div className=" flex gap-x-[10px] items-center group-hover:bg-richblack-900  rounded-full py-1.5 px-4  ">
 
@@ -25,8 +25,8 @@ const Home = () => {
                             <FaArrowRightLong></FaArrowRightLong>
 
                         </div>
-                </Link>
-                    </div>
+                    </Link>
+                </div>
                 <div className="text-3xl text-center leading-10 font-semibold">
                     Empower Your Future with
                     <HighlightText text={"Coding Skills"} />
@@ -48,17 +48,30 @@ const Home = () => {
                     </CTAButton>
                 </div>
 
-                <div className="videoDiv xl:w-[50%] mx-auto relative">
+                <div className="xl:w-[90%] mx-auto relative
+                 shadow-[10px_-5px_50px_-5px] shadow-blue-200 ">
                     <div className="xl:video-circle xl:absolute xl:top-[50%] xl:translate-y-[-50%] xl:left-[50%] xl:translate-x-[-50%]"></div>
-                    <video muted loop className="video relative">
+                    <video  loop autoPlay className="shadow-[20px_20px_rgba(255,255,255)]">
                         <source src={Banner} type="video/mp4" />
+
                     </video>
                 </div>
+                {/* <div className="mx-3 my-7 shadow-[10px_-5px_50px_-5px] shadow-blue-200 ">
+                    <video
+                        className="shadow-[20px_20px_rgba(255,255,255)]"
+                        muted
+                        loop
+                        autoPlay
+                    >
+                        <source src={Banner} type="video/mp4" />
+                    </video>
+                </div> */}
 
             </div>
 
             {/* Code Section1 */}
-            <div className="w-full mt-[4rem]">
+            {/* <div className="w-full border-2 border-white mt-[4rem]"> */}
+            <div className="w-11/12  mx-auto mt-[10rem]">
                 <CodeBlocks
                     heading={
                         <div className="font-semibold text-4xl leading-10">
@@ -79,7 +92,8 @@ const Home = () => {
                 ></CodeBlocks>
             </div>
             {/* Section2 */}
-            <div className="w-full mt-[4rem]">
+            {/* <div className="w-full mt-[4rem]"> */}
+            <div className="w-11/12 mx-auto mt-[4rem]">
                 <CodeBlocks
                     heading={
                         <div className="font-semibold text-4xl leading-10">
@@ -167,7 +181,7 @@ const Home = () => {
             </div> */}
             <Reviews></Reviews>
             {/* Footer */}
-            <Footer/>
+            <Footer />
         </div>
     )
 }

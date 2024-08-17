@@ -28,6 +28,7 @@ export const buildSection = async (
             }
             // dispatch(addSection(response.data.updatedCourse.courseContent));
             await dispatch(fetchCourse(courseDetails._id,setLoading,false));
+            
             if (printSuccess) {
                 setLoading(false);
                 toast.dismiss(toastId);

@@ -65,7 +65,7 @@ export const buildCourse = async ({
             // const formObj = await formDatatoObject(formData);
             // console.log("OBJECT....",formObj);
             // dispatch(setCourseDetails(formObj));
-            
+            localStorage.setItem("courseDetails", JSON.stringify(response.data.data))
             dispatch(setCourseDetails(response.data.data))
             if (printSuccess) {
                 setLoading(false);
@@ -192,6 +192,8 @@ export const fetchCourse = (courseId,setLoading = null , printSuccess = true) =>
             }
             if (printSuccess)
                 toast.success("Successfully edited and saved the course");
+            // return true
+            // return response.data.data
             return true
         }catch(err){
             console.log('ERROR FROM GET COURSE DETAILS API.....',err);
@@ -249,8 +251,9 @@ export const fetchInstructorCourses = async (setLoading = null,printSuccess = tr
             setLoading(false)
             toast.dismiss(toastId)
         }
-        if (printSuccess)
-            toast.success("Successfully fetched the courses")
+        // if (printSuccess){
+        //     toast.success("Successfully fetched the courses")
+        // }
         
         return response.data.data
     }catch(err){
@@ -414,3 +417,5 @@ export const buildRating = async ({rating,review,courseId},setLoading = null,pri
     }
     return null
 }
+
+

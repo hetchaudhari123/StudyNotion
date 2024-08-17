@@ -10,6 +10,7 @@ import HighlightText from  "../HomePage/HighlightText"
 import { buyCourse } from '../../../services/operations/paymentAPI'
 import { formatString } from '../../../services/formatString'
 import ConfirmationModal from '../../common/ConfirmationModal'
+import { resetCart } from '../../../redux/slices/cartSlice'
 const Wishlist = () => {
     const { total, totalItems, cart } = useSelector(state => state.cart);
     console.log(total);
@@ -27,8 +28,12 @@ const Wishlist = () => {
         avgRating.push(res);
     }
 
-    const buyCourseHandler = () => {
-    buyCourse({ user, courses: cart }, setLoading, true)
+    const buyCourseHandler = async () => {
+    const result = await buyCourse({ user, courses: cart }, setLoading, true)
+    if(result) {
+        console.log("yes\n");
+        dispatch(resetCart())
+    }
     }
     const removeHandler = (course) => {
         // console.log("COURSE INSIDE THE REMOVE HANDLER....",course)

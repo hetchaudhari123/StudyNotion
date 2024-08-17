@@ -38,9 +38,13 @@ import ModalNavBar from "./components/common/ModalNavBar";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
+import { Navigate } from "react-router-dom";
+import { ACCOUNT_TYPE } from "./utils/constants";
 function App() {
   const [navVis,setNavVis] = useState(false)
   const [subLinks, setSubLinks] = useState([]);
+  const { user } = useSelector((state) => state.profile)
+
   return (
 
     <div className="overflow-y-auto w-screen 
@@ -81,7 +85,11 @@ function App() {
           </OpenRoute>
         }></Route>
         <Route path="/reset-password-successful" element={<ResetPasswordSuccessful />}></Route>
-        <Route path="/verify-email" element={<VerifyEmail />}></Route>
+        <Route path="/verify-email" element={
+          <OpenRoute>
+          <VerifyEmail />
+          </OpenRoute>
+          }></Route>
         <Route path="/about" element={<Aboutus />}></Route>
         <Route path="/contact" element={<Contactus />}></Route>
         {/* <Route path="/dashboard/my-profile" element={<Dashboard />}></Route> */}
@@ -105,13 +113,30 @@ function App() {
             <Dashboard />
           </PrivateRoute>
         }>
+           <Route index element={<Navigate to="my-profile" />} />
           <Route path="my-profile" element={<MyProfile />} />
           <Route path="settings" element={<Settings />} />
+          {user?.accountType === ACCOUNT_TYPE.INSTRUCTOR && (
+            <>
+               <Route path="add-course" element={<AddCourses />} />
+              <Route path="my-courses" element={<MyCourses />} />
+              <Route path="instructor" element={<InstructorDashboard />} />
+              {/* <Route
+                path="dashboard/edit-course/:courseId"
+                element={<EditCourse />}
+              /> */}
+            </>
+          )}
+          {/* Route only for Students */}
+          {user?.accountType === ACCOUNT_TYPE.STUDENT && (
+            <>
+              
           <Route path="enrolled-courses" element={<EnrolledCourses />} />
           <Route path="wishlist" element={<Wishlist />} />
-          <Route path="add-course" element={<AddCourses />} />
-          <Route path="my-courses" element={<MyCourses />} />
-          <Route path="instructor" element={<InstructorDashboard />} />
+
+            </>
+          )}
+         
         </Route>
         <Route path="course/:courseId" element={<BuyCourse />} />
         {/* <Route path="review-modal" element={<ReviewModal />} /> */}

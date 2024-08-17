@@ -39,7 +39,8 @@ const CourseForm = () => {
     // const [editCourse,setEditCourse] = useSelector((state) => state.editCourse);
     const { editCourse, courseStep, courseDetails } = useSelector(state => state.course);
     const goNext = () => {
-        dispatch(setStep(2));
+        localStorage.setItem('step', '2')
+        dispatch(setStep(2));  
     }
     useEffect(() => {
        const fetch  = async () => {
@@ -112,6 +113,7 @@ const CourseForm = () => {
                 setLoading, true));
             if(result){
                 // dispatch(setCourseDetails(result))
+                localStorage.setItem('step', '2')
                 dispatch(setStep(2))
             }
         }
@@ -132,6 +134,7 @@ const CourseForm = () => {
                 setLoading, true));
                 if(result){
                     // dispatch(setCourseDetails(result))
+                    localStorage.setItem('step', '2')
                     dispatch(setStep(2))
                     // dispatch(setEditCourse(true))
                 }

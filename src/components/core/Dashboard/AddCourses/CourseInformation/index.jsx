@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useSyncExternalStore } from 'react'
 import { FaAngleLeft } from "react-icons/fa6";
 import RenderSteps from './RenderSteps';
 import CourseForm from './CourseForm';
@@ -14,14 +14,20 @@ import PublishCourse from '../PublishCourse';
 import { useNavigate } from 'react-router-dom';
 const AddCourses = () => {
     const navigate = useNavigate()
-    const { courseStep } = useSelector(state => state.course); //FOR TESTING
-    const dispatch = useDispatch(); // FOR TESTING 
+    const { courseStep,courseDetails } = useSelector(state => state.course); 
+    const dispatch = useDispatch(); 
     // FOR TESTING STEP2 -------> REMOVE DURING PRODUCTION
     const [loading, setLoading] = useState(false);
     // useEffect(() => {
     //     dispatch(fetchCourse('669297ea069e5e52c23d6324', setLoading, false));
     //     dispatch(setStep(3));
     // }, []);
+    useEffect(() => {
+        localStorage.setItem("step",JSON.stringify(courseStep))
+      },[courseStep])
+      useEffect(() => {
+        localStorage.setItem("courseDetails",JSON.stringify(courseDetails))
+      },[courseDetails])
     return (
 
         (<div className=''>
