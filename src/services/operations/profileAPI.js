@@ -1,5 +1,5 @@
 import apiConnector from "../apiconnector"
-import { profileEndpoints } from "../apis"
+import { profileEndpoints, ratingsEndpoints } from "../apis"
 import { settingsEndpoints } from "../apis"
 import { toast } from "react-hot-toast"
 import { login, logout } from "./authAPI"
@@ -185,7 +185,7 @@ export const fetchAverageRating = async (courseId,setLoading = null,printSuccess
       if(printSuccess) toastId = toast.loading("Loading...")
       if(printSuccess) setLoading(true)
         try{
-        const response = await apiConnector('GET',courseEndpoints.GET_AVERAGE_RATING_COURSES_API,courseId);
+        const response = await apiConnector('POST',ratingsEndpoints.GET_AVERAGE_RATING_COURSES_API,{courseId});
         console.log('RESPONSE FROM AVERAGE RATING API........',response);
         if(!response.data.success){
           throw new Error(response.data.message);

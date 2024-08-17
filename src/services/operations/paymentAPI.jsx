@@ -64,6 +64,7 @@ export const buyCourse = async ({user,courses,navigate = null,navPath=null},setL
             setLoading(false);
             toast.dismiss(toastId);
           }
+          return true
     }catch(err){
         console.log("ERROR FROM PAYMENT API....",err)
         if(printSuccess){
@@ -76,6 +77,7 @@ export const buyCourse = async ({user,courses,navigate = null,navPath=null},setL
                 console.log("hey")
             }
         }
+        return false
     }
 }
 

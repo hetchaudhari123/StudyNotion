@@ -13,25 +13,23 @@ import ConfirmationModal from '../../common/ConfirmationModal'
 import { resetCart } from '../../../redux/slices/cartSlice'
 const Wishlist = () => {
     const { total, totalItems, cart } = useSelector(state => state.cart);
-    console.log(total);
-    console.log(totalItems);
-    console.log(cart);
     const { user } = useSelector(state => state.profile)
     const [loading,setLoading] = useState(false)
     const [confirmationModal,setConfirmationModal] = useState(false)
     const [removeCourse,setRemoveCourse] = useState(null)
     // const {user} = useSelector(state => state.auth)
-    const avgRating = [];
+    // const avgRating = [];
+    const [avgRating,setAvgRating] = useState([])
     const dispatch = useDispatch();
     const fetchAvgRating = async (id) => {
         const res = await fetchAverageRating(id, null, false);
-        avgRating.push(res);
+        // avgRating.push(res);
+        setAvgRating([...avgRating, res]);
     }
 
     const buyCourseHandler = async () => {
     const result = await buyCourse({ user, courses: cart }, setLoading, true)
     if(result) {
-        console.log("yes\n");
         dispatch(resetCart())
     }
     }
@@ -43,11 +41,14 @@ const Wishlist = () => {
     
 
     // UNCOMMENT THIS TO GET THE DATA
-    // useEffect(() => {
-    //     cart.forEach(ele => {
-    //         fetchAvgRating(ele._id);
-    //     });
-    // },[]);
+    useEffect(() => {
+        cart.forEach(ele => {
+            fetchAvgRating(ele._id);
+            console.log("ele...",ele)
+            console.log("ratings and reviews length",ele.ratingAndReviews)
+            console.log("ratings and reviews length",ele.ratingAndReviews.length)
+        });
+    },[]);
     return (
         (confirmationModal)?(
             <div>
@@ -110,8 +111,8 @@ const Wishlist = () => {
 
                                                         <div className='font-inter text-base font-semibold leading-6 text-left  text-yellow-100'>
                                                             {/* Average Rating */}
-                                                            {/* {avgRating[index]} */}
-                                                            {4.5}
+                                                            {avgRating ? avgRating[index] : "Loading"}
+                                                            {/* {4.5} */}
                                                         </div>
                                                         <div className=''>
                                                             {/* Stars */}
@@ -125,7 +126,7 @@ const Wishlist = () => {
                                                         <div className='text-richblack-400 font-inter 
                                                 text-base font-normal leading-6 text-left'>
                                                             {/* Review Count */}
-                                                            (Review Count)
+                                                            {course.ratingAndReviews.length}
                                                         </div>
                                                     </div>
                                                 </div>

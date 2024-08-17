@@ -38,7 +38,7 @@ router.post('/get-user-rating',auth,isStudent,fetchUserRating);
 // edit user rating
 router.post('/edit-user-rating',auth,isStudent,editRating);
 //getAverageRating
-router.get('/get-average-rating',getAverageRating);
+router.post('/get-average-rating',getAverageRating);
 // getAllReviews
 router.get('/get-reviews',getAllReviews);
 // getAllCourseReviews
