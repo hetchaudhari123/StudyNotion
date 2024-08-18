@@ -62,7 +62,7 @@ const PublishCourse = () => {
     dispatch(setStep(2))
   }
   useEffect(() => {
-    setValue(name, checked)
+    setValue('box', checked)
   }, [checked])
   return (
     (loading) ? (

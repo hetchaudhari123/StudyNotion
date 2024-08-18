@@ -38,7 +38,6 @@ const VideoPage = () => {
 
   useEffect(() => {
     const fetch = async () => {
-      
       setLoading(true)
       const completedVideos = await fetchCourseProgress({ courseId }, null, false)
       if (!completedVideos) {

@@ -408,6 +408,7 @@ exports.getCourseProgress = async (req, res) => {
         const { courseId } = req.body
         const userId = req.user.id
         
+        
         if (!courseId) {
             return res.status(404).json({
                 success: false,

@@ -333,7 +333,6 @@ export const fetchCourseProgress = async ({courseId},setLoading = null,printSucc
     if (printSuccess) toastId = toast.loading("Loading...")
     if (printSuccess) setLoading(true)
     try{
-        
         const response = await apiConnector('POST',courseEndpoints.GET_COURSE_PROGRESS,{courseId})
         console.log("RESPONSE FROM GET COURSE PROGRESS API.......",response)
         if(!response.data.success){

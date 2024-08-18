@@ -63,10 +63,9 @@ const TableCourses = () => {
 
 
 
-    const courseClickHandler = (course) => {  
-        // http://localhost:3000/view-course/669750c8107ff5f3542be1f5/section/669750ce107ff5f3542be1f9/sub-section/669750e4107ff5f3542be20b
-        navigate(`/view-course/${course._id}/section/${course.courseContent[0]._id}/sub-section/${course.courseContent[0].subSection[0]._id}`)
-    }
+    // const courseClickHandler = (course) => {  
+    //     navigate(`/view-course/${course._id}/section/${course.courseContent[0]._id}/sub-section/${course.courseContent[0].subSection[0]._id}`)   
+    // }
 
     return (
 
@@ -122,7 +121,8 @@ const TableCourses = () => {
                                 <div  className='
                              flex flex-row w-full 
                                 ' key={course._id}>
-                                    <div onClick={() => courseClickHandler(course)} className='cursor-pointer w-1/2  2/3'>
+                                    {/* <div onClick={() => courseClickHandler(course)} className='cursor-pointer w-1/2  2/3'> */}
+                                    <div  className='cursor-pointer w-1/2  2/3'>
                                         <div className='w-full flex flex-row 
                                             text-richblack-100 p-4 gap-6
                                             '>
