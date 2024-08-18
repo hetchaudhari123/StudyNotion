@@ -39,14 +39,15 @@ app.use(cookieParser());
 //   );
 
 
-app.use(
-	cors({
-		origin: "https://study-notion2.vercel.app",
-		credentials: true,
-		optionsSuccessStatus: 200,
-	  	methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-	})
-);
+// app.use(
+// 	cors({
+// 		origin: "https://study-notion2.vercel.app",
+// 		credentials: true,
+// 		optionsSuccessStatus: 200,
+// 	  	methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+// 	})
+// );
+app.use(cors())
 
 
 app.use(fileUpload({
