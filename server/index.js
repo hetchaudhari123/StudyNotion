@@ -28,12 +28,25 @@ app.use(cookieParser());
 // 		// allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept'],
 // 	})
 // )
+// app.use(
+// 	cors({
+// 	//   origin: "https://study-notion2.vercel.app", // Frontend URL
+// 	  origin: "*", // Frontend URL
+// 	  optionsSuccessStatus: 200,
+// 	  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+// 	  credentials: true, // Allow credentials (cookies) to be sent
+// 	})
+//   );
+
+
 app.use(
 	cors({
-	  origin: "https://study-notion2.vercel.app", // Frontend URL
-	  credentials: true, // Allow credentials (cookies) to be sent
+		origin: "*",
+		credentials: true,
 	})
-  );
+);
+
+
 app.use(fileUpload({
     useTempFiles:true,
 	tempFileDir:"/tmp",
