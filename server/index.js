@@ -16,18 +16,24 @@ const PORT = process.env.PORT || 4000;
 connect();
 app.use(express.json());
 app.use(cookieParser());
+// app.use(
+// 	cors({
+// 		// origin:"http://localhost:3000",
+// 		// origin: "https://study-notion2-i0j6b2uwb-hetchaudhari123s-projects.vercel.app",
+		
+// 		origin: "https://study-notion2.vercel.app/",
+// 		optionsSuccessStatus: 200,
+// 		methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+// 		credentials:true,
+// 		// allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept'],
+// 	})
+// )
 app.use(
 	cors({
-		// origin:"http://localhost:3000",
-		// origin: "https://study-notion2-i0j6b2uwb-hetchaudhari123s-projects.vercel.app",
-		
-		origin: "https://study-notion2.vercel.app/",
-		optionsSuccessStatus: 200,
-		methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-		credentials:true,
-		// allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept'],
+	  origin: "https://study-notion2.vercel.app", // Frontend URL
+	  credentials: true, // Allow credentials (cookies) to be sent
 	})
-)
+  );
 app.use(fileUpload({
     useTempFiles:true,
 	tempFileDir:"/tmp",
