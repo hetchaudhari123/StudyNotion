@@ -21,7 +21,7 @@ app.use(
 		// origin:"http://localhost:3000",
 		// origin: "https://study-notion2-i0j6b2uwb-hetchaudhari123s-projects.vercel.app",
 		
-		origin: "https://study-notion2-fg69tgzg5-hetchaudhari123s-projects.vercel.app",
+		origin: "https://study-notion2.vercel.app/",
 		credentials:true,
 		// allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept'],
 	})
