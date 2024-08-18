@@ -21,7 +21,7 @@ app.use(
 		// origin:"http://localhost:3000",
 		origin: "*",
 		credentials:true,
-		allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept'],
+		// allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept'],
 	})
 )
 app.use(fileUpload({
