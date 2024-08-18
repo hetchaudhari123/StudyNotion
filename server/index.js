@@ -19,7 +19,8 @@ app.use(cookieParser());
 app.use(
 	cors({
 		// origin:"http://localhost:3000",
-		origin: "https://study-notion2-i0j6b2uwb-hetchaudhari123s-projects.vercel.app",
+		// origin: "https://study-notion2-i0j6b2uwb-hetchaudhari123s-projects.vercel.app",
+		origin: "https://vercel.com/hetchaudhari123s-projects/study-notion2/CWetXGuvpUT1kHPXiLekYSiZAfSf",
 		credentials:true,
 		// allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept'],
 	})
