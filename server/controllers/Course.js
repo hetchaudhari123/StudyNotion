@@ -3,7 +3,6 @@ const User = require("../models/User");
 const Course = require('../models/Course');
 const { fileUploader } = require("../utils/uploadFile");
 const Category = require("../models/Category");
-const { SiConcourse } = require("react-icons/si");
 const CourseProgress = require("../models/CourseProgress");
 const mongoose = require('mongoose');
 const Section = require("../models/Section");
