@@ -1,0 +1,150 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,body{
+    overflow-x: hidden;
+}
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+}
+
+.videoDiv{
+    /* box-shadow: 0.75rem 0.75rem white; */
+    box-shadow: 
+    /* 0 0 1rem 0.25rem rgba(0, 102, 255, 0.75),  */
+    0.75rem 0.75rem white; /* White shadow on bottom and right */
+}
+
+
+.codeblock1, .codeblock2 {
+    border-radius: 100%;
+    -webkit-filter: blur(34px);
+    filter: blur(34px);
+    height: 257.05px;
+    left: calc(50% - 263.005px);
+    opacity: .2;
+    top: calc(50% - 175.995px);
+    -webkit-transform: matrix(1, 0, -.03, 1, 0, 0);
+    transform: matrix(1, 0, -.03, 1, 0, 0);
+    width: 372.95px;
+}
+.codeblock1{
+    background: linear-gradient(123.77deg, #8a2be2 -6.46%, orange 59.04%, #f8f8ff 124.53%);
+}
+.codeblock2{
+
+    background: linear-gradient(118.19deg, #1fa2ff -3.62%, #12d8fa 50.44%, #a6ffcb 104.51%);
+}
+.code-border {
+    /* background: linear-gradient(111.93deg, rgba(14, 26, 45, .24) -1.4%, rgba(17, 30, 50, .38) 104.96%); */
+    border: 2px solid;
+    border-image-slice: 1;
+    border-image-source: linear-gradient(to right bottom, #ffffff38, #ffffff00);
+}
+.homepage_bg{
+    background:url('./assets/Images/bghome.svg');
+}
+.timeline-section-circle {
+    
+    height: 700px; 
+    width: 700px; 
+    border-radius: 50%;
+    /* background: radial-gradient(circle, #c4d5f6 30%, rgba(20, 4, 240, 0) 100%); */
+    background: radial-gradient(circle, #3b82f6 20%, rgba(59, 130, 246, 0) 70%);
+}
+.video-circle {
+    
+    height: 550px; 
+    width: 450px; 
+    border-radius: 50%;
+    /* background: radial-gradient(circle, #c4d5f6 30%, rgba(20, 4, 240, 0) 100%); */
+    background: radial-gradient(circle, #3b82f6 20%, rgba(59, 130, 246, 0) 70%);
+}
+
+.instructor-image{
+    /* box-shadow: -2px -2px 0px 0px rgba(1, 1, 1, 0); */
+    box-shadow: -1rem -1rem 0px 0px white;
+}
+@media screen and (max-width: 770px){
+    .videoDiv{
+        /* box-shadow: 0.75rem 0.75rem white; */
+        box-shadow: 
+        /* 0 0 1rem 0.25rem rgba(0, 102, 255, 0.75),  */
+        0.5rem 0.5rem white; /* White shadow on bottom and right */
+    }
+    .instructor-image{
+        /* box-shadow: -2px -2px 0px 0px rgba(1, 1, 1, 0); */
+        box-shadow: -0.8rem -0.8rem 0px 0px white;
+    }
+}
+@media screen and (max-width: 430px){
+    .videoDiv{
+        /* box-shadow: 0.75rem 0.75rem white; */
+        box-shadow: 
+        /* 0 0 1rem 0.25rem rgba(0, 102, 255, 0.75),  */
+        0.35rem 0.35rem white; /* White shadow on bottom and right */
+    }
+    .instructor-image{
+        /* box-shadow: -2px -2px 0px 0px rgba(1, 1, 1, 0); */
+        box-shadow: -0.5rem -0.5rem 0px 0px white;
+    }
+}
+@media screen and (max-width: 330px){
+    .videoDiv{
+        /* box-shadow: 0.75rem 0.75rem white; */
+        box-shadow: 
+        /* 0 0 1rem 0.25rem rgba(0, 102, 255, 0.75),  */
+        0.15rem 0.15rem white; /* White shadow on bottom and right */
+    }
+    .instructor-image{
+        /* box-shadow: -2px -2px 0px 0px rgba(1, 1, 1, 0); */
+        box-shadow: -0.4rem -0.4rem 0px 0px white;
+    }
+}
+.course-selected-shadow{
+    box-shadow: 12px 12px 0px 0px #FFD60A;
+}
+
+/* For hiding the default eye symbol */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+    display: none;
+}
+
+input[type="password"]::-webkit-textfield-decoration-container {
+    display: none;
+}
+/* .spinner {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: 9px solid #f1f2ff;
+    animation: spinner-bulqg1 0.8s infinite linear alternate,
+      spinner-oaa3wk 1.6s infinite linear;
+  } */
+  .spinner {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: conic-gradient(#0000 10%,#474bff);
+    -webkit-mask: radial-gradient(farthest-side,#0000 calc(100% - 9px),#000 0);
+    animation: spinner-zp9dbg 1s infinite linear;
+ }
+ 
+ @keyframes spinner-zp9dbg {
+    to {
+       transform: rotate(1turn);
+    }
+ }
+
+
+ .inputOutline {
+    outline: none; /* Remove the default focus outline */
+}
+
+.inputOutline:focus {
+    border: 1px solid yellow; /* Apply a yellow border when focused */
+}
