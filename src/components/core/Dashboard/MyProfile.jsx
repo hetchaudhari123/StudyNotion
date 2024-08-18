@@ -8,7 +8,7 @@ const MyProfile = () => {
   const { user } = useSelector(state => state.profile);
   const isSmallDevice = useMediaQuery("only screen and (max-width : 768px)");
 
-  console.log(user);
+  // console.log(user);
   return (
     <div className='mb-4'>
       <Header text1={"My Profile"} text2={"My Profile"}></Header>

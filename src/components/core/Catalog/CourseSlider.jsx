@@ -25,7 +25,7 @@ const CourseSlider = ({ courses }) => {
 
     }, [courses])
     useEffect(() => {
-        console.log("AVERAGE RATING COURSE.....", avgRatingCourse)
+        // console.log("AVERAGE RATING COURSE.....", avgRatingCourse)
     }, [avgRatingCourse])
     const swiperRef = useRef(null);
     const clickHandler = () => {

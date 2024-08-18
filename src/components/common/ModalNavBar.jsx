@@ -12,7 +12,7 @@ const ModalNavBar = ({navVis,setNavVis,onLinkClick, subLinks, title1, title2, pa
     const location = useLocation()
     const handleClickOutside = (event) => {
         if (navbarRef.current && !navbarRef.current.contains(event.target)) {
-            console.log("hey\n");
+            // console.log("hey\n");
           setNavVis(false);
         }
       };

@@ -101,7 +101,7 @@ exports.getAllUserDetails = async (req, res) => {
         const userId = req.user.id;
         //2 get all the details
         const userDetails = await User.findById(userId).populate('additionalDetails');
-        console.log(userDetails);
+        // console.log(userDetails);
 
         //3 return the response
         return res.status(200).json({
@@ -127,7 +127,7 @@ exports.updateDisplayPicture = async (req, res) => {
         //upload onto the cloudinary
         const fileDetails = await fileUploader(displayPicture, process.env.FOLDER_NAME, 1000,
             1000);
-        console.log(fileDetails);
+        // console.log(fileDetails);
         //update the user document
         const updatedProfile = await User.findByIdAndUpdate(
             { _id: userId },

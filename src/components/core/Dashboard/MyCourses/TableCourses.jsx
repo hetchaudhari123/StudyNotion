@@ -33,7 +33,7 @@ const TableCourses = () => {
         const result = await fetchInstructorCourses(setLoading, true)
         if (result) {
             setCourses(result)
-            console.log("COURSES.....", result)
+            // console.log("COURSES.....", result)
         }
     }
     const deleteHandler = async (courseId) => {

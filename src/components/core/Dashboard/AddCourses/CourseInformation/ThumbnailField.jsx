@@ -11,7 +11,7 @@ const ThumbnailField = ({ errorMessage,register, getValues, setValue, errors, cu
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        console.log("File is.....", e?.target?.files[0]);
+        // console.log("File is.....", e?.target?.files[0]);
         if(file && throwError) setThrowError(false);
         setValue('file', file);
         setImage(reader.result);

@@ -22,7 +22,7 @@ exports.createSubSection = async (req,res) => {
               .status(404)
               .json({ success: false, message: "All Fields are Required" })
           }
-          console.log(video)
+          // console.log(video)
         //3 upload to cloudinary 
         const file = await fileUploader(video,process.env.FOLDER_NAME);
       // console.log(file)
@@ -37,7 +37,7 @@ exports.createSubSection = async (req,res) => {
         //5 insert the id of the sub-section into the section
         const sectionResponse = await Section.findByIdAndUpdate(sectionId,{$push:{subSection:subSectionDetails._id}},{new:true}).populate('subSection');
         // const courses = await Courses.find(sectionId,{$push:{subSection:subSectionDetails._id}},{new:true}).populate('subSection');
-        console.log(sectionResponse);
+        // console.log(sectionResponse);
         return res.status(200).json({
             success:true,
             message:"Successfully inserted the sub-section",

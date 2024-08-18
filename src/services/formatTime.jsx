@@ -1,5 +1,5 @@
 exports.formatTime = (seconds) => {
-  console.log("SECONDS...",seconds)
+  // console.log("SECONDS...",seconds)
     seconds = Math.ceil(seconds)
 
     const hours = Math.floor(seconds / 3600);
@@ -19,7 +19,7 @@ exports.formatTime = (seconds) => {
       parts.push(`${seconds}s`);
     }
     // Join parts into the final formatted string
-    console.log("PARTS JOIN...",parts.join(' '))
+    // console.log("PARTS JOIN...",parts.join(' '))
     return parts.join(' ');
     
 }

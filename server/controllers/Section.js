@@ -73,8 +73,8 @@ exports.deleteSection = async (req,res) => {
         //2 validation
         if(!sectionId || !courseId){
             // console.log(req.params);
-            console.log(sectionId);
-            console.log(courseId);
+            // console.log(sectionId);
+            // console.log(courseId);
             // console.log(req.params);
             return res.status(400).json({
                 success:false,

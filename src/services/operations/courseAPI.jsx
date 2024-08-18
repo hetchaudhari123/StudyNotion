@@ -179,7 +179,7 @@ export const fetchCourse = (courseId,setLoading = null , printSuccess = true) =>
         if (printSuccess) setLoading(true)
         try{   
             // const response = await apiConnector('POST',courseEndpoints.COURSE_DETAILS_API,{ courseId });
-            console.log("COURSEID FROM FETCH COURSE......",courseId);
+            // console.log("COURSEID FROM FETCH COURSE......",courseId);
             const response = await apiConnector('POST',courseEndpoints.COURSE_DETAILS_API,{ courseId });
             console.log('RESPONSE FROM GET COURSE DETAILS API.....',response);
             if(!response.data.success){
@@ -272,7 +272,7 @@ export const deleteCourse = async ({dispatch,courseId},setLoading = null,printSu
     if (printSuccess) toastId = toast.loading("Loading...")
     if (printSuccess) setLoading(true)
     try{
-        console.log("COURSE ID INSIDE DELETE COURSE.....",courseId)
+        // console.log("COURSE ID INSIDE DELETE COURSE.....",courseId)
         const response = await apiConnector('DELETE',courseEndpoints.DELETE_COURSE_API,{courseId})
         console.log("RESPONSE FROM DELETE COURSE API.....",response)
         if(!response.data.success){
@@ -302,7 +302,7 @@ export const fetchCategoryPageDetails = async ({categoryId},setLoading = null,pr
     if (printSuccess) toastId = toast.loading("Loading...")
     if (printSuccess) setLoading(true)
     try{
-        console.log("CATEGORYID.....",categoryId)
+        // console.log("CATEGORYID.....",categoryId)
         const response = await apiConnector('POST',catalogData.CATALOGPAGEDATA_API,{categoryId})
         if(!response.data.success){
             throw new Error(response.data.message)

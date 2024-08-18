@@ -36,7 +36,7 @@ const LectureVideo = () => {
             courseDetails.courseContent.forEach(section => {
                  section.subSection.forEach(ss => {
                      if(ss._id === subSectionId){
-                         console.log("THE LECTURE....",ss)
+                        //  console.log("THE LECTURE....",ss)
                          setLecture(ss)
                      }
                  })
@@ -169,7 +169,7 @@ const LectureVideo = () => {
         const subSection = section.subSection.find(ss => ss._id === subSectionId)
         const courseProgress = await updateCourseProgress({courseId,subSection},setLoading,true)
         // console.log("COURSE PROGRESS COMPLETED VIDEOS....",courseProgress)
-        console.log("COMPLETED VIDEOS FROM THE UPDATE COURSE PROGRESS API....",courseProgress.completedVideos)
+        // console.log("COMPLETED VIDEOS FROM THE UPDATE COURSE PROGRESS API....",courseProgress.completedVideos)
         dispatch(setCompletedVideos(courseProgress.completedVideos))
         nextHandler()
         setEndModal(false)

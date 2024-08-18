@@ -34,9 +34,9 @@ const Upload = ({
         if (file) {
             setValue(name,file)
             previewFile(file)
-            console.log("BEFORE.....",errors[name])
+            // console.log("BEFORE.....",errors[name])
             clearErrors(name)
-            console.log("AFTER.....",errors[name])
+            // console.log("AFTER.....",errors[name])
         }
     }
 

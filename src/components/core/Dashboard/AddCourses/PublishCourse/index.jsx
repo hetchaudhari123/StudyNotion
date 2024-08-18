@@ -23,14 +23,14 @@ const PublishCourse = () => {
   const [checked, setChecked] = useState(false)
   const [loading, setLoading] = useState(false)
   const { courseDetails } = useSelector(state => state.course)
-  console.log("COURSE DETAILS....",courseDetails)
+  // console.log("COURSE DETAILS....",courseDetails)
   const navigate = useNavigate()
   const clickHandler = () => {
     setChecked(prev => !prev)
     document.getElementById('box').click()
   }
   useEffect(() => {
-    console.log("COURSE DETAILS....",courseDetails?.status)
+    // console.log("COURSE DETAILS....",courseDetails?.status)
      if(courseDetails?.status === COURSE_STATUS.PUBLISHED){
       setChecked(true)
      }

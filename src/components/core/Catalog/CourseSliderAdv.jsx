@@ -21,21 +21,21 @@ export default function CourseSliderAdv({ courses,delay=null }) {
     const [loading, setLoading] = useState(true)
     const [grabbing,setGrabbing] = useState(false)
     const courseClickHandler = (course) => {
-        console.log("Course...",course)
+        // console.log("Course...",course)
         navigate(`/course/${course._id}`)
     }
     useEffect(() => {
         // avgRating(course)
         setAvgRatingCourse(courses.map((course) => {
             const obj = avgRating(course)
-            console.log("OBJ....",obj)
+            // console.log("OBJ....",obj)
             return obj
         }))
         setLoading(false)
 
     }, [courses])
     useEffect(() => {
-        console.log("AVERAGE RATING COURSE.....", avgRatingCourse)
+        // console.log("AVERAGE RATING COURSE.....", avgRatingCourse)
     }, [avgRatingCourse])
 
   

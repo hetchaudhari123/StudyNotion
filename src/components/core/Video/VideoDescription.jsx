@@ -35,7 +35,7 @@ const VideoDescription = () => {
            courseDetails.courseContent.forEach(section => {
                 section.subSection.forEach(ss => {
                     if(ss._id === subSectionId){
-                        console.log("THE LECTURE....",ss)
+                        // console.log("THE LECTURE....",ss)
                         setLecture(ss)
                     }
                 })

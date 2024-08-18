@@ -11,7 +11,7 @@ import { updateUserRating } from '../../../services/operations/reviewAPI';
 const ReviewModal = ({
     editReview = null,rating = 0,review = "",setReviewModal}) => {
     const [loading,setLoading] = useState(false)
-    console.log("RATING -> ",rating)
+    // console.log("RATING -> ",rating)
     const {
         register,
         handleSubmit,
@@ -32,7 +32,7 @@ const ReviewModal = ({
     const {courseDetails} = useSelector(state => state.course)
 
     const submitHandler = async () => {
-        console.log("EDIT REVIEW INSIDE REVIEW MODAL.....",editReview)
+        // console.log("EDIT REVIEW INSIDE REVIEW MODAL.....",editReview)
         if(!editReview){
 
             await buildRating({rating:getValues('rating'),review:getValues('review'),

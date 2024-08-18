@@ -58,7 +58,7 @@ const FormSettings = () => {
 
     const selectedValue = watch('gender');
     const submitSettings = (data) => {
-      console.log(data);
+    //   console.log(data);
       dispatch(setProfile(data,setLoading,user?.email,user?.image));
     }
     useEffect(() => {
@@ -69,7 +69,7 @@ const FormSettings = () => {
         }
     }, [isSubmitSuccessful])
     const handleFileChange = (e) => {
-        console.log("File is.....",e?.target?.files[0]);
+        // console.log("File is.....",e?.target?.files[0]);
         const file = e.target.files[0];
         if (file) {
             const reader = new FileReader();

@@ -32,7 +32,7 @@ export function sendOtp(email, navigate) {
         checkUserPresent: true,
       })
       console.log("SENDOTP API RESPONSE............", response)
-      console.log(response.data.success)
+      // console.log(response.data.success)
       if (!response.data.success) {
         throw new Error(response.data.message)
       }
@@ -186,7 +186,7 @@ export function logout(navigate) {
     localStorage.removeItem("user")
     if(navigate) toast.success("Logged Out")
     if(navigate){
-      console.log("INSIDE LOG OUT");
+      // console.log("INSIDE LOG OUT");
       navigate("/")
     }
   }

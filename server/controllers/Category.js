@@ -15,7 +15,7 @@ exports.createCategory = async (req, res) => {
         }
         //3 creation
         const categoryResponse = await Category.create({ name, description });
-        console.log(categoryResponse);
+        // console.log(categoryResponse);
         return res.status(200).json({
             success: true,
             message: "Successfully created the category."
@@ -251,7 +251,7 @@ exports.categoryPageDetails = async (req, res) => {
       // console.log("ALL COURSES.....",allCourses)
       const selectedCourses = selectedCategory.courses
   
-      console.log("ALL COURSES.....",allCourses)
+      // console.log("ALL COURSES.....",allCourses)
       let mostSellingCourses = null
       let highestRated = null
       let latestCourses = null // Courses in descending order of their publish year

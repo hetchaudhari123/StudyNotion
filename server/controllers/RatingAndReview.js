@@ -56,7 +56,7 @@ exports.createRating = async (req, res) => {
             {
                 new: true
             });
-        console.log(courseResponse);
+        // console.log(courseResponse);
         //5 return the response
         return res.status(200).json({
             success: true,
@@ -135,7 +135,7 @@ exports.editRating = async (req, res) => {
             {
                 new: true
             });
-            console.log("HEY........")
+            // console.log("HEY........")
 
         //5 return the response
         return res.status(200).json({

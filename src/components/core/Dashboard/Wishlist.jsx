@@ -44,9 +44,9 @@ const Wishlist = () => {
     useEffect(() => {
         cart.forEach(ele => {
             fetchAvgRating(ele._id);
-            console.log("ele...",ele)
-            console.log("ratings and reviews length",ele.ratingAndReviews)
-            console.log("ratings and reviews length",ele.ratingAndReviews.length)
+            // console.log("ele...",ele)
+            // console.log("ratings and reviews length",ele.ratingAndReviews)
+            // console.log("ratings and reviews length",ele.ratingAndReviews.length)
         });
     },[]);
     return (

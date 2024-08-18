@@ -72,9 +72,12 @@ export const buyCourse = async ({user,courses,navigate = null,navPath=null},setL
             toast.dismiss(toastId);
             // console.log("errmessage.....",err.response.data.message)
             // console.log("CHECK...",err.message === "User already registered to a provided course")
-            if("User already registered to a provided course" === err.response.data.message){
+            if("User already registered to a provided course" === err?.response?.data?.message){
                 toast.error("User already registered")
-                console.log("hey")
+                // console.log("hey")
+            }
+            else{
+                console.log("error->",err)
             }
         }
         return false

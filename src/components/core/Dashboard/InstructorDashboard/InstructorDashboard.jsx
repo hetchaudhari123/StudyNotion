@@ -18,7 +18,7 @@ const InstructorDashboard = () => {
         let colors = []
         for(let i = 0 ; i < courses.length ; i++){
             const color = (`rgb(${Math.random() * 256},${Math.random() * 256},${Math.random() * 256})`)
-            console.log("COLOR....",color)
+            // console.log("COLOR....",color)
             colors.push(color)
         }
         return colors

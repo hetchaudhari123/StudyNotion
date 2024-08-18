@@ -70,7 +70,7 @@ export const setProfile = ({ file,
       // const pattern = /^https:\/\/res\.cloudinary\.com-.*-StudyNotion$/; 
       // let check = pattern.test(user?.image);
       let check = (image).includes('cloudinary')
-      console.log("CHECK.........", check);
+      // console.log("CHECK.........", check);
 
       if (file !== '') {
         await dispatch(updatePicture(file, setLoading, false));
@@ -108,7 +108,7 @@ export const setProfile = ({ file,
 
         // toast.success("Login Successful")
         dispatch(setToken(response.data.token))
-        console.log("IMAGE.........", response.data?.user?.image);
+        // console.log("IMAGE.........", response.data?.user?.image);
         const userImage = response.data?.user?.image
           ? response.data.user.image
           : `https://api.dicebear.com/5.x/initials/svg?seed=${response.data.user.firstName} ${response.data.user.lastName}`

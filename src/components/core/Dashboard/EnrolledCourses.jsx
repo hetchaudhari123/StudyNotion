@@ -74,19 +74,19 @@ const EnrolledCourses = () => {
 
     const calcProgress = async (course) => {
         const completedLectures = await fetchCourseProgress({courseId:course._id},null,false)
-        console.log("START......................")
+        // console.log("START......................")
         if(null){
-            console.log("RETURNED NULL....")
+            // console.log("RETURNED NULL....")
             return 0
         }
-        console.log("COMPLETED LECTURES....",completedLectures.length)
+        // console.log("COMPLETED LECTURES....",completedLectures.length)
         const completed = completedLectures.length
-        console.log("COURSE.....",completed)
+        // console.log("COURSE.....",completed)
         const total = course.courseContent.reduce((prev,section) => {
             return prev + section.subSection.length
         },0)
-        console.log((completed * 100) / total)
-        console.log("END............................")
+        // console.log((completed * 100) / total)
+        // console.log("END............................")
         return (completed * 100) / total
     }
 

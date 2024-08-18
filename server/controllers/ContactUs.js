@@ -3,12 +3,12 @@ exports.contactUs = async (req,res) => {
     try{
         //1 fetch all the details
         const {firstName,lastName,email,phoneNo,message,countrycode} = req.body;
-        console.log("CONTACT US firstName...",firstName)
-        console.log("CONTACT US lastName...",lastName)
-        console.log("CONTACT US email...",email)
-        console.log("CONTACT US phoneNo...",phoneNo)
-        console.log("CONTACT US message...",message)
-        console.log("CONTACT US countrycode...",countrycode)
+        // console.log("CONTACT US firstName...",firstName)
+        // console.log("CONTACT US lastName...",lastName)
+        // console.log("CONTACT US email...",email)
+        // console.log("CONTACT US phoneNo...",phoneNo)
+        // console.log("CONTACT US message...",message)
+        // console.log("CONTACT US countrycode...",countrycode)
         //2 validation
         if(!firstName || !lastName || !email || !phoneNo || !message
     || !countrycode

@@ -10,7 +10,7 @@ const RatingStars = ({reviewCount}) => {
     const [halfStarCount,setHalfStarCount] = useState(0)
     const [emptyStarCount,setEmptyStarCount] = useState(0)
     useEffect(() => {
-        console.log("REVIEWCOUNT.....",reviewCount)
+        // console.log("REVIEWCOUNT.....",reviewCount)
         const fullStars = Math.floor(reviewCount) || 0
         const remainder = reviewCount - fullStars
         setFullStarCount(fullStars)

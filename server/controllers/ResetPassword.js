@@ -20,7 +20,7 @@ exports.resetPasswordToken = async (req,res)=>{
         const token = crypto.randomBytes(20).toString("hex");
         //4 add into the User document
         const userUpdate = await User.findOneAndUpdate({email},{token:token,resetPasswordExpires:(Date.now() +3600000)},{new:true});
-        console.log("DETAILS", userUpdate);
+        // console.log("DETAILS", userUpdate);
         const url = `http://localhost:3000/update-password/${token}`;
         //5 send the email
         // const body = `<p>Press this link for resetting the password:${url}.</p><p>The password will expire after ${userUpdate.resetPasswordExpires}</p>`

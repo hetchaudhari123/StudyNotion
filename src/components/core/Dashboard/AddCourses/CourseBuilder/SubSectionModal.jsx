@@ -69,7 +69,7 @@ const SubSectionModal = ({
   // console.log('COURSEDETAILS FROM SUBSECTION MODAL.......',courseDetails);  
   const submitHandler = async () => {
     // console.log(getValues());
-    console.log("INSIDE SUBMIT HANDLER....");
+    // console.log("INSIDE SUBMIT HANDLER....");
 
     // console.log('SECTIONID.........',sectionId);
     let timeDuration = "";
@@ -391,7 +391,7 @@ const SubSectionModal = ({
                     </CTAButton>
                     <CTAButton active={true}
                       onClick={() => {
-                        console.log("hey");
+                        // console.log("hey");
                         handleSubmit(submitHandler)()
                       }}>
 

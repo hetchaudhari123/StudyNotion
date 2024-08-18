@@ -70,9 +70,9 @@ const CourseForm = () => {
             setTagList( courseDetails.tag);//--
             // setValue('requirement', courseDetails.whatYouWillLearn);//--
             setValue('courseTitle', courseDetails.courseName);//--
-            console.log("coursedetails...",courseDetails)
-            console.log("coursedetails...",courseDetails.courseDescription
-            )
+            // console.log("coursedetails...",courseDetails)
+            // console.log("coursedetails...",courseDetails.courseDescription
+            // )
             setValue('courseDesc', courseDetails.courseDescription);//--
             // console.log("DESCRIPTION........",getValues('courseDesc'))
             // console.log("CATEGORY........",getValues('category'))
@@ -95,8 +95,8 @@ const CourseForm = () => {
 
     const submitHandler = async () => {
         const { benefit, category, courseDesc, courseTitle, price, file } = getValues();
-        console.log("SUBMIT HANDLER ALL THE VALUES....",getValues())
-        console.log("SUBMIT HANDLER CATEGORY....",category)
+        // console.log("SUBMIT HANDLER ALL THE VALUES....",getValues())
+        // console.log("SUBMIT HANDLER CATEGORY....",category)
         if (!editCourse) {
             const result = await (buildCourse({
                 dispatch,
@@ -138,7 +138,7 @@ const CourseForm = () => {
                     dispatch(setStep(2))
                     // dispatch(setEditCourse(true))
                 }
-                console.log("RESPONSE FROM UPDATE COURSE....",result)
+                // console.log("RESPONSE FROM UPDATE COURSE....",result)
         }
 
 

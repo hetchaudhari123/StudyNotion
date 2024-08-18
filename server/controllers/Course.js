@@ -33,12 +33,12 @@ exports.createCourse = async (req, res) => {
             !thumbnail ||
             !category
         ) {
-            console.log("MISSING FIELDS........",
-                {
-                    courseName,
-                    courseDescription, whatYouWillLearn, price, tag, thumbnail, category
-                }
-            );
+            // console.log("MISSING FIELDS........",
+            //     {
+            //         courseName,
+            //         courseDescription, whatYouWillLearn, price, tag, thumbnail, category
+            //     }
+            // );
             return res.status(400).json({
                 success: false,
                 message: "All Fields are Mandatory",
@@ -71,7 +71,7 @@ exports.createCourse = async (req, res) => {
         //3 cloudinary insertion
         // console.log('THUMBNAIL IMAGE............');
         const thumbnailImage = await fileUploader(thumbnail, process.env.FOLDER_NAME);
-        console.log('THUMBNAIL IMAGE............', thumbnailImage);
+        // console.log('THUMBNAIL IMAGE............', thumbnailImage);
 
         //4 insertion into the db
         const course = await Course.create({
@@ -195,7 +195,7 @@ exports.getCourseDetails = async (req, res) => {
 
 exports.editCourse = async (req, res) => {
     try {
-        console.log("INSIDE EDIT COURSE!!....",req.body)
+        // console.log("INSIDE EDIT COURSE!!....",req.body)
         //1 fetch the details
         let { courseid, courseName,
             courseDescription,
@@ -236,7 +236,7 @@ exports.editCourse = async (req, res) => {
         //2.2 validate the tag
 
         if (category && category !== "undefined") {
-            console.log("INSIDE THE CATEGORY UPDATION...")
+            // console.log("INSIDE THE CATEGORY UPDATION...")
             const categoryDetails = await Category.findById(category);
             if (!categoryDetails) {
                 return res.status(404).json({
@@ -247,7 +247,7 @@ exports.editCourse = async (req, res) => {
             }
 
             if (category !== course.category) {
-                console.log("UPDATING THE CATEGORY...")
+                // console.log("UPDATING THE CATEGORY...")
                 await Category.findByIdAndUpdate(course.category, {
                     $pull: { courses: courseid }
                 }, { new: true });
@@ -466,7 +466,7 @@ exports.updateCourseProgress = async (req, res) => {
             })
         }
         response.completedVideos.push(subSection)
-        console.log("SUBSECTION INSIDE THE COURSE....",subSection)
+        // console.log("SUBSECTION INSIDE THE COURSE....",subSection)
         response = await response.save()
         
         return res.status(200).json({
