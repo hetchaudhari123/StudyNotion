@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+
 const {cloudinaryConnect} = require('./config/cloudinary');
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
@@ -10,13 +11,18 @@ const contactUsRoutes = require('./routes/Contactus');
 const courseRoutes = require('./routes/Course');
 const paymentsRoutes = require('./routes/Payments');
 const profileRoutes = require('./routes/Profile');
+app.use(cors({
+	origin: 'https://study-notion2.vercel.app/',
+	
+  }));
 require('dotenv').config();
 cloudinaryConnect();
 const PORT = process.env.PORT || 4000;
 connect();
-app.use(cors())
+
 app.use(express.json());
 app.use(cookieParser());
+
 // app.use(
 // 	cors({
 // 		// origin:"http://localhost:3000",
