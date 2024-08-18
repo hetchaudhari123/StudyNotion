@@ -22,6 +22,8 @@ app.use(
 		// origin: "https://study-notion2-i0j6b2uwb-hetchaudhari123s-projects.vercel.app",
 		
 		origin: "https://study-notion2.vercel.app/",
+		optionsSuccessStatus: 200,
+		methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
 		credentials:true,
 		// allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept'],
 	})
