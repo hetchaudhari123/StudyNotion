@@ -14,6 +14,7 @@ require('dotenv').config();
 cloudinaryConnect();
 const PORT = process.env.PORT || 4000;
 connect();
+app.use(cors())
 app.use(express.json());
 app.use(cookieParser());
 // app.use(
@@ -47,7 +48,7 @@ app.use(cookieParser());
 // 	  	methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
 // 	})
 // );
-app.use(cors())
+
 
 
 app.use(fileUpload({
