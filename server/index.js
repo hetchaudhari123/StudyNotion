@@ -11,10 +11,6 @@ const contactUsRoutes = require('./routes/Contactus');
 const courseRoutes = require('./routes/Course');
 const paymentsRoutes = require('./routes/Payments');
 const profileRoutes = require('./routes/Profile');
-// app.use(cors({
-// 	origin: 'https://study-notion2.vercel.app/',
-
-//   }));
 require('dotenv').config();
 cloudinaryConnect();
 // const PORT = process.env.PORT || 4000;
@@ -25,50 +21,21 @@ app.use(express.json());
 app.use(cookieParser());
 
 
-app.use(cors({
-    origin: 'https://study-notion2.vercel.app',  // Frontend domain
-    credentials: true,  // Enable credentials (cookies, auth headers)
-}));
 
 // Handle preflight requests for all routes (this must come after app.use(cors()))
+app.use(
+	cors({
+		
+		origin: "https://study-notion2.vercel.app/",
+		optionsSuccessStatus: 200,
+		methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+		credentials:true,
+		allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept'],
+	})
+)
 app.options('*', cors());
 
-// app.use(
-// 	cors({
-// 		// origin:"http://localhost:3000",
-// 		// origin: "https://study-notion2-i0j6b2uwb-hetchaudhari123s-projects.vercel.app",
-		
-// 		origin: "https://study-notion2.vercel.app/",
-// 		optionsSuccessStatus: 200,
-// 		methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-// 		credentials:true,
-// 		// allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept'],
-// 	})
-// )
-// app.use(
-// 	cors({
-// 	//   origin: "https://study-notion2.vercel.app", // Frontend URL
-// 	  origin: "*", // Frontend URL
-// 	  optionsSuccessStatus: 200,
-// 	  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-// 	  credentials: true, // Allow credentials (cookies) to be sent
-// 	})
-//   );
 
-// https://study-notion2.vercel.app/signup
-// app.use(
-// 	cors({
-// 		origin: "https://study-notion2.vercel.app/",
-// 		credentials: true,
-// 		optionsSuccessStatus: 200,
-// 	  	methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-// 	})
-// );
-
-// app.use(cors({
-// 	origin: 'https://study-notion2.vercel.app',
-// 	credentials: true, // Include this if you are sending cookies or authentication headers
-//   }));
 
 
 
