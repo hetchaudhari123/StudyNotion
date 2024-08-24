@@ -12,6 +12,11 @@
 //         params: params ? params : null,
 //     })
 // }
+
+
+
+
+/*
 import axios from "axios";
 
 // Create an Axios instance with default settings
@@ -57,3 +62,45 @@ const apiConnector = async (method, url, bodyData, headers, params) => {
 export default apiConnector;
 
 
+
+*/
+
+
+
+import axios from 'axios';
+
+// Define the function to fetch categories
+const fetchCategories = async () => {
+    try {
+        // Make the API request
+        const response = await axios({
+            method: 'GET',
+            url: 'https://studynotion2-iket.onrender.com/api/v1/course/get-all-categories',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        // Log the response data
+        console.log('Categories:', response.data);
+    } catch (error) {
+        // Handle errors and log detailed information
+        console.error("Direct Axios Error:", error.message);
+        if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.error("Response data:", error.response.data);
+            console.error("Response status:", error.response.status);
+            console.error("Response headers:", error.response.headers);
+        } else if (error.request) {
+            // The request was made but no response was received
+            console.error("Request data:", error.request);
+        } else {
+            // Something happened in setting up the request that triggered an Error
+            console.error("Error message:", error.message);
+        }
+    }
+};
+
+// Call the function to fetch categories
+fetchCategories();
