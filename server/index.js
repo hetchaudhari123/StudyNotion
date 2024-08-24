@@ -47,14 +47,19 @@ app.use(cookieParser());
 //   );
 
 // https://study-notion2.vercel.app/signup
-app.use(
-	cors({
-		origin: "https://study-notion2.vercel.app",
-		credentials: true,
-		optionsSuccessStatus: 200,
-	  	methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-	})
-);
+// app.use(
+// 	cors({
+// 		origin: "https://study-notion2.vercel.app/",
+// 		credentials: true,
+// 		optionsSuccessStatus: 200,
+// 	  	methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+// 	})
+// );
+
+app.use(cors({
+	origin: 'https://study-notion2.vercel.app',
+	credentials: true, // Include this if you are sending cookies or authentication headers
+  }));
 
 
 
