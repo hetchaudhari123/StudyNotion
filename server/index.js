@@ -11,10 +11,10 @@ const contactUsRoutes = require('./routes/Contactus');
 const courseRoutes = require('./routes/Course');
 const paymentsRoutes = require('./routes/Payments');
 const profileRoutes = require('./routes/Profile');
-app.use(cors({
-	origin: 'https://study-notion2.vercel.app/',
+// app.use(cors({
+// 	origin: 'https://study-notion2.vercel.app/',
 
-  }));
+//   }));
 require('dotenv').config();
 cloudinaryConnect();
 // const PORT = process.env.PORT || 4000;
@@ -46,7 +46,7 @@ app.use(cookieParser());
 // 	})
 //   );
 
-
+// https://study-notion2.vercel.app/signup
 app.use(
 	cors({
 		origin: "https://study-notion2.vercel.app",
