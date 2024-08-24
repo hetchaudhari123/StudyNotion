@@ -16,7 +16,7 @@
 
 
 
-/*
+
 import axios from "axios";
 
 // Create an Axios instance with default settings
@@ -59,15 +59,10 @@ const apiConnector = async (method, url, bodyData, headers, params) => {
     }
 };
 
-export default apiConnector;
 
 
+// 
 
-*/
-
-
-
-import axios from 'axios';
 
 // Define the function to fetch categories
 const fetchCategories = async () => {
@@ -104,3 +99,15 @@ const fetchCategories = async () => {
 
 // Call the function to fetch categories
 fetchCategories();
+
+// 
+
+
+export default apiConnector;
+
+
+
+
+
+
+
