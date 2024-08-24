@@ -24,6 +24,15 @@ connect();
 app.use(express.json());
 app.use(cookieParser());
 
+
+app.use(cors({
+    origin: 'https://study-notion2.vercel.app',  // Frontend domain
+    credentials: true,  // Enable credentials (cookies, auth headers)
+}));
+
+// Handle preflight requests for all routes (this must come after app.use(cors()))
+app.options('*', cors());
+
 // app.use(
 // 	cors({
 // 		// origin:"http://localhost:3000",
@@ -56,10 +65,10 @@ app.use(cookieParser());
 // 	})
 // );
 
-app.use(cors({
-	origin: 'https://study-notion2.vercel.app',
-	credentials: true, // Include this if you are sending cookies or authentication headers
-  }));
+// app.use(cors({
+// 	origin: 'https://study-notion2.vercel.app',
+// 	credentials: true, // Include this if you are sending cookies or authentication headers
+//   }));
 
 
 
