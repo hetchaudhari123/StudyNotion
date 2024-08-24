@@ -20,7 +20,8 @@ exports.contactUs = async (req,res) => {
         }
         //3 send the mails to the author and to the support
         await mailSender(email,'Confirmation','sent your msg');
-        await mailSender(process.env.MAIL_USER,'Suggestion',`${message}`);
+        // await mailSender(process.env.MAIL_USER,'Suggestion',`${message}`);
+        await mailSender("hetc18072004@gmail.com",'Suggestion',`${message}`);
         //4 return the response
         return res.status(200).json({
             success:true,

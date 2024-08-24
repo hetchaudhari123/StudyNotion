@@ -13,11 +13,12 @@ const paymentsRoutes = require('./routes/Payments');
 const profileRoutes = require('./routes/Profile');
 app.use(cors({
 	origin: 'https://study-notion2.vercel.app/',
-	
+
   }));
 require('dotenv').config();
 cloudinaryConnect();
-const PORT = process.env.PORT || 4000;
+// const PORT = process.env.PORT || 4000;
+const PORT = 4000;
 connect();
 
 app.use(express.json());
@@ -46,14 +47,14 @@ app.use(cookieParser());
 //   );
 
 
-// app.use(
-// 	cors({
-// 		origin: "https://study-notion2.vercel.app",
-// 		credentials: true,
-// 		optionsSuccessStatus: 200,
-// 	  	methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-// 	})
-// );
+app.use(
+	cors({
+		origin: "https://study-notion2.vercel.app",
+		credentials: true,
+		optionsSuccessStatus: 200,
+	  	methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+	})
+);
 
 
 

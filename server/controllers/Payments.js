@@ -266,8 +266,12 @@ exports.verifySignature = async (req,res) => {
         const userId = req.user.id
         // let body = razorpay_order_id + "|" + razorpay_payment_id;
         let body = order_id + "|" + razorpay_payment_id;
+        // const generated_signature = crypto
+        //     .createHmac("sha256", process.env.RAZORPAY_SECRET)
+        //     .update(body.toString())
+        //     .digest("hex");
         const generated_signature = crypto
-            .createHmac("sha256", process.env.RAZORPAY_SECRET)
+            .createHmac("sha256", "lYS9jXe1OJryXgrM6y8la7kZ")
             .update(body.toString())
             .digest("hex");
 

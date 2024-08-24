@@ -181,7 +181,8 @@ exports.login = async (req,res) => {
                 courseProgress:user?.courseProgress,
             }
             
-            const token = jwt.sign(payload,process.env.JWT_SECRET,{
+            // const token = jwt.sign(payload,process.env.JWT_SECRET,{
+            const token = jwt.sign(payload,"chaudhari",{
                 expiresIn:"24h"
             });
             user.token = token;
