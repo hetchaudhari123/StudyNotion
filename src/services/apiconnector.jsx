@@ -12,6 +12,18 @@
 //         params: params ? params : null,
 //     })
 // }
+import axios from "axios";
+
+// Create an Axios instance with default settings
+const axiosInstance = axios.create({
+    withCredentials: true,
+    headers: {
+        'Content-Type': 'application/json',
+        // Add any other default headers here
+    }
+});
+
+// API connector function to handle requests
 const apiConnector = async (method, url, bodyData, headers, params) => {
     // Define default headers
     const defaultHeaders = {
@@ -42,8 +54,6 @@ const apiConnector = async (method, url, bodyData, headers, params) => {
     }
 };
 
-
 export default apiConnector;
-
 
 
