@@ -1,4 +1,5 @@
-const BASE_URL = process.env.REACT_APP_BASE_URL
+// const BASE_URL = process.env.REACT_APP_BASE_URL
+const BASE_URL = "https://studynotion2-iket.onrender.com"
 
 // AUTH ENDPOINTS
 export const endpoints = {
