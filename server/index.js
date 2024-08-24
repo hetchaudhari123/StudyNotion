@@ -26,7 +26,7 @@ app.use(cookieParser());
 app.use(
 	cors({
 		
-		origin: "https://study-notion2.vercel.app/",
+		origin: "https://study-notion2.vercel.app",
 		optionsSuccessStatus: 200,
 		methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
 		credentials:true,
