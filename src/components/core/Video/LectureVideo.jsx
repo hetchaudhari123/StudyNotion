@@ -1,5 +1,5 @@
 import React, { useEffect,useState } from 'react'
-import { Player } from 'video-react'
+// import { Player } from 'video-react'
 // import "node_modules/video-react/dist/video-react.css";
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -186,16 +186,15 @@ const LectureVideo = () => {
     //  style={{ width: 'calc(100% - )' }}
      className='
      w-[100%] md:w-[80%]'>
-        {/* gjfkgjfk */}
         <div className=' '>
-         <Player
+         {/* <Player
       playsInline
     aspectRatio='16:9'
         ref={videoRef}
       src={lecture.videoUrl}
       onEnded={() => setEndModal(true)}
         fluid={true}
-    />
+    /> */}
         <div className=''>
             {endModal && <VideoEndModal
             onClickMarkAsCompleted={markAsCompletedHandler}
