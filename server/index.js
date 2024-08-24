@@ -96,7 +96,7 @@ const profileRoutes = require('./routes/Profile');
 require('dotenv').config();
 
 cloudinaryConnect();
-const PORT = process.env.PORT || 4000;
+const PORT = 4000;
 connect();
 
 app.use(express.json());

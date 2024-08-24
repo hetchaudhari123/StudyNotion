@@ -21,7 +21,9 @@ exports.resetPasswordToken = async (req,res)=>{
         //4 add into the User document
         const userUpdate = await User.findOneAndUpdate({email},{token:token,resetPasswordExpires:(Date.now() +3600000)},{new:true});
         // console.log("DETAILS", userUpdate);
-        const url = `http://localhost:3000/update-password/${token}`;
+        // const url = `http://localhost:3000/update-password/${token}`;
+        
+        const url = `https://study-notion2.vercel.app/update-password/${token}`;
         //5 send the email
         // const body = `<p>Press this link for resetting the password:${url}.</p><p>The password will expire after ${userUpdate.resetPasswordExpires}</p>`
         await mailSender(email,`Link for resetting the password`,resetPasswordTemplate(email,userUpdate.firstName + ' ' + userUpdate.lastName,url));
