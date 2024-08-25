@@ -5,7 +5,8 @@ const bcrypt = require('bcrypt');
 const Profile = require('../models/Profile');
 const jwt = require('jsonwebtoken');
 const mailSender = require('../utils/mailSender');
-const passwordUpdated = require('../mail/templates/passwordUpdate')
+const passwordUpdated = require('../mail/templates/passwordUpdate');
+const { otpEmail } = require('../mail/templates/otp');
 require('dotenv').config();
 exports.sendOTP = async (req,res) => {
     try{
@@ -38,6 +39,9 @@ exports.sendOTP = async (req,res) => {
         }
         //5 save the otp to the DB
         const response = await OTP.create({email,otp});
+        // await mailSender(email,'OTP',otpEmail(otp));
+        const mailResponse = await mailSender(email, `OTP for SignUp`, otpEmail(otp));
+        
 		// console.log("OTP Body", {email,otp});
 
         return res.status(200).json({
