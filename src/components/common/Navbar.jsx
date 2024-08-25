@@ -22,7 +22,11 @@ export default function Navbar({ navVis, setNavVis, subLinks, setSubLinks }) {
     // console.log(categories.CATEGORIES_API);
     const getSubLinks = async () => {
         const response = await apiConnector('GET', categories.CATEGORIES_API);
+        console.log("Response from get Categories.....",response);
         //Putting a new property of link inside the response.data.data
+        if(response?.data?.data){
+
+        
         const updatedResponse = response.data.data.map((ele, index) => {
             const name = ele.name.replace(/[\s/]+/g, '-').toLowerCase();
             // return { ...ele, link: `${'/catalog/' + ele.name}` }
@@ -30,6 +34,7 @@ export default function Navbar({ navVis, setNavVis, subLinks, setSubLinks }) {
         })
         // setSubLinks(response.data.data);
         setSubLinks(updatedResponse);
+    }
 
     }
     useEffect(() => {
