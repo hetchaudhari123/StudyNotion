@@ -9,6 +9,7 @@ exports.auth = async (req,res,next) => {
         //check if it exists
         if(!token){
             console.log("req cookies",req.cookies);
+            console.log("req ",req);
             return res.status(401).json({
                 success:false,
                 message:"Token missing"
