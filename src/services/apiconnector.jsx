@@ -44,7 +44,8 @@ const apiConnector = async (method, url, bodyData, headers, params) => {
             headers: defaultHeaders, // Use merged headers
             params: params || null,
         });
-        return response.data; // Return only the data part of the response
+        // return response.data; // Return only the data part of the response
+        return response; // Return only the data part of the response
     } catch (error) {
         // Enhanced error logging
         console.error("API Error:", error.message);
