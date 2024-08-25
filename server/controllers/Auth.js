@@ -198,7 +198,7 @@ exports.login = async (req,res) => {
                 // expires:new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),httpOnly: true,
                 expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
                 httpOnly: true,
-                secure: process.env.NODE_ENV === 'production', // Only set secure flag in production
+                secure: true, // Only set secure flag in production
                 
             }).status(200).json({
                 success:true,
