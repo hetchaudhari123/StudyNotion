@@ -24,16 +24,31 @@ export default function Navbar({ navVis, setNavVis, subLinks, setSubLinks }) {
         const response = await apiConnector('GET', categories.CATEGORIES_API);
         console.log("Response from get Categories.....",response);
         //Putting a new property of link inside the response.data.data
-        if(response?.data?.data){
+        // if(response?.data?.data){
 
         
-        const updatedResponse = response.data.data.map((ele, index) => {
-            const name = ele.name.replace(/[\s/]+/g, '-').toLowerCase();
-            // return { ...ele, link: `${'/catalog/' + ele.name}` }
-            return { ...ele, link: `${'/catalog/' + name}` }
-        })
+        // const updatedResponse = response.data.data.map((ele, index) => {
+        //     const name = ele.name.replace(/[\s/]+/g, '-').toLowerCase();
+        //     // return { ...ele, link: `${'/catalog/' + ele.name}` }
+        //     return { ...ele, link: `${'/catalog/' + name}` }
+        // })
+        const success = response?.data?.success ?? response?.success;
+
+        if (success) {
+            console.log("API call was successful:", success);
+
+            // Proceed with data manipulation
+            const categoryData = response?.data?.data ?? response?.data;
+            if (categoryData && Array.isArray(categoryData)) {
+                const updatedResponse = categoryData.map((ele) => {
+                    const name = ele.name.replace(/[\s/]+/g, '-').toLowerCase();
+                    return { ...ele, link: `${'/catalog/' + name}` };
+                });
+
+                setSubLinks(updatedResponse);
+            }
         // setSubLinks(response.data.data);
-        setSubLinks(updatedResponse);
+        // setSubLinks(updatedResponse);
     }
 
     }
