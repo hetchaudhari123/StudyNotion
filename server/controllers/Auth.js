@@ -191,8 +191,15 @@ exports.login = async (req,res) => {
             });
             user.token = token;
             user.password = undefined;
+            // res.cookie("token", token, {
+               
+            // });
             return res.cookie("token",token,{
-                expires:new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),httpOnly: true,
+                // expires:new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),httpOnly: true,
+                expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production', // Only set secure flag in production
+                
             }).status(200).json({
                 success:true,
                 message:"Successfully created the token",
