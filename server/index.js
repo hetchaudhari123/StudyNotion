@@ -103,12 +103,20 @@ app.use(express.json());
 app.use(cookieParser());
 
 // Configure CORS
-app.use(cors({
-    origin: 'https://study-notion2.vercel.app',
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    credentials: true,
-    allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept'],
-}));
+// app.use(cors({
+//     origin: 'https://study-notion2.vercel.app',
+//     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+//     credentials: true,
+//     allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept'],
+// }));
+
+
+app.use(
+	cors({
+		origin: "*",
+		credentials: true,
+	})
+);
 
 // File upload middleware
 app.use(fileUpload({
