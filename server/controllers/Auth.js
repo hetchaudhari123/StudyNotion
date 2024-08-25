@@ -104,7 +104,7 @@ exports.signUp = async (req,res) => {
                 else if(fetchedOtp[0].otp !== otp){
                     return res.status(400).json({
                         success:false,
-                        message:"The otps don't match"
+                        message:`The otps don't match.The obtained otp:${fetchedOtp[0].otp} & written:${otp}`
                     })
                 }
             //hash the password
