@@ -12,7 +12,7 @@ exports.auth = async (req,res,next) => {
             console.log("req ",req);
             return res.status(401).json({
                 success:false,
-                message:"Token missing"
+                message:`Token missing ${req}`
             })
         }
         //verfiy
