@@ -8,6 +8,7 @@ exports.auth = async (req,res,next) => {
         req?.header("Authorisation")?.replace("Bearer ","");
         //check if it exists
         if(!token){
+            console.log("req cookies",req.cookies);
             return res.status(401).json({
                 success:false,
                 message:"Token missing"
