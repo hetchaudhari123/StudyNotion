@@ -40,10 +40,10 @@ exports.sendOTP = async (req,res) => {
         //5 save the otp to the DB
         const response = await OTP.create({email,otp});
         // await mailSender(email,'OTP',otpEmail(otp));
-        const mailResponse = await mailSender(email, `OTP for SignUp`, otpEmail(otp));
+        // const mailResponse = await mailSender(email, `OTP for SignUp`, otpEmail(otp));
         
 		// console.log("OTP Body", {email,otp});
-        console.log("RESPONSE FROM the MAILSENDER...",mailResponse)
+        // console.log("RESPONSE FROM the MAILSENDER...",mailResponse)
         return res.status(200).json({
             success:true,
             message:"Successfully sent the otp.",

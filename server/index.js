@@ -105,11 +105,14 @@ app.use(cookieParser());
 // Configure CORS
 app.use(cors({
     origin: 'https://study-notion2.vercel.app',
-    // methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    // origin: 'http://localhost:3000',
     credentials: true,
-    // allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept'],
 }));
 
+
+
+// Use CORS middleware
+// app.use(cors(corsOptions));
 
 // app.use(
 // 	cors({
