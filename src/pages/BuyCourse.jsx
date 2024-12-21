@@ -42,9 +42,10 @@ const BuyCourse = () => {
   const {token} = useSelector(state => state.auth)
   const [confirmationModal,setConfirmationModal] = useState(false)
   const navigate = useNavigate()
+  
   useEffect(() => {
     const fetchCurCourse = async () => {
-      await dispatch(fetchCourse(courseId, null, false))
+      await dispatch(fetchCourse(courseId,token, null, false))
     }
     fetchCurCourse()
   }, [])
@@ -59,7 +60,7 @@ const BuyCourse = () => {
       toast.error("You are an Instructor. You can't buy a course.")
       return
     }
-    await (buyCourse({ user, courses: [courseId] ,navigate,navPath:'/dashboard/enrolled-courses'}, setLoading, true))
+    await (buyCourse({ user, courses: [courseId] ,navigate,navPath:'/dashboard/enrolled-courses'}, token,setLoading, true))
   }
   const collapseHandler = () => {
     setIsActive([])

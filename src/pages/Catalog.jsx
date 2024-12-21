@@ -33,6 +33,7 @@ const Catalog = () => {
     const [tag, setTag] = useState(TAGS.MOST_POPULAR)
     const [coursesData, setCoursesData] = useState(null)
     const navigate = useNavigate()
+    const {token} = useSelector(state=>state.auth);
     useEffect(() => {
      
         const fetchCat = async () => {
@@ -42,7 +43,7 @@ const Catalog = () => {
             const reqCat = resCat?.filter((ele) => ele?.name.replace(/[\s/]+/g, '-').toLowerCase() === catalogName)[0]
             setCategory(reqCat)
             // console.log("REQCAT...",reqCat)
-            const result = await fetchCategoryPageDetails({ categoryId: reqCat._id }, null, false)
+            const result = await fetchCategoryPageDetails({ categoryId: reqCat._id },token, null, false)
             // console.log("RESULT....", result.data.data)
             if(result.data.data) setCoursesData(result.data.data)
             else{

@@ -27,7 +27,7 @@ const LectureVideo = () => {
     const navigate = useNavigate()
     const {completedVideos} = useSelector(state => state.courseProgress)
 
-
+    const {token} = useSelector(state=>state.auth);
  
 
 
@@ -167,7 +167,7 @@ const LectureVideo = () => {
         // })
         const section = courseDetails.courseContent.find(section => section._id === sectionId)
         const subSection = section.subSection.find(ss => ss._id === subSectionId)
-        const courseProgress = await updateCourseProgress({courseId,subSection},setLoading,true)
+        const courseProgress = await updateCourseProgress({courseId,subSection},token,setLoading,true)
         // console.log("COURSE PROGRESS COMPLETED VIDEOS....",courseProgress)
         // console.log("COMPLETED VIDEOS FROM THE UPDATE COURSE PROGRESS API....",courseProgress.completedVideos)
         dispatch(setCompletedVideos(courseProgress.completedVideos))

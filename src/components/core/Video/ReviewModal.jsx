@@ -31,17 +31,19 @@ const ReviewModal = ({
 
     const {courseDetails} = useSelector(state => state.course)
 
+    const {token} = useSelector(state=>state.auth);
+
     const submitHandler = async () => {
         // console.log("EDIT REVIEW INSIDE REVIEW MODAL.....",editReview)
         if(!editReview){
 
             await buildRating({rating:getValues('rating'),review:getValues('review'),
-                courseId:courseDetails._id},setLoading,true)
+                courseId:courseDetails._id},token,setLoading,true)
             }
         else{
 
             await updateUserRating({rating:getValues('rating'),review:getValues('review'),
-                courseId:courseDetails._id},setLoading,true)
+                courseId:courseDetails._id},token,setLoading,true)
             }
             setReviewModal(false)
     }

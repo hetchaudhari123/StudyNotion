@@ -29,6 +29,8 @@ const PublishCourse = () => {
     setChecked(prev => !prev)
     document.getElementById('box').click()
   }
+      const {token} = useSelector(state=>state.auth);
+
   useEffect(() => {
     // console.log("COURSE DETAILS....",courseDetails?.status)
      if(courseDetails?.status === COURSE_STATUS.PUBLISHED){
@@ -45,7 +47,7 @@ const PublishCourse = () => {
         COURSE_STATUS.PUBLISHED : COURSE_STATUS.DRAFT),
       courseDetails,
       dispatch
-    }, setLoading, true)
+    }, token,setLoading, true)
     if (result){
       dispatch(resetCourse())
       navigate('/dashboard/my-courses')

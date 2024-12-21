@@ -22,6 +22,8 @@ const SubSectionModal = ({
   const [loading, setLoading] = useState(false);
   const { courseDetails } = useSelector(state => state.course);
   const dispatch = useDispatch();
+  const {token} = useSelector(state=>state.auth);
+
   const {
     register,
     handleSubmit,
@@ -100,6 +102,7 @@ const SubSectionModal = ({
         video: getValues('file'),
         setModal
       },
+      token,
         setLoading
       ));
     }
@@ -118,6 +121,7 @@ const SubSectionModal = ({
         video: ((getValues('file') !== "" && getValues('file')) ?
           (getValues('file')) : (undefined))
       },
+      token,
         setLoading,
         true))
 

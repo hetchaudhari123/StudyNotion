@@ -22,6 +22,7 @@ const VideoPage = () => {
   const [loading,setLoading] = useState(false)
   const [formData,setFormData] = useState({rating:0,review:''})
   const { courseId } = useParams()
+  const {token} = useSelector(state=>state.auth);
 
 //   useEffect(() => {
 
@@ -39,15 +40,15 @@ const VideoPage = () => {
   useEffect(() => {
     const fetch = async () => {
       setLoading(true)
-      const completedVideos = await fetchCourseProgress({ courseId }, null, false)
+      const completedVideos = await fetchCourseProgress({ courseId,token }, null, false)
       if (!completedVideos) {
         toast.error("The course has been removed")
         setLectureExists(false)
         return
       }
-      await dispatch(fetchCourse(courseId, null, false))
+      await dispatch(fetchCourse(courseId, token,null, false))
       dispatch(setCompletedVideos(completedVideos))
-      const res = await fetchUserRating({courseId},null,false)
+      const res = await fetchUserRating({courseId},token,null,false)
       if(res){
           setEditReview(true)
           setFormData({rating:res.rating,review:res.review})

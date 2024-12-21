@@ -38,6 +38,8 @@ const CourseForm = () => {
     // const [editCourse,setEditCourse] = useState(false);
     // const [editCourse,setEditCourse] = useSelector((state) => state.editCourse);
     const { editCourse, courseStep, courseDetails } = useSelector(state => state.course);
+    const {token} = useSelector(state=>state.auth);
+    
     const goNext = () => {
         localStorage.setItem('step', '2')
         dispatch(setStep(2));  
@@ -110,6 +112,7 @@ const CourseForm = () => {
                 instructions: reqList.toString(),
                 file
             },
+            token,
                 setLoading, true));
             if(result){
                 // dispatch(setCourseDetails(result))
@@ -131,6 +134,7 @@ const CourseForm = () => {
                 instructions: reqList.toString(),
                 file:(file && file !== "" ) ? (file) : (null)
             },
+            token,
                 setLoading, true));
                 if(result){
                     // dispatch(setCourseDetails(result))

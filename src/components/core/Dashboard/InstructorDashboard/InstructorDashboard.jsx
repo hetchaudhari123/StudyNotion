@@ -13,6 +13,7 @@ const InstructorDashboard = () => {
     const [options, setOptions] = useState(0)
     const [loading, setLoading] = useState(true)
     const [courses, setCourses] = useState([])
+    const {token} = useSelector(state=>state.auth);
     // 'rgb(255, 99, 132)'
     const randomColor = () => {
         let colors = []
@@ -25,7 +26,7 @@ const InstructorDashboard = () => {
     }
     useEffect(() => {
         const fetch = async () => {
-            const response = await fetchInstructorCourses(null, false)
+            const response = await fetchInstructorCourses(token,null, false)
             setCourses(response)
             setLoading(false)
         }

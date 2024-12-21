@@ -34,6 +34,8 @@ const SectionForm = () => {
     const [loading, setLoading] = useState(false);
     const [modal, setModal] = useState(0);
     const [expandSection, setExpandSection] = useState([]);
+    const {token} = useSelector(state=>state.auth);
+
     const initialValues = {
         'sectionName': ''
     }
@@ -50,7 +52,8 @@ const SectionForm = () => {
             setSubSectionId,
             setSectionId
         },
-            setModal,
+        setModal,
+        token,
             setLoading,
             true
         ))
@@ -109,6 +112,7 @@ const SectionForm = () => {
             setSubSectionId,
             courseDetails
         },
+        token,
             setLoading,
             true
         ))
@@ -135,6 +139,7 @@ const SectionForm = () => {
                 sectionName:getValues('sectionName'),
                 courseDetails,
                 dispatch},
+                token,
                 setLoading,
                 true,
                 
@@ -151,6 +156,7 @@ const SectionForm = () => {
                     sectionName: getValues('sectionName'),
                     setModal
                 },
+                token,
                 setLoading,
                 true));
         }
@@ -345,7 +351,8 @@ const SectionForm = () => {
                                     {
                                         required: {
                                             value: true,
-                                            message: "Please enter the course name."
+                                            // message: "Please enter the course name."
+                                            message: "Please enter the section name."
                                         }
                                     })}
                                 placeholder='Add a section to build your course'

@@ -27,8 +27,11 @@ const EnrolledCourses = () => {
     const [courses, setCourses] = useState(null);
     const [progPercent,setProgPercent] = useState([])
     const navigate = useNavigate()
+    const { token } = useSelector((state) => state.auth)
+
     useEffect(() => {
-            dispatch(getEnrolledCourses(setLoading, setCourses, false))
+            // dispatch(getEnrolledCourses(setLoading, setCourses, false))
+            dispatch(getEnrolledCourses(setLoading, setCourses, false,token))
     }, []);
     useEffect(() => {
         const fetchProgresses = async () => {
@@ -73,7 +76,7 @@ const EnrolledCourses = () => {
     }
 
     const calcProgress = async (course) => {
-        const completedLectures = await fetchCourseProgress({courseId:course._id},null,false)
+        const completedLectures = await fetchCourseProgress({courseId:course._id},token,null,false)
         // console.log("START......................")
         if(null){
             // console.log("RETURNED NULL....")

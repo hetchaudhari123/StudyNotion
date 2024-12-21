@@ -20,6 +20,7 @@ const Wishlist = () => {
     // const {user} = useSelector(state => state.auth)
     // const avgRating = [];
     const [avgRating,setAvgRating] = useState([])
+    const {token} = useSelector(state=>state.auth);
     const dispatch = useDispatch();
     const fetchAvgRating = async (id) => {
         const res = await fetchAverageRating(id, null, false);
@@ -28,7 +29,7 @@ const Wishlist = () => {
     }
 
     const buyCourseHandler = async () => {
-    const result = await buyCourse({ user, courses: cart }, setLoading, true)
+    const result = await buyCourse({ user, courses: cart },token, setLoading, true)
     if(result) {
         dispatch(resetCart())
     }

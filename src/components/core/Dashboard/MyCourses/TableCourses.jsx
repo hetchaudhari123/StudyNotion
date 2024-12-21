@@ -19,6 +19,7 @@ import { formatDate } from '../../../../services/formatDate';
 import { totalDuration } from '../../../../services/totalDuration';
 import { formatString } from '../../../../services/formatString';
 import { useMediaQuery } from '@uidotdev/usehooks';
+import { useSelector } from 'react-redux';
 const TableCourses = () => {
     const [courses, setCourses] = useState([])
     const [loading, setLoading] = useState(false)
@@ -29,15 +30,16 @@ const TableCourses = () => {
     const TRUNCATE_LENGTH = 120
     const isSmallDevice = useMediaQuery("only screen and (max-width : 768px)");
     const courseIdRef = useRef(null)
+    const {token} = useSelector(state=>state.auth);
     const fetchCourses = async () => {
-        const result = await fetchInstructorCourses(setLoading, true)
+        const result = await fetchInstructorCourses(token,setLoading, true)
         if (result) {
             setCourses(result)
             // console.log("COURSES.....", result)
         }
     }
     const deleteHandler = async (courseId) => {
-        const result = await deleteCourse({ dispatch, courseId }, null, false)
+        const result = await deleteCourse({ dispatch, courseId },token, null, false)
         setModal(false)
         fetchCourses()
     }
@@ -46,7 +48,7 @@ const TableCourses = () => {
     }, [])
 
     const handleEdit = async (courseId) => {
-        const result = await dispatch(fetchCourse(courseId, null, false))
+        const result = await dispatch(fetchCourse(courseId,token, null, false))
         if (result) {
             dispatch(setEditCourse(true))
             dispatch(setStep(1))
