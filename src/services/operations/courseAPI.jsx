@@ -753,10 +753,10 @@ export const fetchCategoryPageDetails = async ({categoryId},token,setLoading = n
 }
 
 
-export const fetchCourseProgress = async ({courseId},token,setLoading = null,printSuccess = true) => {
+export const fetchCourseProgress = async ({courseId},token,setLoading = null,printSuccess = false) => {
     let toastId = ""
-    if (printSuccess) toastId = toast.loading("Loading...")
-    if (printSuccess) setLoading(true)
+    if (printSuccess == true) toastId = toast.loading("Loading...")
+    if (printSuccess == true) setLoading(true)
     try{
         const response = await apiConnector('POST',courseEndpoints.GET_COURSE_PROGRESS,{courseId,Authorization: `Bearer ${token}`})
         console.log("RESPONSE FROM GET COURSE PROGRESS API.......",response)
