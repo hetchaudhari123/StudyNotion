@@ -753,6 +753,35 @@ export const fetchCategoryPageDetails = async ({categoryId},token,setLoading = n
 }
 
 
+// export const fetchCourseProgress = async ({courseId},token,setLoading = null,printSuccess = false) => {
+//     let toastId = ""
+//     if (printSuccess == true) toastId = toast.loading("Loading...")
+//     if (printSuccess == true) setLoading(true)
+//     try{
+//         const response = await apiConnector('POST',courseEndpoints.GET_COURSE_PROGRESS,{courseId,Authorization: `Bearer ${token}`})
+//         console.log("RESPONSE FROM GET COURSE PROGRESS API.......",response)
+//         if(!response.data.success){
+//             throw new Error(response.data.message)
+//         }
+//         if (printSuccess) {
+//             setLoading(false)
+//             toast.dismiss(toastId)
+//         }
+//         if (printSuccess)
+//             toast.success("Successfully fetched the course progress")
+//         return response.data.data
+//     }catch(err){
+//         console.log("ERROR FROM GET COURSE PROGRESS API.....",err)
+//         if (printSuccess) {
+//             setLoading(false)
+//             toast.dismiss(toastId)
+//         }
+//         if (printSuccess)
+//             toast.error("Failed to fetch the course progress.")
+//     }
+//     return null
+// }
+
 export const fetchCourseProgress = async ({courseId},token,setLoading = null,printSuccess = false) => {
     let toastId = ""
     if (printSuccess == true) toastId = toast.loading("Loading...")
