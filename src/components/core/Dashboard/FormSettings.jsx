@@ -30,6 +30,7 @@ const FormSettings = () => {
     const { user } = useSelector(state => state.profile);
     const [imageUrl, setImageUrl] = useState(`${user?.image}`);
     const navigate = useNavigate();
+  const { token } = useSelector((state) => state.auth)
 
    
     const initialValues = {
@@ -59,7 +60,8 @@ const FormSettings = () => {
     const selectedValue = watch('gender');
     const submitSettings = (data) => {
     //   console.log(data);
-      dispatch(setProfile(data,setLoading,user?.email,user?.image));
+    //   dispatch(setProfile(data,setLoading,user?.email,user?.image));
+      dispatch(setProfile(data,setLoading,user?.email,user?.image,token));
     }
     useEffect(() => {
         if (isSubmitSuccessful) {
@@ -81,7 +83,7 @@ const FormSettings = () => {
         return;
     }
     const deleteHandler = () => {
-        dispatch(deleteProfile(setLoading,navigate));
+        dispatch(deleteProfile(setLoading,navigate,token));
     }
     return (
         <form onSubmit={handleSubmit(submitSettings)} className='

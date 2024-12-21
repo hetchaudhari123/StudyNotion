@@ -4,8 +4,10 @@ exports.auth = async (req,res,next) => {
     try{
 
         //fetch the token
-        const token = req.cookies.token || req.body.token ||
-        req?.header("Authorization")?.replace("Bearer ","");
+        // const token = req.cookies.token || req.body.token ||
+        // req?.header("Authorization")?.replace("Bearer ","");
+        const token = req?.body?.Authorization?.replace("Bearer ","")
+
         //check if it exists
 
         if(!token){
