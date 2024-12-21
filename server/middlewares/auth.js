@@ -5,15 +5,17 @@ exports.auth = async (req,res,next) => {
 
         //fetch the token
         const token = req.cookies.token || req.body.token ||
-        req?.header("Authorisation")?.replace("Bearer ","");
+        req?.header("Authorization")?.replace("Bearer ","");
         //check if it exists
-        
+
         if(!token){
             console.log("req cookies",req.cookies);
             console.log("req ",req);
+            console.log("req headers", req.headers);
+            console.log("req body", req.body);
             return res.status(401).json({
                 success:false,
-                message:`Token missing ${req}`
+                message:`Token missing req cookies:${req.cookies}`
             })
         }
         //verfiy
