@@ -12,7 +12,7 @@ import CourseSliderAdv from '../components/core/Catalog/CourseSliderAdv'
 import CTAButton from "../components/core/HomePage/Button"
 import HighlightText from '../components/core/HomePage/HighlightText'
 
-
+import { useSelector } from 'react-redux'
 
 
 
