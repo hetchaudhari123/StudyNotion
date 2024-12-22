@@ -48,6 +48,55 @@ exports.updateProfile = async (req, res) => {
         })
     }
 }
+// exports.deleteAccount = async (req, res) => {
+//     try {
+//         //1 fetch the details
+//         // console.log("Printing ID: ", req.user.id);
+//         const userId = req.user.id;
+//         //2 validation
+//         let userDetails = await User.findById(userId);
+//         if (!userDetails) {
+//             return res.status(404).json({
+//                 success: false,
+//                 message: "The user is not registered"
+//             })
+//         }
+//         //3 delete the profile
+
+//         // const profileId = userDetails.additionalDetails;
+//         // const profileResponse = await Profile.findByIdAndDelete(profileId);
+//         //BY ME
+//         //4 delete the courses if the user is a instructor
+//         // const courseDetails = await Course.find({ instructor: userId });
+//         // const coursesId = courseDetails.map((a) => a._id);
+
+//         // await CourseProgress.deleteMany({ courseId: { $in: coursesId } });
+//         // await Course.deleteMany({ _id: { $in: coursesId } });
+//         // await RatingAndReview.deleteMany({ user: userId });
+
+//         //BY ME ends
+//         //4 delete the user
+//         await Profile.deleteMany({id:{$in:userDetails.additionalDetails}})
+//         await RatingAndReview.deleteMany({user:userDetails._id})
+//         await Course.deleteMany({_id:{$in:userDetails.courses}})
+//         await CourseProgress.deleteMany({_id:{$in:userDetails.courseProgress}})
+//         userDetails = await User.findByIdAndDelete(userId);
+//         //5 return the response
+//         return res.status(200).json({
+//             success: true,
+//             message: "Successfully deleted the account."
+//         })
+//     } catch (err) {
+//         console.log(err);
+//         return res.status(500).json({
+//             success: false,
+//             message: "Error occurred while deleting the account.",
+//             error: err.message
+//         })
+//     }
+// }
+
+
 exports.deleteAccount = async (req, res) => {
     try {
         //1 fetch the details
@@ -76,7 +125,10 @@ exports.deleteAccount = async (req, res) => {
 
         //BY ME ends
         //4 delete the user
-        await Profile.deleteMany({id:{$in:userDetails.additionalDetails}})
+        console.log("USER DETAILS ADDITIONAL DETAILS...",userDetails.additionalDetails)
+        // await Profile.deleteMany({id:{$in:userDetails.additionalDetails}})
+
+        await Profile.findByIdAndDelete(userDetails.additionalDetails);
         await RatingAndReview.deleteMany({user:userDetails._id})
         await Course.deleteMany({_id:{$in:userDetails.courses}})
         await CourseProgress.deleteMany({_id:{$in:userDetails.courseProgress}})
@@ -95,6 +147,8 @@ exports.deleteAccount = async (req, res) => {
         })
     }
 }
+
+
 exports.getAllUserDetails = async (req, res) => {
     try {
         //1 fetch the details
