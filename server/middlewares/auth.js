@@ -128,7 +128,6 @@ exports.auth = async (req,res,next) => {
 
         try{
             console.log("The token obtained is...",token)
-            // const decode = jwt.verify(token,"chaudhari");
             const decode = jwt.verify(token,process.env.JWT_SECRET);
             // console.log("DECODING THE TOKEN.....",decode);
             req.user = decode;

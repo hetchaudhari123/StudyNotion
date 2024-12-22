@@ -25,7 +25,6 @@ exports.createSubSection = async (req,res) => {
           // console.log(video)
         //3 upload to cloudinary 
         const file = await fileUploader(video,process.env.FOLDER_NAME);
-        // const file = await fileUploader(video,"StudyNotion");
       // console.log(file)
         //4 insert into the sub-section
         const subSectionDetails = await SubSection.create({
@@ -75,7 +74,6 @@ exports.updateSubSection = async (req,res) => {
             const video = req.files.video
             const uploadDetails = await fileUploader(
               video,
-              // "StudyNotion"
               process.env.FOLDER_NAME
             )
             subSection.videoUrl = uploadDetails.secure_url

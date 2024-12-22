@@ -231,7 +231,6 @@ exports.updateDisplayPicture = async (req, res) => {
         //1.1 fetch the image
         const displayPicture = req.files.displayPicture;
         //upload onto the cloudinary
-        // const fileDetails = await fileUploader(displayPicture, "StudyNotion", 1000,
         const fileDetails = await fileUploader(displayPicture, process.env.FOLDER_NAME, 1000,
             1000);
         // console.log(fileDetails);

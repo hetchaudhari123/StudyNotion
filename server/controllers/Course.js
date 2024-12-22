@@ -71,7 +71,6 @@ exports.createCourse = async (req, res) => {
         //3 cloudinary insertion
         // console.log('THUMBNAIL IMAGE............');
         const thumbnailImage = await fileUploader(thumbnail, process.env.FOLDER_NAME);
-        // const thumbnailImage = await fileUploader(thumbnail, "StudyNotion");
         // console.log('THUMBNAIL IMAGE............', thumbnailImage);
 
         //4 insertion into the db
@@ -265,7 +264,6 @@ exports.editCourse = async (req, res) => {
         if (thumbnail && thumbnail !== "undefined") {
 
             const thumbnailImage = await fileUploader(thumbnail, process.env.FOLDER_NAME);
-            // const thumbnailImage = await fileUploader(thumbnail, "StudyNotion");
             // console.log('THUMBNAIL IMAGE............', thumbnailImage);
             course.thumbnail = thumbnailImage.secure_url
         }
