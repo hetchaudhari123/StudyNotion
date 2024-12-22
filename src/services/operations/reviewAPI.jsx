@@ -96,10 +96,10 @@
 import apiConnector from "../apiconnector"
 import { ratingsEndpoints } from "../apis"
 import toast from "react-hot-toast"
-export const fetchAllReviews = async (setLoading = null,printSuccess = true) => {
+export const fetchAllReviews = async (setLoading = null,printSuccess = false) => {
     let toastId = ""
-    if(printSuccess) toastId = toast.loading("Loading...")
-    if(printSuccess) setLoading(true)
+    if(printSuccess == true) toastId = toast.loading("Loading...")
+    if(printSuccess == true) setLoading(true)
     try{
         const response = await apiConnector('GET',ratingsEndpoints.REVIEWS_DETAILS_API)
         console.log("RESPONSE FROM REVIEW DETAILS API....",response)
@@ -127,10 +127,10 @@ export const fetchAllReviews = async (setLoading = null,printSuccess = true) => 
 
 
 // Create fetch rating and review according to the user id.
-export const fetchUserRating = async ({courseId},token,setLoading = null,printSuccess = true) => {
+export const fetchUserRating = async ({courseId},token,setLoading = null,printSuccess = false) => {
     let toastId = ""
-    if(printSuccess) toastId = toast.loading("Loading...")
-    if(printSuccess) setLoading(true)
+    if(printSuccess == true) toastId = toast.loading("Loading...")
+    if(printSuccess == true) setLoading(true)
     try{
         const response = await apiConnector('POST',ratingsEndpoints.GET_USER_RATING,{courseId,Authorization: `Bearer ${token}`})
         console.log("RESPONSE FROM GET USER RATINGS API....",response)
@@ -157,10 +157,10 @@ export const fetchUserRating = async ({courseId},token,setLoading = null,printSu
     }
 }
 
-export const updateUserRating = async ({courseId,review,rating},token,setLoading = null,printSuccess = true) => {
+export const updateUserRating = async ({courseId,review,rating},token,setLoading = null,printSuccess = false) => {
     let toastId = ""
-    if(printSuccess) toastId = toast.loading("Loading...")
-    if(printSuccess) setLoading(true)
+    if(printSuccess == true) toastId = toast.loading("Loading...")
+    if(printSuccess == true) setLoading(true)
     try{
         const response = await apiConnector('POST',ratingsEndpoints.UPDATE_USER_RATING,{courseId,review,rating,Authorization: `Bearer ${token}`})
         console.log("RESPONSE FROM UPDATE USER RATING API....",response)

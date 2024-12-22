@@ -39,13 +39,13 @@ const BuyCourse = () => {
   const dispatch = useDispatch()
   const { courseDetails } = useSelector(state => state.course)
   const [avgAndCnt, setAvgAndCnt] = useState(null)
-  const {token} = useSelector(state => state.auth)
-  const [confirmationModal,setConfirmationModal] = useState(false)
+  const { token } = useSelector(state => state.auth)
+  const [confirmationModal, setConfirmationModal] = useState(false)
   const navigate = useNavigate()
-  
+
   useEffect(() => {
     const fetchCurCourse = async () => {
-      await dispatch(fetchCourse(courseId,token, null, false))
+      await dispatch(fetchCourse(courseId, token, null, false))
     }
     fetchCurCourse()
   }, [])
@@ -60,7 +60,7 @@ const BuyCourse = () => {
       toast.error("You are an Instructor. You can't buy a course.")
       return
     }
-    await (buyCourse({ user, courses: [courseId] ,navigate,navPath:'/dashboard/enrolled-courses'}, token,setLoading, true))
+    await (buyCourse({ user, courses: [courseId], navigate, navPath: '/dashboard/enrolled-courses' }, token, setLoading, true))
   }
   const collapseHandler = () => {
     setIsActive([])
@@ -70,7 +70,7 @@ const BuyCourse = () => {
       toast.error("You are an Instructor. You can't buy a course.")
       return
     }
-    if(!token){
+    if (!token) {
       setConfirmationModal(true)
     }
     dispatch(addToCart({ course: courseDetails }))
@@ -116,14 +116,14 @@ const BuyCourse = () => {
       </div>
     ) : (confirmationModal) ? (
       <ConfirmationModal
-      text1={'Not logged in'}
-      text2={'Login to buy the course!'}
-      setModal={setConfirmationModal}
-      onClickBtn1={() => navigate('/login')}
-      onClickBtn2={() => setConfirmationModal(false)}
-      btn1={'Login'}
-      btn2={'Cancel'}
-      customClassBtn2='bg-richblack-700'
+        text1={'Not logged in'}
+        text2={'Login to buy the course!'}
+        setModal={setConfirmationModal}
+        onClickBtn1={() => navigate('/login')}
+        onClickBtn2={() => setConfirmationModal(false)}
+        btn1={'Login'}
+        btn2={'Cancel'}
+        customClassBtn2='bg-richblack-700'
       />
     ) : (
       <div>
@@ -236,7 +236,7 @@ const BuyCourse = () => {
                     </div>
                   </div>
                 </div>
-                <div className='  h-full
+                <div className='h-full
             '>
 
                 </div>

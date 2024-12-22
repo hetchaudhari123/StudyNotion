@@ -651,10 +651,10 @@ export const getEnrolledCourses = (setLoading,setCourses,printSuccess,token) => 
 
   }
 }
-export const fetchAverageRating = async (courseId,token,setLoading = null,printSuccess = true) => {
+export const fetchAverageRating = async (courseId,token,setLoading = null,printSuccess = false) => {
       let toastId = ""
-      if(printSuccess) toastId = toast.loading("Loading...")
-      if(printSuccess) setLoading(true)
+      if(printSuccess == true) toastId = toast.loading("Loading...")
+      if(printSuccess == true) setLoading(true)
         try{
         const response = await apiConnector('POST',ratingsEndpoints.GET_AVERAGE_RATING_COURSES_API,{courseId,Authorization: `Bearer ${token}`});
         console.log('RESPONSE FROM AVERAGE RATING API........',response);

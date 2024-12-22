@@ -163,11 +163,11 @@ import toast from "react-hot-toast"
 
 // import mailSender from "../../../server/utils/mailSender"
 // import { courseEnrollmentEmail } from "../../../server/mail/templates/courseEnrollmentEmail"
-export const buyCourse = async ({user,courses,navigate = null,navPath=null},token,setLoading = null,printSuccess = true) => {
+export const buyCourse = async ({user,courses,navigate = null,navPath=null},token,setLoading = null,printSuccess = false) => {
 
     let toastId = ""
-    if(printSuccess) toastId = toast.loading("Loading...")
-    if(printSuccess) setLoading(true)
+    if(printSuccess == true) toastId = toast.loading("Loading...")
+    if(printSuccess == true) setLoading(true)
     try{
         const response = await apiConnector('POST',studentEndpoints.COURSE_PAYMENT_API,{courses,Authorization: `Bearer ${token}`})
         console.log("RESPONSE FROM PAYMENT API....",response)

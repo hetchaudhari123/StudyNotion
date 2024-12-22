@@ -37,11 +37,11 @@
 import apiConnector from "../apiconnector"
 import { categories } from "../apis";
 import toast from "react-hot-toast";
-export const fetchCategory = (setLoading = null,printSuccess = true) => {
+export const fetchCategory = (setLoading = null,printSuccess = false) => {
     return async (dispatch) => {
         let toastId = ""
-        if(printSuccess) toastId = toast.loading("Loading...")
-        if(printSuccess) setLoading(true)
+        if(printSuccess == true) toastId = toast.loading("Loading...")
+        if(printSuccess == true) setLoading(true)
         try{
 
             const response = await apiConnector('GET',categories.CATEGORIES_API);
