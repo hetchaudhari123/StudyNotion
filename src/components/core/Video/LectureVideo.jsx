@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-// import { BigPlayButton, Player } from "video-react"
-// import "video-react/dist/video-react.css"
+import { BigPlayButton, Player } from "video-react"
+import "video-react/dist/video-react.css"
 
 // import "node_modules/video-react/dist/video-react.css";
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
@@ -187,14 +187,14 @@ const LectureVideo = () => {
                 className='
      w-[100%] md:w-[80%]'>
                 <div className=' '>
-                    {/* <Player
+                    <Player
                         playsInline
                         aspectRatio='16:9'
                         ref={videoRef}
                         src={lecture.videoUrl}
                         onEnded={() => setEndModal(true)}
                         fluid={true}
-                    /> */}
+                    />
                     <div className=''>
                         {endModal && <VideoEndModal
                             onClickMarkAsCompleted={markAsCompletedHandler}
