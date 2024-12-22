@@ -191,7 +191,7 @@ const LectureVideo = () => {
                         playsInline
                         aspectRatio='16:9'
                         ref={videoRef}
-                        src={lecture.videoUrl}
+                        src={lecture?.videoUrl}
                         onEnded={() => setEndModal(true)}
                         fluid={true}
                     />
