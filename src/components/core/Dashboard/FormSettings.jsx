@@ -490,6 +490,7 @@
 // export default FormSettings
 
 
+
 import React, { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import CountryCode from "../../../data/countrycode.json"
@@ -555,7 +556,9 @@ const FormSettings = () => {
     //   console.log(data);
     //   dispatch(setProfile(data,setLoading,user?.email,user?.image));
     //   dispatch(setProfile(data,setLoading,user?.email,user?.image,token));
-      dispatch(setProfile(data,setLoading,user?.email,imageUrl,token));
+      
+    
+    dispatch(setProfile(data,setLoading,user?.email,imageUrl,token));
     }
     useEffect(() => {
         if (isSubmitSuccessful) {
@@ -888,7 +891,7 @@ const FormSettings = () => {
                             </div>
                             {/* box-shadow: 0px -1px 0px 0px #FFFFFF2E inset;
                             */}
-                            {/* <div
+                            <div
                                 className='p-3 flex focus-within:ring-1 focus-within:ring-yellow-50 
                                 gap-3 rounded-lg bg-richblack-700 flex-row items-center'
                                 style={{ boxShadow: '0px -1px 0px 0px rgba(255, 255, 255, 0.18) inset' }}>
@@ -911,9 +914,9 @@ const FormSettings = () => {
                                         <FaRegEyeSlash /> : <FaRegEye />}
                                 </div>
 
-                            </div> */}
+                            </div>
                         </div>
-                        <div className='flex flex-col gap-1.5 w-full md:w-1/2'>
+                        {/* <div className='flex flex-col gap-1.5 w-full md:w-1/2'>
 
                             <div className='font-inter text-sm font-normal leading-6 text-left flex flex-row gap-0.5 text-richblack-5'>Change Password <span className='text-pink-200'>*</span></div>
 
@@ -940,7 +943,7 @@ const FormSettings = () => {
                                         <FaRegEyeSlash /> : <FaRegEye />}
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
                 <div className='p-6 gap-5 rounded-lg flex flex-row border bg-richblack-900  border-pink-700 '>
@@ -957,7 +960,7 @@ const FormSettings = () => {
                         <div className='flex flex-col gap-0.5'>
 
                             <div className='font-inter text-sm font-medium leading-6 text-left text-pink-25'>Would you like to delete account?</div>
-                            <div className='font-inter text-sm font-medium leading-6 text-left text-pink-25'>This account contains Paid Courses. Deleting your account will remove all the contain associated with it.</div>
+                            <div className='font-inter text-sm font-medium leading-6 text-left text-pink-25'>This account contains Paid Courses. Deleting your account will remove all the courses associated with it.</div>
 
                         </div>
 
