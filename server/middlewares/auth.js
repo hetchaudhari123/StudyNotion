@@ -107,10 +107,14 @@ exports.auth = async (req,res,next) => {
         // const token = req.cookies.token || req.body.token ||
         // req?.header("authorization")?.replace("Bearer ","");
         // const token = req?.body?.Authorization?.replace("Bearer ","") 
-        const token = req?.body?.Authorization?.replace("Bearer ","") || req?.headers?.authorization?.replace("Bearer ", "");
+        // const token = req?.body?.Authorization?.replace("Bearer ","") || req?.headers?.authorization?.replace("Bearer ", "");
+        
+        const token = req?.body?.Authorization?.replace("Bearer ","") || req?.headers?.authorization?.replace("Bearer ", "") || 
+        req?.body?.token || req.headers.authorization?.split(' ')[1] || req?.headers?.cookie.split('=')[1];
         //check if it exists
         // console.log("The body inside the middleware is...",req?.body)
-        console.log("The body inside the middleware is...",req?.headers)
+        console.log("The body inside the middleware is...",req?.body)
+        console.log("The header inside the middleware is...",req?.headers)
         console.log("The token inside the middleware is...",token)
         if(!token){
             // console.log("req cookies",req.cookies);

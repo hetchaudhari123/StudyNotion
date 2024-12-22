@@ -787,7 +787,9 @@ export const fetchCourseProgress = async ({courseId},token,setLoading = null,pri
     if (printSuccess == true) toastId = toast.loading("Loading...")
     if (printSuccess == true) setLoading(true)
     try{
-        const response = await apiConnector('POST',courseEndpoints.GET_COURSE_PROGRESS,{courseId,Authorization: `Bearer ${token}`})
+        // const response = await apiConnector('POST',courseEndpoints.GET_COURSE_PROGRESS,{courseId,Authorization: `Bearer ${token}`})
+        const response = await apiConnector('POST',courseEndpoints.GET_COURSE_PROGRESS,{courseId,Authorization: `Bearer ${token}`,token},{ headers: { Authorization: `Bearer ${token}` } })
+
         console.log("RESPONSE FROM GET COURSE PROGRESS API.......",response)
         if(!response.data.success){
             throw new Error(response.data.message)
