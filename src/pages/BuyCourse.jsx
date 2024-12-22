@@ -88,7 +88,7 @@ const BuyCourse = () => {
   //   Pay with Razorpay
   // </button>
   const calcLecture = () => {
-    return courseDetails.courseContent.reduce((prev, section) => {
+    return courseDetails?.courseContent.reduce((prev, section) => {
       return prev + section.subSection.length
     }, 0)
   }
@@ -156,7 +156,7 @@ const BuyCourse = () => {
                     <div className='font-inter text-sm font-normal leading-6 text-left text-richblack-600'>/</div>
                     <div className='font-inter text-sm font-normal leading-6 text-left text-richblack-300'>Learning</div>
                     <div className='font-inter text-sm font-normal leading-6 text-left text-richblack-600'>/</div>
-                    <div className='font-inter text-sm font-medium leading-6 text-left text-yellow-50'>{(courseDetails.category.name)}</div>
+                    <div className='font-inter text-sm font-medium leading-6 text-left text-yellow-50'>{(courseDetails?.category?.name)}</div>
 
                   </div>
                   <div className='text-richblack-5
@@ -164,12 +164,12 @@ const BuyCourse = () => {
               leading-10 text-left
               
               '>
-                    {courseDetails.courseName}
+                    {courseDetails?.courseName}
                   </div>
 
                   <div className=' font-inter text-sm font-normal
               leading-6 text-left text-richblack-200'>
-                    {(courseDetails.courseDescription)}
+                    {(courseDetails?.courseDescription)}
 
                   </div>
                   <div className='gap-2  flex flex-row
@@ -196,16 +196,16 @@ const BuyCourse = () => {
                     <div className='text-richblack-25 font-inter
               text-base font-normal leading-6 text-left'>
                       {/* Number of Student enrolled */}
-                      {courseDetails.studentsEnrolled.length + " " + (courseDetails.studentsEnrolled.length === 1 ? "student" : "students")}
+                      {courseDetails?.studentsEnrolled.length + " " + (courseDetails?.studentsEnrolled.length === 1 ? "student" : "students")}
                     </div>
                   </div>
 
                   <div className='text-richblack-25 font-inter
               text-base font-normal leading-6 text-left
               '>
-                    Created by {(courseDetails.instructor.firstName
+                    Created by {(courseDetails?.instructor?.firstName
                       + " " +
-                      courseDetails.instructor.lastName)}
+                      courseDetails?.instructor?.lastName)}
                   </div>
                   {/* 12px */}
                   <div className='gap-3 flex flex-row'>
@@ -218,7 +218,7 @@ const BuyCourse = () => {
                       <div className='text-richblack-25
                   font-inter text-base font-normal leading-6 text-left'>
                         {/* Time and Date */}
-                        Created at {formatDate(courseDetails.createdAt)}
+                        Created at {formatDate(courseDetails?.createdAt)}
                       </div>
                     </div>
                     <div className='gap-2 flex flex-row items-center'>
@@ -251,14 +251,14 @@ const BuyCourse = () => {
                     font-inter text-base font-no rmal leading-6
                     text-left object-contain rounded-t-lg
                      w-[384px]'
-                  src={courseDetails.thumbnail} alt={courseDetails.courseName + " image"} />
+                  src={courseDetails?.thumbnail} alt={courseDetails?.courseName + " image"} />
                 {/* 16px */}
                 <div className='flex flex-col gap-4 p-6
                 bg-richblack-700 rounded-b-lg'>
 
                   <div className='text-richblack-5
                       font-inter text-3xl font-bold leading-10 text-left'>
-                    Rs. {courseDetails.price}
+                    Rs. {courseDetails?.price}
                   </div>
                   <div className='gap-3 flex flex-col'>
                     {/* Button */}
@@ -352,7 +352,7 @@ const BuyCourse = () => {
                   
                   '>
                   {
-                    courseDetails.whatYouWillLearn.split(".").map((sentence, index) =>
+                    courseDetails?.whatYouWillLearn.split(".").map((sentence, index) =>
 
                       <div key={index} className='w-full  '>
                         {sentence}
@@ -381,7 +381,7 @@ const BuyCourse = () => {
                     <div>
 
                       {/* {courseDetails.courseContent.length + " " + (courseDetails.courseContent.length === 1) ? ("section") : ("sections")} */}
-                      {courseDetails.courseContent.length + " " + ((courseDetails.courseContent.length === 1) ? ("section") : ("sections"))}
+                      {courseDetails?.courseContent.length + " " + ((courseDetails?.courseContent.length === 1) ? ("section") : ("sections"))}
                     </div>
                     <li>
 
@@ -390,7 +390,7 @@ const BuyCourse = () => {
                     <li>
                       {/* total length */}
                       {/* {totalDuration(courseDetails) + " total length"} */}
-                      {formatTime(courseDetails.courseContent.reduce((previ, section) => {
+                      {formatTime(courseDetails?.courseContent.reduce((previ, section) => {
                         return previ + section.subSection.reduce((prev, ss) => {
                           return prev + Number(ss.timeDuration)
                         }, 0)
@@ -408,7 +408,7 @@ const BuyCourse = () => {
                 <div className='w-full '>
                   {/* Content of the Course */}
                   {
-                    courseDetails.courseContent.map((section) => (
+                    courseDetails?.courseContent.map((section) => (
                       <div key={section._id} className='
                  flex flex-col '>
 
@@ -515,15 +515,15 @@ const BuyCourse = () => {
             items-center '>
                 {/* 52px */}
                 <img className='rounded-[200px] object-contain h-[52px]'
-                  src={courseDetails.instructor.image} alt={courseDetails.instructor.firstName + courseDetails.instructor.lastName + "image"} />
+                  src={courseDetails?.instructor?.image} alt={courseDetails?.instructor?.firstName + courseDetails?.instructor?.lastName + "image"} />
                 <div>
-                  {courseDetails.instructor.firstName + " " + courseDetails.instructor.lastName}
+                  {courseDetails?.instructor?.firstName + " " + courseDetails?.instructor?.lastName}
                 </div>
               </div>
 
               <div className='text-richblack-50 font-inter text-sm font-normal
             leading-6 text-left'>
-                {courseDetails.courseDescription}
+                {courseDetails?.courseDescription}
               </div>
             </div>
             <div className='   text-richblack-700 rounded-lg 
@@ -536,14 +536,14 @@ const BuyCourse = () => {
                     font-inter text-base font-no rmal leading-6
                     text-left object-contain rounded-t-lg
                      w-[384px]'
-                  src={courseDetails.thumbnail} alt={courseDetails.courseName + " image"} />
+                  src={courseDetails?.thumbnail} alt={courseDetails?.courseName + " image"} />
                 {/* 16px */}
                 <div className='flex flex-col gap-4 p-6
               bg-richblack-700 rounded-b-lg'>
 
                   <div className='text-richblack-5
                       font-inter text-3xl font-bold leading-10 text-left'>
-                    Rs. {courseDetails.price}
+                    Rs. {courseDetails?.price}
                   </div>
                   <div className='gap-3 flex flex-col'>
                     {/* Button */}

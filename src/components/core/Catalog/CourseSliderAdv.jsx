@@ -131,7 +131,8 @@ export default function CourseSliderAdv({ courses,delay=null }) {
                                                     font-inter text-base font-medium leading-6
                                                     text-left
                                                     '>
-                                                    {course.courseDescription}
+                                                    {/* {course.courseDescription} */}
+                                                    {course?.courseName}
                                                 </div>
 
                                                 <div className='text-richblack-300
