@@ -173,9 +173,9 @@ export const buyCourse = async ({user,courses,navigate = null,navPath=null},toke
         console.log("RESPONSE FROM PAYMENT API....",response)
         // console.log("TYPE OF x---->",typeof x)
         var options = {
-            // key: process.env.REACT_APP_RAZORPAY_KEY, // Enter the Key ID generated from the Dashboard
+            key: process.env.REACT_APP_RAZORPAY_KEY, // Enter the Key ID generated from the Dashboard
 
-            key: "rzp_test_mjgfS4aI7n3uqt", // Enter the Key ID generated from the Dashboard
+            // key: "rzp_test_mjgfS4aI7n3uqt", // Enter the Key ID generated from the Dashboard
             amount: response.data.data.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
             currency: response.data.data.currency,
             name: "StudyNotion",
