@@ -888,7 +888,7 @@ const FormSettings = () => {
                             </div>
                             {/* box-shadow: 0px -1px 0px 0px #FFFFFF2E inset;
                             */}
-                            <div
+                            {/* <div
                                 className='p-3 flex focus-within:ring-1 focus-within:ring-yellow-50 
                                 gap-3 rounded-lg bg-richblack-700 flex-row items-center'
                                 style={{ boxShadow: '0px -1px 0px 0px rgba(255, 255, 255, 0.18) inset' }}>
@@ -911,7 +911,7 @@ const FormSettings = () => {
                                         <FaRegEyeSlash /> : <FaRegEye />}
                                 </div>
 
-                            </div>
+                            </div> */}
                         </div>
                         <div className='flex flex-col gap-1.5 w-full md:w-1/2'>
 
