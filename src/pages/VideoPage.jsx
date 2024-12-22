@@ -40,7 +40,8 @@ const VideoPage = () => {
   useEffect(() => {
     const fetch = async () => {
       setLoading(true)
-      const completedVideos = await fetchCourseProgress({ courseId,token }, null, false)
+      // const completedVideos = await fetchCourseProgress({ courseId,token }, null, false)
+      const completedVideos = await fetchCourseProgress({ courseId },token, null, false)
       if (!completedVideos) {
         toast.error("The course has been removed")
         setLectureExists(false)
