@@ -104,8 +104,8 @@ app.use(cookieParser());
 
 // Configure CORS
 app.use(cors({
-    // origin: 'https://study-notion2.vercel.app',
-    origin: 'http://localhost:3000',
+    origin: 'https://study-notion2.vercel.app',
+    // origin: 'http://localhost:3000',
     credentials: true,
 }));
 
