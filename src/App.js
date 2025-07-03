@@ -44,7 +44,6 @@ function App() {
   const [navVis,setNavVis] = useState(false)
   const [subLinks, setSubLinks] = useState([]);
   const { user } = useSelector((state) => state.profile)
-
   return (
 
     <div className="overflow-y-auto w-screen 

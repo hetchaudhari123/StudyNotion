@@ -164,7 +164,7 @@ import toast from "react-hot-toast"
 // import mailSender from "../../../server/utils/mailSender"
 // import { courseEnrollmentEmail } from "../../../server/mail/templates/courseEnrollmentEmail"
 export const buyCourse = async ({user,courses,navigate = null,navPath=null},token,setLoading = null,printSuccess = false) => {
-
+    // console.log("RAZORPAY...", process.env.REACT_APP_KEY_OF_RAZOR)
     let toastId = ""
     if(printSuccess == true) toastId = toast.loading("Loading...")
     if(printSuccess == true) setLoading(true)
@@ -174,7 +174,7 @@ export const buyCourse = async ({user,courses,navigate = null,navPath=null},toke
         // console.log("TYPE OF x---->",typeof x)
         var options = {
             // key: process.env.REACT_APP_RAZORPAY_KEY, // Enter the Key ID generated from the Dashboard
-            key: process.env.KEY_OF_RAZOR, // Enter the Key ID generated from the Dashboard
+            key: process.env.REACT_APP_KEY_OF_RAZOR, // Enter the Key ID generated from the Dashboard
 
             amount: response.data.data.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
             currency: response.data.data.currency,
