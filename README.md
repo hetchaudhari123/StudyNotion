@@ -15,15 +15,15 @@ A fully functional **ed-tech platform** that enables users to create, consume, a
 
 ### 🏠 Home Page
 
-![Home Page](https://claude.ai/chat/assets/homepage.png)
+![Home Page](/assets/homepage.png)
 
 ### 📚 Dashboard
 
-![Dashboard](https://claude.ai/chat/assets/dashboard.png)
+![Dashboard](/assets/dashboard.png)
 
 ### 📖 Courses Page
 
-This page displays all available courses for users. Each course shows its title, description, and preview image. Users can browse and enroll from here. ![Courses Page](https://claude.ai/chat/assets/courses.png)
+This page displays all available courses for users. Each course shows its title, description, and preview image. Users can browse and enroll from here. ![Courses Page](/assets/courses.png)
 
 ----------
 
