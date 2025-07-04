@@ -18,7 +18,7 @@ A fully functional **ed-tech platform** that enables users to create, consume, a
 ![Home Page](./assets/homepage.png)
 
 ### 📚 Dashboard
-![Dashboard](./screenshots/dashboard.png)
+![Dashboard](./assets/dashboard.png)
 
 ### 📖 Courses Page
 This page displays all available courses for users. Each course shows its title, description, and preview image. Users can browse and enroll from here.
