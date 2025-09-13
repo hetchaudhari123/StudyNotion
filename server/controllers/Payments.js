@@ -219,10 +219,7 @@ exports.enrollStudent = async (userId,courses,res) => {
                 courseEnrollmentEmail(course.courseName, user.firstName)
             )   
             if(!emailResponse){
-                // return res.status(400).json({
-                //     success:false,
-                //     message:"ERROR OCCURRED WHILE SENDING THE MAIL"
-                // })
+                console.log("INSIDE THE ENROLL STUDENT...", emailResponse)
                 return false
             }
         }
