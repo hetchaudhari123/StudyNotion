@@ -277,15 +277,15 @@ export const verifyPayment = async ({razorpay_order_id,
           }
           return true
     }catch(err){
-        console.log("ERROR FROM VERFIY PAYMENT.....",err)
+        // console.log("ERROR FROM VERFIY PAYMENT.....",err)
         if(printSuccess){
             if(setLoading) setLoading(false);
             toast.dismiss(toastId);
           }
-          if(printSuccess)
-          toast.error("Verification of the payment failed",{
-            position: "bottom-center"
-        });
+        //   if(printSuccess)
+        //   toast.error("Verification of the payment failed",{
+        //     position: "bottom-center"
+        // });
         return false
     }
 }
