@@ -1,27 +1,15 @@
-import React, { useSyncExternalStore } from 'react'
 import { FaAngleLeft } from "react-icons/fa6";
 import RenderSteps from './RenderSteps';
 import CourseForm from './CourseForm';
 import CourseTips from './CourseTips';
-import { useDispatch, useSelector } from 'react-redux';
-import { setStep } from '../../../../../redux/slices/courseSlice';
-import { setCourseDetails } from '../../../../../redux/slices/courseSlice';
-import { useState, useEffect } from 'react';
-import Spinner from '../../../../common/Spinner';
+import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
 import Section from '../CourseBuilder/Section';
-import { fetchCourse } from '../../../../../services/operations/courseAPI';
 import PublishCourse from '../PublishCourse';
 import { useNavigate } from 'react-router-dom';
 const AddCourses = () => {
     const navigate = useNavigate()
     const { courseStep,courseDetails } = useSelector(state => state.course); 
-    const dispatch = useDispatch(); 
-    // FOR TESTING STEP2 -------> REMOVE DURING PRODUCTION
-    const [loading, setLoading] = useState(false);
-    // useEffect(() => {
-    //     dispatch(fetchCourse('669297ea069e5e52c23d6324', setLoading, false));
-    //     dispatch(setStep(3));
-    // }, []);
     useEffect(() => {
         localStorage.setItem("step",JSON.stringify(courseStep))
       },[courseStep])

@@ -1,9 +1,7 @@
-import React, { useRef } from 'react'
-import rzpLogo from "../assets/Logo/rzp_logo.png"
+import { useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Spinner from '../components/common/Spinner'
 import { useState, useEffect } from 'react'
-import apiConnector from '../services/apiconnector'
 import { FiGlobe } from "react-icons/fi";
 import { LuFileCheck } from "react-icons/lu";
 import toast from 'react-hot-toast'
@@ -12,8 +10,6 @@ import { BsCursorFill } from "react-icons/bs";
 import { TfiMobile } from "react-icons/tfi";
 import { HiTv } from "react-icons/hi2";
 import { formatTime } from '../services/formatTime'
-import { studentEndpoints } from '../services/apis'
-import { useNavigate, useParams } from 'react-router-dom'
 import { buyCourse } from '../services/operations/paymentAPI'
 import Footer from '../components/common/Footer'
 import { fetchCourse } from '../services/operations/courseAPI'
@@ -23,14 +19,13 @@ import { FiInfo } from "react-icons/fi";
 import { formatDate } from '../services/formatDate'
 import CTAButton from "../components/core/HomePage/Button"
 import Reviews from '../components/common/Reviews'
-import { totalDuration } from '../services/totalDuration'
-// import { TfiAngleUp } from "react-icons/tfi";
 import { FaAngleUp } from "react-icons/fa";
 import { FaAngleDown } from "react-icons/fa";
 import { FiClock } from "react-icons/fi";
 import { addToCart } from '../redux/slices/cartSlice'
-import ReviewSlider from '../components/common/ReviewSlider'
 import { ACCOUNT_TYPE } from '../utils/constants'
+import { useNavigate, useParams } from 'react-router-dom';
+
 const BuyCourse = () => {
   const { user } = useSelector(state => state.profile)
   const [loading, setLoading] = useState(true)

@@ -1,4 +1,3 @@
-import React from 'react'
 import SectionForm from './SectionForm'
 import CTAButton from "../../../HomePage/Button"
 import { useDispatch } from 'react-redux';

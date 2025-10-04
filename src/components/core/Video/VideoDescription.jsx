@@ -1,11 +1,8 @@
-import React from 'react'
-import { formatTime } from '../../../services/formatTime'
 import { useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
 import { useState } from 'react'
 import { useEffect } from 'react'
-import Spinner from '../../common/Spinner'
 const VideoDescription = () => {
     const {subSectionId} = useParams()
     const location = useLocation()
@@ -67,7 +64,6 @@ const VideoDescription = () => {
         <div className='text-richblack-5 font-inter text-base font-normal
         leading-6 text-left '>
             {/* Date */}
-            {/* {lecture ? formatTime(lecture?.createdAt) : "Loading"} */}
             {lecture ? (formatDate(lecture?.createdAt)) : "Loading"}
         </div>
     </div>

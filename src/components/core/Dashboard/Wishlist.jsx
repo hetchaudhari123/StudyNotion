@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Header from './Header'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchAverageRating } from '../../../services/operations/profileAPI'
@@ -14,17 +14,14 @@ import { resetCart } from '../../../redux/slices/cartSlice'
 const Wishlist = () => {
     const { total, totalItems, cart } = useSelector(state => state.cart);
     const { user } = useSelector(state => state.profile)
-    const [loading,setLoading] = useState(false)
+    const [loading, setLoading] = useState(false)
     const [confirmationModal,setConfirmationModal] = useState(false)
     const [removeCourse,setRemoveCourse] = useState(null)
-    // const {user} = useSelector(state => state.auth)
-    // const avgRating = [];
     const [avgRating,setAvgRating] = useState([])
     const {token} = useSelector(state=>state.auth);
     const dispatch = useDispatch();
     const fetchAvgRating = async (id) => {
         const res = await fetchAverageRating(id, null, false);
-        // avgRating.push(res);
         setAvgRating([...avgRating, res]);
     }
 
@@ -35,19 +32,14 @@ const Wishlist = () => {
     }
     }
     const removeHandler = (course) => {
-        // console.log("COURSE INSIDE THE REMOVE HANDLER....",course)
         setConfirmationModal(true)
         setRemoveCourse(course)
     }
     
 
-    // UNCOMMENT THIS TO GET THE DATA
     useEffect(() => {
         cart.forEach(ele => {
             fetchAvgRating(ele._id);
-            // console.log("ele...",ele)
-            // console.log("ratings and reviews length",ele.ratingAndReviews)
-            // console.log("ratings and reviews length",ele.ratingAndReviews.length)
         });
     },[]);
     return (

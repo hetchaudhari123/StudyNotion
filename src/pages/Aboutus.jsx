@@ -7,17 +7,13 @@ import foundingImage from "../assets/Images/FoundingStory.png"
 import StatsComponent from '../components/core/Aboutus/StatsComponent'
 import HighlightText from '../components/core/HomePage/HighlightText'
 import LearningGrid from '../components/core/Aboutus/LearningGrid'
-import ContactUsForm from '../components/core/Aboutus/ContactUsForm'
 import Footer from '../components/common/Footer'
-import ReviewSlider from '../components/common/ReviewSlider'
 import Reviews from '../components/common/Reviews'
 const Aboutus = () => {
     return (
-        // <div className='w-11/12 max-w-maxContent mx-auto'>
         <div>
             <section className='w-11/12 max-w-maxContent mx-auto lg:h-[618px] pt-20 xl:px-32 flex flex-col gap-14 text-richblack-800 bg-richblack-800'>
 
-                {/* <div className='w-full pt-20 px-32 flex flex-col gap-14 text-richblack-800'> */}
                 <div className='flex flex-col gap-10 '>
                     <div className='pt-1 gap-1.5 rounded-full w-full flex justify-center'>
                         <div className='py-1.5 px-5 flex gap-2.5 rounded-full'>
@@ -34,7 +30,6 @@ const Aboutus = () => {
                         <div className=' lg:h-[72px] lg:w-[809px] font-inter text-base font-normal leading-6 text-center text-richblack-300'>Studynotion is at the forefront of driving innovation in online education. We're passionate about creating a brighter future by offering cutting-edge courses, leveraging emerging technologies, and nurturing a vibrant learning community.</div>
                     </div>
                 </div>
-                {/* </div> */}
                 <div className='flex  flex-col items-center lg:flex-row gap-6'>
                     <div>
                         <img src={Banner1} alt="Banner1 image" className='lg:w-[384px] lg:h-[311px] object-contain' />
@@ -79,13 +74,7 @@ const Aboutus = () => {
 
                 </div>
             </section>
-            {/* width: Fixed (1,440px)px;--
-height: Hug (416px)px;--
-top: 1645px;--
-padding: 90px 120px 90px 120px;--
-gap: 98px;--
-opacity: 0px;
- */}
+         
             <section className='flex flex-col lg:flex-row justify-between py-4 px-4 lg:py-24 lg:px-32 gap-24 items-center'>
                 {/* 24px */}
                 <div className='flex flex-col gap-6 xl:w-[486px] '>
@@ -100,8 +89,7 @@ opacity: 0px;
                 </div>
                 {/* 24px */}
                 <div className=' flex flex-col gap-6 xl:w-[486px]'>
-                  {/* background: linear-gradient(118.19deg, #1FA2FF -3.62%, #12D8FA 50.44%, #A6FFCB 104.51%);
- */}
+    
                     <div style={{background: 'linear-gradient(118.19deg, #1FA2FF -3.62%, #12D8FA 50.44%, #A6FFCB 104.51%)',WebkitBackgroundClip: 'text',
                         color: 'transparent'
 }} className='font-inter tracking-tight text-left font-semibold text-4xl leading-10'>
@@ -113,15 +101,7 @@ opacity: 0px;
                     </div>
                 </div>
             </section>
-            {/* width: Fixed (1,440px)px;--
-height: Hug (254px)px;--
-top: 2061px;--
-padding: 90px 120px 90px 120px;--
-gap: 10px;--
-border: 0px 0px 1px 0px;
-opacity: 0px;
- */}
- {/* border-bottom: 1px solid #2C333F */}
+          
             <section className=''>
 
                 <StatsComponent/>
@@ -130,16 +110,8 @@ opacity: 0px;
             <section className='py-4 px-4 md:py-24 md:px-32'>
               <LearningGrid></LearningGrid>
             </section>
-            <section >
-                <ContactUsForm></ContactUsForm>
-            </section>
             
-            {/* <div className="p-20 flex flex-col gap-20">
-                <div className="flex flex-row justify-center text-richblack-5 font-inter text-4xl font-semibold leading-10 tracking-tight text-left w-full  ">
-                    Reviews from other learners
-                </div>
-                <ReviewSlider></ReviewSlider>
-            </div> */}
+           
             <Reviews></Reviews>
             <Footer></Footer>
         </div>

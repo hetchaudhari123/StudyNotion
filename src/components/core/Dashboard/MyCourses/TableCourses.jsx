@@ -1,12 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
+import { useEffect, useRef, useState } from 'react'
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
 import { deleteCourse, fetchCourse, fetchInstructorCourses } from '../../../../services/operations/courseAPI';
 import { COURSE_STATUS } from '../../../../utils/constants';
-import { FaCheck } from "react-icons/fa"
-import { FiEdit2 } from "react-icons/fi"
-import { HiClock } from "react-icons/hi"
-import { RiDeleteBin6Line } from "react-icons/ri"
 import { HiCheckCircle } from "react-icons/hi2";
 import { HiMiniClock } from "react-icons/hi2";
 import { HiMiniPencil } from "react-icons/hi2";

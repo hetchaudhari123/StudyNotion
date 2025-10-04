@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useState, useEffect } from 'react'
+import { useSelector } from 'react-redux'
 import { formatTime } from '../../../services/formatTime'
 import { FaAngleUp } from "react-icons/fa";
 import { FaAngleDown } from 'react-icons/fa6';
@@ -8,18 +8,12 @@ import { MdCheckBox } from "react-icons/md";
 import { HiTv } from "react-icons/hi2";
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { FaPlay } from "react-icons/fa";
-import { setCompletedVideos } from '../../../redux/slices/courseProgressSlice';
-import { fetchCourse, fetchCourseProgress } from '../../../services/operations/courseAPI';
 import CTAButton from "../HomePage/Button"
-import ReviewModal from './ReviewModal';
-import { fetchUserRating } from '../../../services/operations/reviewAPI';
 const VideoSideBar = ({ editReview,loading,setLoading,reviewModal, setReviewModal }) => {
     const { courseDetails } = useSelector(state => state.course)
-    const dispatch = useDispatch()
     const { completedVideos } = useSelector(state => state.courseProgress)
     const [isActive, setIsActive] = useState([])
     const [currentVideo, setCurrentVideo] = useState(null)
-    const [currentSection, setCurrentSection] = useState(null)
     const location = useLocation()
     const { sectionId } = useParams()
     const { subSectionId } = useParams()
@@ -31,7 +25,6 @@ const VideoSideBar = ({ editReview,loading,setLoading,reviewModal, setReviewModa
    
     useEffect(() => {
         setCurrentVideo(subSectionId)
-        setCurrentSection(sectionId)
     }, [location.pathname])
     const isActiveHandler = (sectionId) => {
         !isActive.includes(sectionId) ?

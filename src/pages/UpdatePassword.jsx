@@ -72,28 +72,13 @@ const UpdatePassword = () => {
     },[formData]);
     return (
         (loading) ? (
-            // <div className='spinner'></div>
-            // <div className="text-richblack-5 lds-ripple"><div></div><div></div></div>
-            // <div className="text-richblack-5 bg-white lds-hourglass"></div>
             <div className='w-full flex-1 flex justify-center items-center'>
                 <div className="spinner"></div>
             </div>
         ):
        
         (<div className='w-full flex-1  flex justify-center items-center'>
-            {/* //styleName: Text lg/Regular;
-//styleName: Text small/Regular;
-width: Fixed (508px)px;
-height: Hug (586px)px;
-top: 288px;
-left: 466px;
-padding: 32px 0px 0px 0px;
-gap: 24px;
-opacity: 0px;
-
-
-
- */}
+           
             <form onSubmit={submitHandler} className='p-8 flex flex-col gap-6 bg-richblack-900'>
                 <div className='flex flex-col gap-3'>
                     <div className='text-richblack-5 font-inter text-3xl font-semibold leading-9 text-left'>Choose new password</div>

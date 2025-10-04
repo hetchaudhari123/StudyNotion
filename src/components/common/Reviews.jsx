@@ -8,7 +8,6 @@ const Reviews = () => {
 
     useEffect(() => {
         const fetch = async () => {
-            // setLoading(true)
             const response = await fetchAllReviews(null, false)
             setReviews(response)
             setLoading(false)

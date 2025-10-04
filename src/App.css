@@ -12,9 +12,7 @@ html,body{
 }
 
 .videoDiv{
-    /* box-shadow: 0.75rem 0.75rem white; */
     box-shadow: 
-    /* 0 0 1rem 0.25rem rgba(0, 102, 255, 0.75),  */
     0.75rem 0.75rem white; /* White shadow on bottom and right */
 }
 
@@ -39,7 +37,6 @@ html,body{
     background: linear-gradient(118.19deg, #1fa2ff -3.62%, #12d8fa 50.44%, #a6ffcb 104.51%);
 }
 .code-border {
-    /* background: linear-gradient(111.93deg, rgba(14, 26, 45, .24) -1.4%, rgba(17, 30, 50, .38) 104.96%); */
     border: 2px solid;
     border-image-slice: 1;
     border-image-source: linear-gradient(to right bottom, #ffffff38, #ffffff00);
@@ -52,7 +49,6 @@ html,body{
     height: 700px; 
     width: 700px; 
     border-radius: 50%;
-    /* background: radial-gradient(circle, #c4d5f6 30%, rgba(20, 4, 240, 0) 100%); */
     background: radial-gradient(circle, #3b82f6 20%, rgba(59, 130, 246, 0) 70%);
 }
 .video-circle {
@@ -60,47 +56,36 @@ html,body{
     height: 550px; 
     width: 450px; 
     border-radius: 50%;
-    /* background: radial-gradient(circle, #c4d5f6 30%, rgba(20, 4, 240, 0) 100%); */
     background: radial-gradient(circle, #3b82f6 20%, rgba(59, 130, 246, 0) 70%);
 }
 
 .instructor-image{
-    /* box-shadow: -2px -2px 0px 0px rgba(1, 1, 1, 0); */
     box-shadow: -1rem -1rem 0px 0px white;
 }
 @media screen and (max-width: 770px){
     .videoDiv{
-        /* box-shadow: 0.75rem 0.75rem white; */
         box-shadow: 
-        /* 0 0 1rem 0.25rem rgba(0, 102, 255, 0.75),  */
         0.5rem 0.5rem white; /* White shadow on bottom and right */
     }
     .instructor-image{
-        /* box-shadow: -2px -2px 0px 0px rgba(1, 1, 1, 0); */
         box-shadow: -0.8rem -0.8rem 0px 0px white;
     }
 }
 @media screen and (max-width: 430px){
     .videoDiv{
-        /* box-shadow: 0.75rem 0.75rem white; */
         box-shadow: 
-        /* 0 0 1rem 0.25rem rgba(0, 102, 255, 0.75),  */
         0.35rem 0.35rem white; /* White shadow on bottom and right */
     }
     .instructor-image{
-        /* box-shadow: -2px -2px 0px 0px rgba(1, 1, 1, 0); */
         box-shadow: -0.5rem -0.5rem 0px 0px white;
     }
 }
 @media screen and (max-width: 330px){
     .videoDiv{
-        /* box-shadow: 0.75rem 0.75rem white; */
         box-shadow: 
-        /* 0 0 1rem 0.25rem rgba(0, 102, 255, 0.75),  */
         0.15rem 0.15rem white; /* White shadow on bottom and right */
     }
     .instructor-image{
-        /* box-shadow: -2px -2px 0px 0px rgba(1, 1, 1, 0); */
         box-shadow: -0.4rem -0.4rem 0px 0px white;
     }
 }
@@ -117,14 +102,6 @@ input[type="password"]::-ms-clear {
 input[type="password"]::-webkit-textfield-decoration-container {
     display: none;
 }
-/* .spinner {
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    border: 9px solid #f1f2ff;
-    animation: spinner-bulqg1 0.8s infinite linear alternate,
-      spinner-oaa3wk 1.6s infinite linear;
-  } */
   .spinner {
     width: 56px;
     height: 56px;

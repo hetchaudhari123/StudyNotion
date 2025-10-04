@@ -5,7 +5,6 @@ const BASE_URL = "https://studynotion2-iket.onrender.com/api/v1"
 
 // AUTH ENDPOINTS
 export const endpoints = {
-  SENDOTP_API: BASE_URL + "/auth/sendotp",
   SIGNUP_API: BASE_URL + "/auth/signup",
   LOGIN_API: BASE_URL + "/auth/login",
   RESETPASSTOKEN_API: BASE_URL + "/auth/reset-password-token",
@@ -17,7 +16,6 @@ export const endpoints = {
 export const profileEndpoints = {
   GET_USER_DETAILS_API: BASE_URL + "/profile/get-user-details",
   GET_USER_ENROLLED_COURSES_API: BASE_URL + "/profile/get-enrolled-courses",
-  // BY ME
   GET_COUNT_USERS_API:BASE_URL + '/profile/get-number-of-users',
   DELETE_USER_API:BASE_URL + '/profile/delete-profile'
 }
@@ -69,10 +67,6 @@ export const categories = {
 // CATALOG PAGE DATA
 export const catalogData = {
   CATALOGPAGEDATA_API: BASE_URL + "/course/category-page-details",
-}
-// CONTACT-US API
-export const contactusEndpoint = {
-  CONTACT_US_API: BASE_URL + "/reach/contact-us",
 }
 
 // SETTINGS PAGE API

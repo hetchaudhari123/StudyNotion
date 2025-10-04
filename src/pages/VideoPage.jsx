@@ -24,23 +24,10 @@ const VideoPage = () => {
   const { courseId } = useParams()
   const {token} = useSelector(state=>state.auth);
 
-//   useEffect(() => {
-
-//     const fetchReview = async () => {
-//         setLoading(true)
-//         const res = await fetchUserRating({courseId},null,false)
-//         if(res){
-//             setEditReview(true)
-//         }
-//         setLoading(false)
-//     }
-//     fetchReview()
-// },[])
 
   useEffect(() => {
     const fetch = async () => {
       setLoading(true)
-      // const completedVideos = await fetchCourseProgress({ courseId,token }, null, false)
       const completedVideos = await fetchCourseProgress({ courseId },token, null, false)
       if (!completedVideos) {
         toast.error("The course has been removed")

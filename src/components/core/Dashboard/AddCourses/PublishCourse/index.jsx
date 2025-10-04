@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { ImCheckboxChecked } from "react-icons/im";
 import { ImCheckboxUnchecked } from "react-icons/im";
@@ -9,21 +9,16 @@ import { useNavigate } from 'react-router-dom';
 import CTAButton from "../../../HomePage/Button"
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 import { useDispatch, useSelector } from 'react-redux';
-import { resetCourse, setCourseDetails, setEditCourse, setStep } from '../../../../../redux/slices/courseSlice';
-import toast from 'react-hot-toast';
+import { resetCourse, setEditCourse, setStep } from '../../../../../redux/slices/courseSlice';
 const PublishCourse = () => {
-  // border: 1px solid #2C333F
   const {
     register,
-    errors,
     handleSubmit,
-    getValues,
     setValue
   } = useForm()
   const [checked, setChecked] = useState(false)
   const [loading, setLoading] = useState(false)
   const { courseDetails } = useSelector(state => state.course)
-  // console.log("COURSE DETAILS....",courseDetails)
   const navigate = useNavigate()
   const clickHandler = () => {
     setChecked(prev => !prev)
@@ -32,7 +27,6 @@ const PublishCourse = () => {
       const {token} = useSelector(state=>state.auth);
 
   useEffect(() => {
-    // console.log("COURSE DETAILS....",courseDetails?.status)
      if(courseDetails?.status === COURSE_STATUS.PUBLISHED){
       setChecked(true)
      }
@@ -91,9 +85,7 @@ const PublishCourse = () => {
             text-base gap-2 font-medium leading-6 text-left'>
 
                 <div className='flex flex-row justify-center '>
-                  {/* <div className='flex p-2.5 gap-2.5
-              border border-richblack-500
-              rounded-md'> */}
+                  
                   <div className='
                 text-[20px] cursor-pointer
                 '

@@ -1,22 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import { useState } from 'react'
 import CTAButton from '../HomePage/Button'
 import { RxCross1 } from "react-icons/rx";
 import ReactStars from 'react-stars';
 import { useForm } from 'react-hook-form';
 import { buildRating } from '../../../services/operations/courseAPI';
-import { useParams } from 'react-router-dom';
 import Spinner from '../../common/Spinner';
 import { useSelector } from 'react-redux';
 import { updateUserRating } from '../../../services/operations/reviewAPI';
 const ReviewModal = ({
     editReview = null,rating = 0,review = "",setReviewModal}) => {
-    const [loading,setLoading] = useState(false)
-    // console.log("RATING -> ",rating)
+    const [loading, setLoading] = useState(false)
     const {
         register,
         handleSubmit,
-        formState: { errors, isSubmitSuccessful },
-        reset,
+        formState: { errors },
         getValues,
         setValue
     } = useForm({

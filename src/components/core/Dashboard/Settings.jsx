@@ -1,7 +1,5 @@
-import React from 'react'
 import Header from './Header'
 import { useSelector } from 'react-redux'
-import CTAButton from "../../core/HomePage/Button"
 import FormSettings from './FormSettings'
 const Settings = () => {
     const {user} = useSelector(state => state.profile);

@@ -1,51 +1,20 @@
 import { toast } from "react-hot-toast"
 
-// import { setLoading, setToken } from "../../slices/authSlice"
 import { setLoading,setToken } from "../../redux/slices/authSlice"
-// import { resetCart } from "../../slices/cartSlice"
 import { resetCart } from "../../redux/slices/cartSlice"
-// import { setUser } from "../../slices/profileSlice"
 import { setUser } from "../../redux/slices/profileSlice"
-// import { apiConnector } from "../apiconnector"
 import apiConnector from "../apiconnector"
-// import { endpoints } from "../apis"
 import { endpoints } from "../apis"
-import { Navigate } from "react-router-dom"
 import { profileEndpoints } from "../apis"
 import { courseEndpoints } from "../apis"
-import { settingsEndpoints } from "../apis"
 const {
-  SENDOTP_API,
   SIGNUP_API,
   LOGIN_API,
   RESETPASSTOKEN_API,
   RESETPASSWORD_API,
 } = endpoints
 
-export function sendOtp(email, navigate) {
-  return async (dispatch) => {
-    const toastId = toast.loading("Loading...")
-    dispatch(setLoading(true))
-    try {
-      const response = await apiConnector("POST", SENDOTP_API, {
-        email,
-        checkUserPresent: true,
-      })
-      console.log("SENDOTP API RESPONSE............", response)
-      // console.log(response.data.success)
-      if (!response.data.success) {
-        throw new Error(response.data.message)
-      }
-      toast.success("OTP Sent Successfully")
-      navigate("/verify-email")
-    } catch (error) {
-      console.log("SENDOTP API ERROR............", error)
-      toast.error("Could Not Send OTP")
-    }
-    dispatch(setLoading(false))
-    toast.dismiss(toastId)
-  }
-}
+
 
 export function signUp(
   accountType,
@@ -54,7 +23,6 @@ export function signUp(
   email,
   password,
   confirmPassword,
-  otp,
   navigate
 ) {
   return async (dispatch) => {
@@ -67,8 +35,7 @@ export function signUp(
         lastName,
         email,
         password,
-        confirmPassword,
-        otp,
+        confirmPassword
       })
 
       console.log("SIGNUP API RESPONSE............", response)
@@ -82,8 +49,9 @@ export function signUp(
       console.log("SIGNUP API ERROR............", error)
       toast.error("Signup Failed")
       navigate("/signup")
+    }finally{
+      dispatch(setLoading(false))
     }
-    dispatch(setLoading(false))
     toast.dismiss(toastId)
   }
 }
@@ -152,15 +120,12 @@ export function resetPassword(password, confirmPassword, token, navigate) {
     const toastId = toast.loading("Loading...")
     dispatch(setLoading(true))
     try {
-      // console.log("..................YES....")
-      // console.log(RESETPASSTOKEN_API);
       const response = await apiConnector("POST", RESETPASSWORD_API, {
         password,
         confirmPassword,
         token,
       })
 
-      // console.log("RESETPASSWORD RESPONSE............", response)
 
       if (!response.data.success) {
         throw new Error(response.data.message)
@@ -186,30 +151,22 @@ export function logout(navigate) {
     localStorage.removeItem("user")
     if(navigate) toast.success("Logged Out")
     if(navigate){
-      // console.log("INSIDE LOG OUT");
       navigate("/")
     }
   }
 }
 
 
-//BY ME FOR CALCULATING THE STATS
 export const findStats = (setStats) => {
   return async (dispatch) => {
-      //handle the toast and loading
-      //not required since it would be there within the component itself.
       try{
-          //call the apis
-          // GET_COUNT_USERS_API
           const users_response = await apiConnector('GET',profileEndpoints.GET_COUNT_USERS_API);
-          // console.log('COUNT_USERS API RESPONSE....',users_response);
           if(!users_response.data.success){
               throw new Error(users_response.data.message);
           }
           const courses_response = await apiConnector('GET',courseEndpoints.GET_ALL_COURSE_API);
           console.log('GET_ALL_COURSES API RESPONSE....',courses_response);
           if(!courses_response.data.success){
-            // console.log(courses_response.data);
             throw new Error(courses_response.data.message);
         }
         let students = users_response.data.data.students;

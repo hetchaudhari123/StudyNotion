@@ -1,18 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { RiMoneyRupeeCircleFill } from "react-icons/ri";
 import { fetchCategory } from '../../../../../services/operations/categoryAPI';
 import Spinner from "../../../../common/Spinner"
 import { useDispatch } from 'react-redux';
 import TagField from './TagField';
-import ThumbnailField from './ThumbnailField';
 import RequirementsField from './RequirementsField';
 import CTAButton from "../../../HomePage/Button"
 import { FaAngleRight } from "react-icons/fa6";
 import { buildCourse } from '../../../../../services/operations/courseAPI';
-import { fetchCourseDetails } from '../../../../../services/operations/courseAPI';
 import { useSelector } from 'react-redux';
-import { setCourseDetails, setEditCourse, setStep } from '../../../../../redux/slices/courseSlice';
+import { setStep } from '../../../../../redux/slices/courseSlice';
 import { updateCourse } from '../../../../../services/operations/courseAPI';
 import Upload from './Upload';
 
@@ -20,9 +18,7 @@ const CourseForm = () => {
     const {
         register,
         handleSubmit,
-        formState: { errors, isSubmitSuccessful },
-        reset,
-        watch,
+        formState: { errors },
         setValue,
         getValues,
         clearErrors
@@ -34,9 +30,6 @@ const CourseForm = () => {
     const  [tagList,setTagList] = useState([])
     const dispatch = useDispatch();
     const [category, setCategory] = useState([]);
-    // const [formData,setFormData] = useState(null);
-    // const [editCourse,setEditCourse] = useState(false);
-    // const [editCourse,setEditCourse] = useSelector((state) => state.editCourse);
     const { editCourse, courseStep, courseDetails } = useSelector(state => state.course);
     const {token} = useSelector(state=>state.auth);
     
@@ -52,53 +45,22 @@ const CourseForm = () => {
        }
         fetch()
         if (editCourse) {
-            // dispatch(setEditCourse(true));
-            // const formData = new FormData();
-            // formData.append('thumbnailImage', courseDetails.file);
-            // formData.append('courseDescription', courseDetails.courseDescription);
-            // formData.append('whatYouWillLearn', courseDetails.whatYouWillLearn);
-            // formData.append('price', courseDetails.price);
-            // formData.append('tag', courseDetails.tag);
-            // formData.append('category', courseDetails.category);
-            // formData.append('status', courseDetails.status);
-            // formData.append('instructions', JSON.stringify(courseDetails.instructions));
-            // formData.append('courseName', courseDetails.courseName);
-            // formData.append('tag',JSON.stringify(courseDetails.tag));
-            // setCategory(formData.get('category'));
-            // setImage(formData.get('thumbnailImage'));
-            // console.log("COURSE DETAILS....",courseDetails)
 
             setReqList(courseDetails.instructions);//--
             setTagList( courseDetails.tag);//--
-            // setValue('requirement', courseDetails.whatYouWillLearn);//--
             setValue('courseTitle', courseDetails.courseName);//--
-            // console.log("coursedetails...",courseDetails)
-            // console.log("coursedetails...",courseDetails.courseDescription
-            // )
             setValue('courseDesc', courseDetails.courseDescription);//--
-            // console.log("DESCRIPTION........",getValues('courseDesc'))
-            // console.log("CATEGORY........",getValues('category'))
 
             setValue('price', courseDetails.price);//--
             setValue('benefit',courseDetails.whatYouWillLearn);//--
-            // setValue('tag', JSON.stringify(courseDetails.tag));//--
             setValue('tag', courseDetails.tag);//--
             setValue('requirement', courseDetails.instructions);//--
             setValue('category', courseDetails?.category?._id);//--
-            // setValue('courseDesc', courseDetails.description);//--
-            // setValue('file',courseDetails.thumbnail);
         }
-        // console.log("CATEGORIES....",getValues('category') === "")
     }, [])
-// useEffect(() => {
-//     console.log("category....",getValues('category'))
-//     console.log("category....",courseDetails?.category?._id)
-// },[getValues('category')])
 
     const submitHandler = async () => {
         const { benefit, category, courseDesc, courseTitle, price, file } = getValues();
-        // console.log("SUBMIT HANDLER ALL THE VALUES....",getValues())
-        // console.log("SUBMIT HANDLER CATEGORY....",category)
         if (!editCourse) {
             const result = await (buildCourse({
                 dispatch,
@@ -115,7 +77,6 @@ const CourseForm = () => {
             token,
                 setLoading, true));
             if(result){
-                // dispatch(setCourseDetails(result))
                 localStorage.setItem('step', '2')
                 dispatch(setStep(2))
             }
@@ -137,12 +98,9 @@ const CourseForm = () => {
             token,
                 setLoading, true));
                 if(result){
-                    // dispatch(setCourseDetails(result))
                     localStorage.setItem('step', '2')
                     dispatch(setStep(2))
-                    // dispatch(setEditCourse(true))
                 }
-                // console.log("RESPONSE FROM UPDATE COURSE....",result)
         }
 
 

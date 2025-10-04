@@ -1,11 +1,9 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import CTAButton from '../../../HomePage/Button'
 import { RxCross1 } from "react-icons/rx";
-import ThumbnailField from '../CourseInformation/ThumbnailField';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { addSubSection } from '../../../../../services/operations/subSectionAPI';
-import TimeField from './TimeField';
 import { setCourseDetails } from '../../../../../redux/slices/courseSlice';
 import Spinner from '../../../../common/Spinner';
 import { editSubSection } from '../../../../../services/operations/subSectionAPI';

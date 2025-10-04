@@ -1,6 +1,5 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form';
-import CTAButton from "../../../HomePage/Button"
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { useDispatch, useSelector } from 'react-redux';
 import { RxDropdownMenu } from "react-icons/rx";
@@ -16,8 +15,6 @@ import { removeSubSection } from '../../../../../services/operations/subSectionA
 import ConfirmationModal from '../../../../common/ConfirmationModal';
 import { removeSection } from '../../../../../services/operations/sectionAPI';
 import { editSection } from '../../../../../services/operations/sectionAPI';
-import { fetchCourse } from '../../../../../services/operations/courseAPI';
-// import { editCourse } from '../../../../../server/controllers/Course';
 const SectionForm = () => {
     const {
         register,
@@ -160,14 +157,8 @@ const SectionForm = () => {
                 setLoading,
                 true));
         }
-        // localStorage.setItem("courseDetails",JSON.stringify(courseDetails))
     }
 
-// useEffect(() => {
-//     // console.log("Changed courseDetails....",courseDetails)
-//     localStorage.setItem("courseDetails",JSON.stringify(courseDetails))
-    
-// },[courseDetails])
     return (
         (!courseDetails) ?
             (<Spinner />) :

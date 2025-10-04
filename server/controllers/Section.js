@@ -65,17 +65,10 @@ exports.updateSection = async (req,res) => {
 exports.deleteSection = async (req,res) => {
     try{
         //1 fetch the id from the params
-        // const {sectionId,courseId} = req.params;
-        // console.log("REQ.PARAMS.......",req.body);
         const {courseId,sectionId} = req.body;
         
-        // const {sectionId,courseId} = req.body;
         //2 validation
         if(!sectionId || !courseId){
-            // console.log(req.params);
-            // console.log(sectionId);
-            // console.log(courseId);
-            // console.log(req.params);
             return res.status(400).json({
                 success:false,
                 message:"One or more fields are missing"
@@ -96,7 +89,6 @@ exports.deleteSection = async (req,res) => {
         
 
 
-        // console.log(courseResponse);
         //5 return the response
         return res.status(200).json({
             success:true,

@@ -1,4 +1,3 @@
-import React from 'react'
 
 const avgRating = (course) => {
     if (course.ratingAndReviews.length === 0) {

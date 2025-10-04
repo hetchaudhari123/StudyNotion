@@ -1,4 +1,3 @@
-import React from 'react'
 import { useSelector } from 'react-redux';
 import EditBtn from './EditBtn';
 import Header from './Header';
