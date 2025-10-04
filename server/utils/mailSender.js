@@ -28,19 +28,31 @@ require('dotenv').config();
 
 const mailSender = async (email, title, body) => {
     try {
+        // const transporter = nodemailer.createTransport({
+        //     host: process.env.MAIL_HOST,
+        //     // port: 587,              // Explicitly using port 587
+        //     port: 465,              // Explicitly using port 465
+        //     // secure: false,          // Use TLS (STARTTLS) after connection is established
+        //     secure: true,          // Use TLS (STARTTLS) after connection is established
+        //     auth: {
+        //         user: process.env.MAIL_USER,
+        //         pass: process.env.MAIL_PASS
+        //     },
+        //     tls: {
+        //         rejectUnauthorized: false // Optional: Accept self-signed certificates (use with caution)
+        //     }
+        // });
+
         const transporter = nodemailer.createTransport({
             host: process.env.MAIL_HOST,
-            // port: 587,              // Explicitly using port 587
-            port: 465,              // Explicitly using port 587
-            // secure: false,          // Use TLS (STARTTLS) after connection is established
-            secure: true,          // Use TLS (STARTTLS) after connection is established
+            port: 465,
+            secure: true,
             auth: {
                 user: process.env.MAIL_USER,
                 pass: process.env.MAIL_PASS
             },
-            tls: {
-                rejectUnauthorized: false // Optional: Accept self-signed certificates (use with caution)
-            }
+            logger: true,
+            debug: true
         });
 
         const info = await transporter.sendMail({
