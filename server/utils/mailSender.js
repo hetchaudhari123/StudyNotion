@@ -30,8 +30,10 @@ const mailSender = async (email, title, body) => {
     try {
         const transporter = nodemailer.createTransport({
             host: process.env.MAIL_HOST,
-            port: 587,              // Explicitly using port 587
-            secure: false,          // Use TLS (STARTTLS) after connection is established
+            // port: 587,              // Explicitly using port 587
+            port: 465,              // Explicitly using port 587
+            // secure: false,          // Use TLS (STARTTLS) after connection is established
+            secure: true,          // Use TLS (STARTTLS) after connection is established
             auth: {
                 user: process.env.MAIL_USER,
                 pass: process.env.MAIL_PASS
